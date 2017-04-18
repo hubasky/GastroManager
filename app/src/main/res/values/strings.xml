@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">GastroManager</string>
+
+    <string name="reciepe_str">Receptek</string>
+    <string name="shopping_list_str">Bevásárló lista</string>
+    <string name="diet_manager_str">Étrend kezelő</string>
+    <string name="search_reciepe_str">Receptek keresése</string>
+    <string name="favourite_reciepes_str">Kedvenc receptek</string>
+    <string name="new_reciepe_str">Új recept hozzáadása</string>
+
 </resources>

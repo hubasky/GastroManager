@@ -1,18 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="hu.hubasky.gastromanager.MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_weight="30"
+        >
 
-</android.support.constraint.ConstraintLayout>
+        <GridLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:columnCount="3"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            >
+
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/reciepe_button"
+                style="@style/MainButtonStyle"
+                android:background="@drawable/recipe_icon"
+                />
+
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/shopping_list_button"
+                style="@style/MainButtonStyle"
+                android:background="@drawable/shopping_list_icon"
+                />
+
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/diet_manager_buton"
+                style="@style/MainButtonStyle"
+                android:background="@drawable/diet_manager_icon"
+                />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/appCompatTextView1"
+                style="@style/MainButtonTextStyle"
+                android:text="@string/reciepe_str"
+                />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/appCompatTextView2"
+                style="@style/MainButtonTextStyle"
+                android:text="@string/shopping_list_str"
+                />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/appCompatTextView3"
+                style="@style/MainButtonTextStyle"
+                android:text="@string/diet_manager_str"
+                />
+        </GridLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="70"
+        >
+
+    </RelativeLayout>
+
+
+</LinearLayout>

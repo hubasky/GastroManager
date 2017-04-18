@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/search_reciepe_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/search_reciepe_str"
+        />
+
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/favourite_reciepes_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/favourite_reciepes_str"
+        android:layout_below="@+id/search_reciepe_btn"
+        android:layout_alignParentStart="true"
+        />
+
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/add_reciepe_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/new_reciepe_str"
+        android:layout_below="@+id/favourite_reciepes_btn"
+        android:layout_alignParentStart="true"/>
+
+
+</RelativeLayout>

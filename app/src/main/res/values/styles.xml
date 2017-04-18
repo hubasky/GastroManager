@@ -8,4 +8,18 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <dimen name="ButtonSize">96dp</dimen>
+    <dimen name="ButtonPadding">16dp</dimen>
+    <style name="MainButtonStyle">
+        <item name="android:layout_width">@dimen/ButtonSize</item>
+        <item name="android:layout_height">@dimen/ButtonSize</item>
+        <item name="android:padding">@dimen/ButtonPadding</item>
+    </style>
+
+    <style name="MainButtonTextStyle">
+        <item name="android:layout_width">@dimen/ButtonSize</item>
+        <item name="android:textAlignment">center</item>
+
+    </style>
+
 </resources>
