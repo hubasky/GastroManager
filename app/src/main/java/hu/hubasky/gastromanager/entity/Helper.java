@@ -9,7 +9,7 @@ import hu.hubasky.gastromanager.entity.recept.Hozzavalo;
  * Created by mirso on 2017. 04. 26..
  */
 
-public class Helper {
+public final class Helper {
 
     /**
      * Felkeresi a megadott listában a kívánt alapanyagot.
