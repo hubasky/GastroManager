@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import hu.hubasky.gastromanager.entity.Helper;
 import hu.hubasky.gastromanager.entity.alapanyag.Alapanyag;
 import hu.hubasky.gastromanager.entity.felhasznalo.Felhasznalo;
 
@@ -43,16 +44,12 @@ public final class BevasarloLista {
     public void addVasarlandok(List<VasarlandoAlapanyag> alapanyagok) {
         if (alapanyagok == null) throw new AssertionError();
         for (VasarlandoAlapanyag each : alapanyagok) {
-            boolean bentvan = false;
-            for (VasarlandoAlapanyag eachv : vasarlandok) {
-                if (eachv.getAlapanyag().equals(each.getAlapanyag())) {
-                    // ez már megvan
-                    eachv.addMennyiseg(each.getMennyiseg());
-                    bentvan = true;
-                    break;
-                }
+
+            VasarlandoAlapanyag fnd = Helper.find(vasarlandok, each.getAlapanyag());
+            if(fnd!=null){
+                fnd.addMennyiseg(each.getMennyiseg());
             }
-            if (!bentvan) {
+            else{
                 vasarlandok.add(each);
             }
         }
@@ -74,20 +71,9 @@ public final class BevasarloLista {
      */
     public void torol(Alapanyag alapanyag) {
         if (alapanyag == null) throw new AssertionError();
-        /*
-        Elvileg, minden alapanyag csak egyszer lehetne, de biztos, ami biztos
-         */
-        boolean wasdel = true;
-        while (wasdel) {
-            wasdel = false;
-            for (VasarlandoAlapanyag each : vasarlandok) {
-                if(each.getAlapanyag().equals(alapanyag)){
-                    vasarlandok.remove(each);
-                    wasdel=true;
-                    break;
-                }
-
-            }
+        VasarlandoAlapanyag fnd;
+        while((fnd = Helper.find(vasarlandok, alapanyag))!=null){
+            vasarlandok.remove(fnd);
         }
     }
 
