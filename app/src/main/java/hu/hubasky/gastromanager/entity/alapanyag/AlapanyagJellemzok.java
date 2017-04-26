@@ -160,4 +160,36 @@ public final class AlapanyagJellemzok {
         }
         this.energiaKJ = energiaKJ;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        AlapanyagJellemzok that = (AlapanyagJellemzok) o;
+
+        if (Double.compare(that.vonatkoztatasGramm, vonatkoztatasGramm) != 0) return false;
+        if (Double.compare(that.feherjeSzazalek, feherjeSzazalek) != 0) return false;
+        if (Double.compare(that.zsirSzazalek, zsirSzazalek) != 0) return false;
+        if (Double.compare(that.szenhidratSzazalek, szenhidratSzazalek) != 0) return false;
+        return Double.compare(that.energiaKJ, energiaKJ) == 0;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result;
+        long temp;
+        temp = Double.doubleToLongBits(vonatkoztatasGramm);
+        result = (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(feherjeSzazalek);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(zsirSzazalek);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(szenhidratSzazalek);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(energiaKJ);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        return result;
+    }
 }
