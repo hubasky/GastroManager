@@ -21,8 +21,9 @@ public final class Cimke {
 
     /**
      * Konstruktor.
-     * @param tipus a cimke típusa.
-     * @param szoveg a szövege.
+     *
+     * @param tipus     a cimke típusa.
+     * @param szoveg    a szövege.
      * @param szinKodja a színkód, megjelenítéshez.
      */
     public Cimke(ECimkeTipus tipus, String szoveg, String szinKodja) {
@@ -63,6 +64,31 @@ public final class Cimke {
      */
     public String getSzinKodja() {
         return szinKodja;
+    }
+
+    /**
+     * Visszaadja a cimke típusát.
+     *
+     * @return a típus.
+     */
+    public ECimkeTipus getTipus() {
+        return tipus;
+    }
+
+    /**
+     * Visszaadja, hogy a cimke típusa alapján megfelel-e a paraméterben átadott
+     * vizsgált típusnak.
+     *
+     * @param vizsgalt a vizsgált.
+     * @return true, ha igen.
+     */
+    public boolean isMegfelelo(ECimkeTipus vizsgalt) {
+        if (vizsgalt == ECimkeTipus.MINDEN || tipus == ECimkeTipus.MINDEN) {
+            return true;
+        }
+
+        return tipus==vizsgalt;
+
     }
 
     @Override

@@ -3,8 +3,12 @@ package hu.hubasky.gastromanager.entity.recept;
 import java.net.URL;
 import java.util.EnumSet;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
+import hu.hubasky.gastromanager.entity.Cimke;
+import hu.hubasky.gastromanager.entity.Cimkezheto;
+import hu.hubasky.gastromanager.entity.ECimkeTipus;
 import hu.hubasky.gastromanager.entity.Helper;
 import hu.hubasky.gastromanager.entity.alapanyag.Alapanyag;
 import hu.hubasky.gastromanager.entity.felhasznalo.Felhasznalo;
@@ -14,7 +18,7 @@ import hu.hubasky.gastromanager.entity.felhasznalo.Felhasznalo;
  * Created by mirso on 2017. 04. 26..
  */
 
-public final class Recept {
+public final class Recept extends Cimkezheto {
     /**
      * A recept tulajdonosa.
      */
@@ -46,7 +50,7 @@ public final class Recept {
     /**
      * Az adag.
      */
-    private int adag;
+    private double adag;
 
     /**
      * Recept létrehozása.
@@ -58,7 +62,7 @@ public final class Recept {
      * @param fenykepeURL a fénykép URL.
      * @param adag        hány adagra való.
      */
-    public Recept(Felhasznalo tulajdonos, EReceptStatus status, String neve, String leirasa, String fenykepeURL, int adag) {
+    public Recept(Felhasznalo tulajdonos, EReceptStatus status, String neve, String leirasa, String fenykepeURL, double adag) {
         if (tulajdonos == null) throw new AssertionError();
 
         setNeve(neve);
@@ -145,7 +149,7 @@ public final class Recept {
      *
      * @return az adag.
      */
-    public int getAdag() {
+    public double getAdag() {
         return adag;
     }
 
@@ -154,7 +158,7 @@ public final class Recept {
      *
      * @param adag az adag.
      */
-    public void setAdag(int adag) {
+    public void setAdag(double adag) {
         if (adag <= 0) {
             throw new IllegalArgumentException("Az adag nem lehet nulla vagy negatív!");
         }
@@ -224,5 +228,27 @@ public final class Recept {
      */
     public void publikus() {
         status = EReceptStatus.PUBLIKUS;
+    }
+
+    @Override
+    public boolean isMegfelelo(List<Cimke> tartalmaz, boolean mindegyikt, List<Cimke> kizart) {
+
+        for (Hozzavalo h : hozzavalok) {
+            if (!h.getAlapanyag().isMegfelelo(
+                    Helper.filter(tartalmaz, ECimkeTipus.ALAPANYAG),
+                    mindegyikt,
+                    Helper.filter(kizart, ECimkeTipus.ALAPANYAG)
+
+            )) {
+                return false;
+            }
+        }
+
+        // a recepte vonatkozó cimkék
+        return super.isMegfelelo(
+                Helper.filter(tartalmaz, ECimkeTipus.RECEPT),
+                mindegyikt,
+                Helper.filter(kizart, ECimkeTipus.RECEPT));
+
     }
 }

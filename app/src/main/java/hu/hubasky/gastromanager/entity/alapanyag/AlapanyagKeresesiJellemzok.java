@@ -92,7 +92,10 @@ public final class AlapanyagKeresesiJellemzok {
          * @return építő.
          */
         public Builder nevtoredek(String val) {
-            nevtoredek = val;
+            nevtoredek = val == null ? null : val.trim().toUpperCase();
+            if (nevtoredek.length() == 0) {
+                nevtoredek = null;
+            }
             return this;
         }
 
@@ -217,7 +220,7 @@ public final class AlapanyagKeresesiJellemzok {
     private AlapanyagKeresesiJellemzok(String nevtoredek, List<Cimke> tartalmazottCimke, boolean mindetTartalmazza,
                                        List<Cimke> kizartCimke, Tartomany feherje100g, Tartomany zsir100g,
                                        Tartomany szenhidrat100g, Tartomany energia100g) {
-        this.nevtoredek = nevtoredek.toUpperCase();
+        this.nevtoredek = nevtoredek;
         this.tartalmazottCimke = tartalmazottCimke;
         this.mindetTartalmazza = mindetTartalmazza;
         this.kizartCimke = kizartCimke;
