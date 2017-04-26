@@ -161,6 +161,33 @@ public final class AlapanyagJellemzok {
         this.energiaKJ = energiaKJ;
     }
 
+    /**
+     * Visszaadja a fehérje mennyiségét grammban.
+     *
+     * @return a mennyiség.
+     */
+    public double getFeherjeMennyisegGramm() {
+        return vonatkoztatasGramm * feherjeSzazalek / 100;
+    }
+
+    /**
+     * Visszaadja a szénhidrát mennyiségét grammban.
+     *
+     * @return a mennyiség.
+     */
+    public double getSzenhidratMennyisegGramm() {
+        return vonatkoztatasGramm * szenhidratSzazalek / 100;
+    }
+
+    /**
+     * Visszaadja a zsír mennyiségét grammban.
+     *
+     * @return a mennyiség.
+     */
+    public double getZsirMennyisegGramm() {
+        return vonatkoztatasGramm * zsirSzazalek / 100;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

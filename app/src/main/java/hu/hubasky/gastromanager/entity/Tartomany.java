@@ -74,14 +74,15 @@ public final class Tartomany {
 
     /**
      * Megfelel-e az érték a tartománynak.
+     *
      * @param val a vizsgált érték.
      * @return true, ha megfelel.
      */
-    public boolean isMegfelel(double val){
-        if(min!=null && val<min){
+    public boolean isMegfelel(double val) {
+        if (min != null && val < min) {
             return false;
         }
-        if(max!=null && val>max){
+        if (max != null && val > max) {
             return false;
         }
         return true;
@@ -89,6 +90,7 @@ public final class Tartomany {
 
     /**
      * Visszaadja az alsó értékhatárt.
+     *
      * @return az értékhatár vagy {@code null}, ha nincs ilyen.
      */
     public Double getMin() {
@@ -97,6 +99,7 @@ public final class Tartomany {
 
     /**
      * Visszaadja a felső értékhatárt.
+     *
      * @return az értékhatár vagy {@code null}, ha nincs ilyen.
      */
     public Double getMax() {

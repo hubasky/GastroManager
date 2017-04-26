@@ -191,9 +191,9 @@ public final class AlapanyagKeresesiJellemzok {
 
             return new AlapanyagKeresesiJellemzok(
                     nevtoredek,
-                    tartalmazottCimke.isEmpty()?null:tartalmazottCimke,
+                    tartalmazottCimke.isEmpty() ? null : tartalmazottCimke,
                     mindetTartalmazza,
-                    kizartCimke.isEmpty()?null:kizartCimke,
+                    kizartCimke.isEmpty() ? null : kizartCimke,
                     feherje,
                     szenhidrat,
                     zsir,
@@ -217,7 +217,7 @@ public final class AlapanyagKeresesiJellemzok {
     private AlapanyagKeresesiJellemzok(String nevtoredek, List<Cimke> tartalmazottCimke, boolean mindetTartalmazza,
                                        List<Cimke> kizartCimke, Tartomany feherje100g, Tartomany zsir100g,
                                        Tartomany szenhidrat100g, Tartomany energia100g) {
-        this.nevtoredek = nevtoredek;
+        this.nevtoredek = nevtoredek.toUpperCase();
         this.tartalmazottCimke = tartalmazottCimke;
         this.mindetTartalmazza = mindetTartalmazza;
         this.kizartCimke = kizartCimke;
@@ -230,10 +230,35 @@ public final class AlapanyagKeresesiJellemzok {
 
     /**
      * Visszaadja, hogy az alapanyag megfelel-e a keresési feltételeknek.
+     *
      * @param alapanyag a vizsgált alapanyag.
      * @return true, ha igen.
      */
-    public boolean isMegfelel(Alapanyag alapanyag){
-        throw new UnsupportedOperationException("Nem implementált.");
+    public boolean isMegfelel(Alapanyag alapanyag) {
+        if (nevtoredek != null && !alapanyag.getNeve().toUpperCase().contains(nevtoredek)) {
+            // névtöredék szerint nem oké.
+            return false;
+        }
+
+        if (!alapanyag.isMegfelelo(tartalmazottCimke, mindetTartalmazza, kizartCimke)) {
+            // cimkék szerint nem oké.
+            return false;
+        }
+
+        KalkulaltOsszetevok kalkulal = KalkulaltOsszetevok.kalkulal(alapanyag, 100);
+
+        if (!feherje100g.isMegfelel(kalkulal.getFeherjeGramm())) {
+            return false;
+        }
+        if (!zsir100g.isMegfelel(kalkulal.getZsirGramm())) {
+            return false;
+        }
+        if (!szenhidrat100g.isMegfelel(kalkulal.getSzenhidratGramm())) {
+            return false;
+        }
+        if (!energia100g.isMegfelel(kalkulal.getEnergiaKJ())) {
+            return false;
+        }
+        return true;
     }
 }
