@@ -5,6 +5,7 @@ import java.util.EnumSet;
 import java.util.HashSet;
 import java.util.Set;
 
+import hu.hubasky.gastromanager.entity.Helper;
 import hu.hubasky.gastromanager.entity.alapanyag.Alapanyag;
 import hu.hubasky.gastromanager.entity.felhasznalo.Felhasznalo;
 
@@ -162,71 +163,66 @@ public final class Recept {
 
     /**
      * Felvesz egy hozzávalót.
+     *
      * @param hozzavalo a hozzávaló.
      */
-    public void addHozzavalo(Hozzavalo hozzavalo){
+    public void addHozzavalo(Hozzavalo hozzavalo) {
         if (hozzavalo == null) throw new AssertionError();
-        for (Hozzavalo each :
-                hozzavalok) {
-            if(hozzavalo.getAlapanyag().equals(each.getAlapanyag())){
-                // ez már fent van.
-                each.addMennyiseg(hozzavalo.getMennyiseg());
-                return;
-            }
+        Hozzavalo fnd = Helper.find(hozzavalok, hozzavalo.getAlapanyag());
+        if (fnd != null) {
+            fnd.addMennyiseg(hozzavalo.getMennyiseg());
+        } else {
+            hozzavalok.add(hozzavalo);
         }
-        hozzavalok.add(hozzavalo);
     }
 
     /**
      * Töröl egy alapanyagot a hozzávalók közül.
+     *
      * @param alapanyag az alapanyag.
      */
-    public void remHozzavalo(Alapanyag alapanyag){
+    public void remHozzavalo(Alapanyag alapanyag) {
         if (alapanyag == null) throw new AssertionError();
-        boolean wasDel=true;
-        while (wasDel){
-            wasDel=false;
-            for (Hozzavalo each :
-                    hozzavalok) {
-                if(alapanyag.equals(each.getAlapanyag())){
-                    hozzavalok.remove(each);
-                    wasDel=true;
-                    break;
-                }
-            }
+
+        Hozzavalo fnd;
+        while ((fnd = Helper.find(hozzavalok, alapanyag)) != null) {
+            hozzavalok.remove(fnd);
         }
     }
 
     /**
      * Példány másolása.
+     *
      * @return az új példány.
      */
-    public Recept masolas(){
+    public Recept masolas() {
         throw new UnsupportedOperationException("Nincs implementálva!");
     }
 
     /**
      * Priváttá teszi a receptet.
+     *
      * @param felhasznalo a felhasználó.
      */
-    public void privat(Felhasznalo felhasznalo){
-        tulajdonos=felhasznalo;
-        status=EReceptStatus.PRIVAT;
+    public void privat(Felhasznalo felhasznalo) {
+        tulajdonos = felhasznalo;
+        status = EReceptStatus.PRIVAT;
     }
 
     /**
      * Megosztottá teszi a receptet.
+     *
      * @param felhasznalo a felhasználó.
      */
-    public void megosztott(Felhasznalo felhasznalo){
-        tulajdonos=felhasznalo;
-        status=EReceptStatus.MEGOSZTOTT;
+    public void megosztott(Felhasznalo felhasznalo) {
+        tulajdonos = felhasznalo;
+        status = EReceptStatus.MEGOSZTOTT;
     }
 
     /**
      * Publikussá teszi a receptet.
      */
-    public void publikus(){
-        status=EReceptStatus.PUBLIKUS;
+    public void publikus() {
+        status = EReceptStatus.PUBLIKUS;
     }
 }
