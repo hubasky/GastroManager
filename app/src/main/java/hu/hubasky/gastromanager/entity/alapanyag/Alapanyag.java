@@ -157,4 +157,21 @@ public final class Alapanyag extends Cimkezheto {
     public List<Double> getVasarolhatoMennyisegek() {
         return Collections.unmodifiableList(vasarolhatoMennyisegek);
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Alapanyag alapanyag = (Alapanyag) o;
+
+        if (!jellemzok.equals(alapanyag.jellemzok)) return false;
+        return neve.equals(alapanyag.neve);
+
+    }
+
+    @Override
+    public int hashCode() {
+        return neve.hashCode();
+    }
 }

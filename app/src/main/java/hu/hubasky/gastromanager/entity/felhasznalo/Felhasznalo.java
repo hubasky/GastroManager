@@ -5,7 +5,7 @@ package hu.hubasky.gastromanager.entity.felhasznalo;
  * Created by mirso on 2017. 04. 26..
  */
 
-public class Felhasznalo {
+public final class Felhasznalo {
     /**
      * A felhasználói név min hossza.
      */
