@@ -87,4 +87,5 @@ public interface FelhasznaloNyilvantarto {
      * @throws Exception Ha kivétel lépett fel.
      */
     void kuldes(Felhasznalo felhasznalo, Recept recept) throws Exception;
+
 }

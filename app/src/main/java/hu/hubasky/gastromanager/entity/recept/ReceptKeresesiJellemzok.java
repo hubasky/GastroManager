@@ -11,6 +11,7 @@ import hu.hubasky.gastromanager.entity.Cimke;
 import hu.hubasky.gastromanager.entity.Tartomany;
 import hu.hubasky.gastromanager.entity.alapanyag.Alapanyag;
 import hu.hubasky.gastromanager.entity.alapanyag.AlapanyagKeresesiJellemzok;
+import hu.hubasky.gastromanager.entity.felhasznalo.Felhasznalo;
 
 /**
  * Recept keresési jellemzők
@@ -30,15 +31,15 @@ public final class ReceptKeresesiJellemzok {
     /**
      * Tartalmazott alapanyag szerint.
      */
-    private final Set<Alapanyag> tartalmazottAlapanyag ;
+    private final Set<Alapanyag> tartalmazottAlapanyag;
     /**
      * Kizárt alapanyag szerint.
      */
-    private final Set<Alapanyag> kizartAlapanyag ;
+    private final Set<Alapanyag> kizartAlapanyag;
     /**
      * A tartalmazott cimkék.
      */
-    private final List<Cimke> tartalmazottCimke ;
+    private final List<Cimke> tartalmazottCimke;
     /**
      * Az összes cimkét tartalmazza.
      */
@@ -46,15 +47,15 @@ public final class ReceptKeresesiJellemzok {
     /**
      * A kizért cimkék.
      */
-    private final List<Cimke> kizartCimke ;
+    private final List<Cimke> kizartCimke;
     /**
      * Szavak a szöveges leírásban.
      */
-    private final Set<String> szavak ;
+    private final Set<String> szavak;
     /**
      * Adagra vonatkozó feltétel.
      */
-    private final Tartomany adagSzures ;
+    private final Tartomany adagSzures;
 
 
     /**
@@ -97,6 +98,32 @@ public final class ReceptKeresesiJellemzok {
          * Adagra vonatkozó feltétel.
          */
         private Tartomany.Builder adagSzures = new Tartomany.Builder();
+        /**
+         * A találatok maximális száma.
+         */
+        private int darabszam;
+        /**
+         * Melyik recept utántól keressen.
+         */
+        private Recept kezdoRecept;
+        /**
+         * Kedvenc recept is kell.
+         * A kiinduló halmaz a kedvencek listája (szűrés).
+         */
+        private boolean kedvenc;
+        /**
+         * A kiinduló halmaz a sajátok listája (szűrés).
+         */
+        private boolean sajat;
+        /**
+         * A kiindulo halmaz a teljes adatbázis.
+         */
+        private boolean teljes = true;
+        /**
+         * A felhasználó, akire szűrni kell.
+         */
+        private Felhasznalo felhasznalo;
+
 
         /**
          * Névtöredék szerint.
@@ -196,43 +223,119 @@ public final class ReceptKeresesiJellemzok {
 
         /**
          * Az adagra vonatkozó szűrő építője.
+         *
          * @return a példány.
          */
         public Tartomany.Builder getAdagSzures() {
             return adagSzures;
         }
 
+        /**
+         * Maximális találati darabszám megadása.
+         *
+         * @param val a maximális daraszam.
+         * @return az építő.
+         */
+        public Builder darabszam(int val) {
+            darabszam = val;
+            return this;
+        }
+
+        /**
+         * Melyik recept utántól kezdje a keresést.
+         *
+         * @param val a kezdő.
+         * @return az építő.
+         */
+        public Builder kezdo(Recept val) {
+            kezdoRecept = val;
+            return this;
+        }
+
+        /**
+         * A keresés kiinduló halmazában a kedvencek benne vannak.
+         *
+         * @param val true, ha igen.
+         * @return építő.
+         * @see #felhasznalo(Felhasznalo)
+         */
+        public Builder kedvenc(boolean val) {
+            kedvenc = val;
+            return this;
+        }
+
+        /**
+         * A keresés kiinduló halmazában a saját receptek benne vannak.
+         *
+         * @param val true, ha igen.
+         * @return építő.
+         * @see #felhasznalo(Felhasznalo)
+         */
+        public Builder sajat(boolean val) {
+            sajat = val;
+            return this;
+        }
+
+        /**
+         * A keresés kiinduló halmazában a teljes adatbázis receptjei benne vannak.
+         *
+         * @param val true, ha igen.
+         * @return építő.
+         * @see #felhasznalo(Felhasznalo)
+         */
+        public Builder teljes(boolean val) {
+            teljes = val;
+            return this;
+        }
+
+        /**
+         * Beállítja a felhasználót, mint feltételt.
+         *
+         * @param felhasznalo a felhasználó.
+         * @return az építő
+         * @see #sajat(boolean) Saját szűrésnél kötelező.
+         * @see #kedvenc(boolean) Kedvenc szűrésnél kötelező.
+         * @see #teljes(boolean) Megadható. (Ha idegen felhasználó, akkor csak a publikus receptekben keres,
+         * ha a saját, bejelentkezett user, akkor a publikus és privát is)
+         */
+        public Builder felhasznalo(Felhasznalo felhasznalo) {
+            felhasznalo = felhasznalo;
+            return this;
+        }
+
+
         @Override
         public ReceptKeresesiJellemzok build() {
             return new ReceptKeresesiJellemzok(
                     nevtoredek,
-                    ajanlottEtkezesek.isEmpty()?null:ajanlottEtkezesek,
-                    tartalmazottAlapanyag.isEmpty()?null:tartalmazottAlapanyag,
-                    kizartAlapanyag.isEmpty()?null:kizartAlapanyag,
+                    ajanlottEtkezesek.isEmpty() ? null : ajanlottEtkezesek,
+                    tartalmazottAlapanyag.isEmpty() ? null : tartalmazottAlapanyag,
+                    kizartAlapanyag.isEmpty() ? null : kizartAlapanyag,
                     tartalmazottCimke.isEmpty() ? null : tartalmazottCimke,
                     mindetTartalmazza,
                     kizartCimke.isEmpty() ? null : kizartCimke,
-                    szavak.isEmpty()?null:szavak,
+                    szavak.isEmpty() ? null : szavak,
                     adagSzures.build());
         }
     }
 
     /**
      * Konstuktor.
-     * @param nevtoredek keresési névtöredék.
-     * @param ajanlottEtkezesek ajánlott étkezések.
+     *
+     * @param nevtoredek            keresési névtöredék.
+     * @param ajanlottEtkezesek     ajánlott étkezések.
      * @param tartalmazottAlapanyag tartalmazott alapanyag.
-     * @param kizartAlapanyag kizárt alapanyag.
-     * @param tartalmazottCimke tartalmazott cimke.
-     * @param mindetTartalmazza mindent tartalmazott cimkét tartalmazzon?
-     * @param kizartCimke kizárt cimke.
-     * @param szavak keresendő szavak a leírásban.
-     * @param adagSzures adagra vonatkozó szűrés.
+     * @param kizartAlapanyag       kizárt alapanyag.
+     * @param tartalmazottCimke     tartalmazott cimke.
+     * @param mindetTartalmazza     mindent tartalmazott cimkét tartalmazzon?
+     * @param kizartCimke           kizárt cimke.
+     * @param szavak                keresendő szavak a leírásban.
+     * @param adagSzures            adagra vonatkozó szűrés.
      */
     private ReceptKeresesiJellemzok(String nevtoredek, Set<EEtkezesek> ajanlottEtkezesek,
-                                   Set<Alapanyag> tartalmazottAlapanyag, Set<Alapanyag> kizartAlapanyag,
-                                   List<Cimke> tartalmazottCimke, boolean mindetTartalmazza,
-                                   List<Cimke> kizartCimke, Set<String> szavak, Tartomany adagSzures) {
+                                    Set<Alapanyag> tartalmazottAlapanyag, Set<Alapanyag> kizartAlapanyag,
+                                    List<Cimke> tartalmazottCimke, boolean mindetTartalmazza,
+                                    List<Cimke> kizartCimke, Set<String> szavak, Tartomany adagSzures) {
         this.nevtoredek = nevtoredek;
         this.ajanlottEtkezesek = ajanlottEtkezesek;
         this.tartalmazottAlapanyag = tartalmazottAlapanyag;
@@ -246,11 +349,12 @@ public final class ReceptKeresesiJellemzok {
 
     /**
      * Visszaadja, hogy a recept megfelel-e a keresési feltételeknek.
+     *
      * @param recept a recept.
      * @return true, ha igen.
      */
-    public boolean isMegfelelo(Recept recept){
-        if(nevtoredek!=null && !recept.getNeve().toUpperCase().contains(nevtoredek)){
+    public boolean isMegfelelo(Recept recept) {
+        if (nevtoredek != null && !recept.getNeve().toUpperCase().contains(nevtoredek)) {
             // névtöredék nem oké.
             return false;
         }
