@@ -50,7 +50,10 @@ public class ReciepeAdapter extends BaseAdapter {
         TextView titleText = (TextView) rootView.findViewById(R.id.reciepe_title);
         TextView descriptionText = (TextView) rootView.findViewById(R.id.reciepe_abstract);
 
+        titleText.setText(reciepe.getName());
+        descriptionText.setText(reciepe.getDescription());
 
-        return null;
+
+        return rootView;
     }
 }

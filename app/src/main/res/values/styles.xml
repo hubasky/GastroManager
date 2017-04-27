@@ -23,18 +23,13 @@
     </style>
 
     <dimen name="AddButtonSize">56dp</dimen>
-    <dimen name="AddButtonTextSize">48sp</dimen>
-    <color name="AddButtonTextColor">#ffffff</color>
     <color name="AddButtonBGColor">#32ba94</color>
     <style name="AddButtonStyle">
         <item name="android:layout_width">@dimen/AddButtonSize</item>
         <item name="android:layout_height">@dimen/AddButtonSize</item>
-        <item name="android:background">@drawable/circle_bg_icon</item>
-        <item name="android:text">+</item>
-        <item name="android:textSize">@dimen/AddButtonTextSize</item>
-        <item name="android:textColor">@color/AddButtonTextColor</item>
-
-
+        <item name="android:background">@drawable/add_button</item>
     </style>
+
+    <dimen name="ReciepeListItemHeight">108dp</dimen>
 
 </resources>

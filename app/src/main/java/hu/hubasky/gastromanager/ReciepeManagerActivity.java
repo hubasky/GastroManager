@@ -6,6 +6,7 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import hu.hubasky.gastromanager.viewmodel.IngredientVM;
 import hu.hubasky.gastromanager.viewmodel.ReciepeAdapter;
@@ -19,16 +20,17 @@ public class ReciepeManagerActivity extends AppCompatActivity {
         setContentView(R.layout.reciepe_manager);
 
         List<ReciepeVM> reciepesList = new ArrayList<ReciepeVM>();
-        reciepesList.add(new ReciepeVM("Recept 1", "Leírás 1", new ArrayList<IngredientVM>()));
-        reciepesList.add(new ReciepeVM("Recept 2", "Leírás 2", new ArrayList<IngredientVM>()));
-        reciepesList.add(new ReciepeVM("Recept 3", "Leírás 3", new ArrayList<IngredientVM>()));
-        reciepesList.add(new ReciepeVM("Recept 4", "Leírás 4", new ArrayList<IngredientVM>()));
-        reciepesList.add(new ReciepeVM("Recept 5", "Leírás 5", new ArrayList<IngredientVM>()));
+        Random rand = new Random();
+        for(int i = 1; i < 15; i++) {
+            reciepesList.add(new ReciepeVM("Fincsi hamcsi recept " + i,
+                    "Elkészítési idő: " + rand.nextInt(120) +" perc\nAdagok száma: 4\nFűszeres, illatos pihi puhi csibehusi, gyerekek és felnőttek kedvence.",
+                    new ArrayList<IngredientVM>()));
+        }
 
         final ReciepeAdapter reciepeAdapter = new ReciepeAdapter(reciepesList);
         ListView reciepeListView = (ListView) findViewById(R.id.reciepe_list);
 
-//        reciepeListView.setAdapter(reciepeAdapter);
+        reciepeListView.setAdapter(reciepeAdapter);
 
     }
 }
