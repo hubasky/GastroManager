@@ -89,6 +89,9 @@ public final class AlapanyagJellemzok {
         if (feherjeSzazalek < 0) {
             throw new IllegalArgumentException("feherjeSzazalek < 0");
         }
+        if (feherjeSzazalek > 1) {
+            throw new IllegalArgumentException("feherjeSzazalek > 1");
+        }
         this.feherjeSzazalek = feherjeSzazalek;
     }
 
@@ -112,6 +115,9 @@ public final class AlapanyagJellemzok {
         if (zsirSzazalek < 0) {
             throw new IllegalArgumentException("zsirSzazalek < 0");
         }
+        if (zsirSzazalek > 1) {
+            throw new IllegalArgumentException("zsirSzazalek < 1");
+        }
         this.zsirSzazalek = zsirSzazalek;
     }
 
@@ -134,6 +140,9 @@ public final class AlapanyagJellemzok {
             throw new AssertionError();
         if (szenhidratSzazalek < 0) {
             throw new IllegalArgumentException("szenhidratSzazalek < 0");
+        }
+        if (szenhidratSzazalek > 0) {
+            throw new IllegalArgumentException("szenhidratSzazalek > 0");
         }
         this.szenhidratSzazalek = szenhidratSzazalek;
     }
@@ -167,7 +176,7 @@ public final class AlapanyagJellemzok {
      * @return a mennyiség.
      */
     public double getFeherjeMennyisegGramm() {
-        return vonatkoztatasGramm * feherjeSzazalek / 100;
+        return vonatkoztatasGramm * feherjeSzazalek;
     }
 
     /**
@@ -176,7 +185,7 @@ public final class AlapanyagJellemzok {
      * @return a mennyiség.
      */
     public double getSzenhidratMennyisegGramm() {
-        return vonatkoztatasGramm * szenhidratSzazalek / 100;
+        return vonatkoztatasGramm * szenhidratSzazalek;
     }
 
     /**
@@ -185,7 +194,7 @@ public final class AlapanyagJellemzok {
      * @return a mennyiség.
      */
     public double getZsirMennyisegGramm() {
-        return vonatkoztatasGramm * zsirSzazalek / 100;
+        return vonatkoztatasGramm * zsirSzazalek;
     }
 
     @Override
