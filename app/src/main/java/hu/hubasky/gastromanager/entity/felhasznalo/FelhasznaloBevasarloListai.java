@@ -36,7 +36,7 @@ public final class FelhasznaloBevasarloListai {
      * @param lista a lista.
      */
     public void addLista(BevasarloLista lista) {
-        if (lista == null) throw new AssertionError();
+        if (lista == null) throw new IllegalArgumentException();
         if (!listak.contains(lista)) {
             listak.add(lista);
         }

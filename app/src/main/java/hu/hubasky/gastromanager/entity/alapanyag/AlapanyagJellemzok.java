@@ -42,6 +42,17 @@ public final class AlapanyagJellemzok {
         this.setZsirSzazalek(zsirSzazalek);
         this.setSzenhidratSzazalek(szenhidratSzazalek);
         this.setEnergiaKJ(energiaKJ);
+        checkSzazalek();
+    }
+
+    /**
+     * Ellenőrzi a %-os értékeket.
+     */
+    private void checkSzazalek() {
+        if (feherjeSzazalek + zsirSzazalek + szenhidratSzazalek > 1.0) {
+            throw new IllegalStateException(String.format("A fehérje (%1$.2f)%% + zsír (%2$.2f)%% + szénhidrát (%3$.2f)%% > 100%%"
+                    , feherjeSzazalek * 100, zsirSzazalek * 100, szenhidratSzazalek * 100));
+        }
     }
 
 
@@ -61,7 +72,7 @@ public final class AlapanyagJellemzok {
      */
     public void setVonatkoztatasGramm(double vonatkoztatasGramm) {
         if (Double.isNaN(vonatkoztatasGramm) || Double.isInfinite(vonatkoztatasGramm))
-            throw new AssertionError();
+            throw new IllegalArgumentException();
         if (vonatkoztatasGramm <= 0) {
             throw new IllegalArgumentException("vonatkoztatasGramm <= 0");
         }
@@ -84,7 +95,7 @@ public final class AlapanyagJellemzok {
      */
     public void setFeherjeSzazalek(double feherjeSzazalek) {
         if (Double.isNaN(feherjeSzazalek) || Double.isInfinite(feherjeSzazalek))
-            throw new AssertionError();
+            throw new IllegalArgumentException();
 
         if (feherjeSzazalek < 0) {
             throw new IllegalArgumentException("feherjeSzazalek < 0");
@@ -93,6 +104,7 @@ public final class AlapanyagJellemzok {
             throw new IllegalArgumentException("feherjeSzazalek > 1");
         }
         this.feherjeSzazalek = feherjeSzazalek;
+        checkSzazalek();
     }
 
     /**
@@ -111,7 +123,7 @@ public final class AlapanyagJellemzok {
      */
     public void setZsirSzazalek(double zsirSzazalek) {
         if (Double.isNaN(zsirSzazalek) || Double.isInfinite(zsirSzazalek))
-            throw new AssertionError();
+            throw new IllegalArgumentException();
         if (zsirSzazalek < 0) {
             throw new IllegalArgumentException("zsirSzazalek < 0");
         }
@@ -119,6 +131,7 @@ public final class AlapanyagJellemzok {
             throw new IllegalArgumentException("zsirSzazalek < 1");
         }
         this.zsirSzazalek = zsirSzazalek;
+        checkSzazalek();
     }
 
     /**
@@ -137,14 +150,15 @@ public final class AlapanyagJellemzok {
      */
     public void setSzenhidratSzazalek(double szenhidratSzazalek) {
         if (Double.isNaN(szenhidratSzazalek) || Double.isInfinite(szenhidratSzazalek))
-            throw new AssertionError();
+            throw new IllegalArgumentException();
         if (szenhidratSzazalek < 0) {
             throw new IllegalArgumentException("szenhidratSzazalek < 0");
         }
-        if (szenhidratSzazalek > 0) {
+        if (szenhidratSzazalek > 1) {
             throw new IllegalArgumentException("szenhidratSzazalek > 0");
         }
         this.szenhidratSzazalek = szenhidratSzazalek;
+        checkSzazalek();
     }
 
     /**
@@ -163,7 +177,7 @@ public final class AlapanyagJellemzok {
      */
     public void setEnergiaKJ(double energiaKJ) {
         if (Double.isNaN(energiaKJ) || Double.isInfinite(energiaKJ))
-            throw new AssertionError();
+            throw new IllegalArgumentException();
         if (energiaKJ < 0) {
             throw new IllegalArgumentException("energiaKJ < 0");
         }
