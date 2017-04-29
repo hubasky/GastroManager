@@ -1,5 +1,7 @@
 package hu.hubasky.gastromanager.entity.felhasznalo;
 
+import hu.hubasky.gastromanager.common.Helper;
+
 /**
  * Egy felhasználót reprezentáló osztály.
  * Created by mirso on 2017. 04. 26..
@@ -52,6 +54,7 @@ public final class Felhasznalo {
 
     /**
      * Beállítja a felhasználói nevet.
+     *
      * @param usernev a név.
      */
     private void setUsernev(String usernev) {
@@ -68,6 +71,7 @@ public final class Felhasznalo {
 
     /**
      * A felhasználó jelszava.
+     *
      * @return a jelszó.
      */
     public String getJelszo() {
@@ -76,6 +80,7 @@ public final class Felhasznalo {
 
     /**
      * Beállítja a jelszót.
+     *
      * @param jelszo a jelszó.
      */
     public void setJelszo(String jelszo) {
@@ -93,6 +98,7 @@ public final class Felhasznalo {
 
     /**
      * A felhasználó természetes személy neve.
+     *
      * @return a név.
      */
     public String getNev() {
@@ -101,13 +107,14 @@ public final class Felhasznalo {
 
     /**
      * Beállítja a nevet.
+     *
      * @param nev a név.
      */
     public void setNev(String nev) {
         if (nev == null) throw new AssertionError();
         nev = nev.trim();
 
-        if(nev.isEmpty()){
+        if (nev.isEmpty()) {
             throw new IllegalArgumentException("A név nem lehet üres!");
         }
 
@@ -115,11 +122,61 @@ public final class Felhasznalo {
     }
 
     /**
+     * Visszaadja, hogy a paraméterben átadott felhasználói név ehhez a felhasználóhoz tarozik-e.
+     *
+     * @param pusernev a vizsgált felhasználói név.
+     * @return true, ha igen.
+     */
+    public boolean isAzonos(String pusernev) {
+        if (pusernev == null) {
+            return false;
+        }
+        return Helper.isEqualsIgnoreCase(usernev, pusernev);
+    }
+
+    /**
      * Megfelelő-e a jelszó.
+     *
      * @param probaJelszo a próbált jelszó.
      * @return true, ha igen.
      */
-    public boolean jelszoEllenorzes(String probaJelszo){
-        return jelszo.equals(probaJelszo==null?"":probaJelszo);
+    public boolean jelszoEllenorzes(String probaJelszo) {
+        return jelszo.equals(probaJelszo == null ? "" : probaJelszo);
+    }
+
+    /**
+     * A névtöredék alapján megfelelő-e a felhasználó.
+     *
+     * @param nevtoredek a töredék.
+     * @return true, ha igen.
+     */
+    public boolean isMegfelelo(String nevtoredek) {
+        nevtoredek = Helper.trim(nevtoredek);
+        if (nevtoredek.isEmpty()) {
+            return true;
+        }
+        return Helper.contains(nev, nevtoredek);
+
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Felhasznalo that = (Felhasznalo) o;
+
+        if (!usernev.equals(that.usernev)) return false;
+        if (jelszo != null ? !jelszo.equals(that.jelszo) : that.jelszo != null) return false;
+        return nev != null ? nev.equals(that.nev) : that.nev == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = usernev.hashCode();
+        result = 31 * result + (jelszo != null ? jelszo.hashCode() : 0);
+        result = 31 * result + (nev != null ? nev.hashCode() : 0);
+        return result;
     }
 }

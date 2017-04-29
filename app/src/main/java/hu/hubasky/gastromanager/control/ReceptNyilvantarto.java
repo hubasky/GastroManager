@@ -11,7 +11,7 @@ import hu.hubasky.gastromanager.entity.recept.ReceptKeresesiJellemzok;
  * Created by mirso on 2017. 04. 26..
  */
 
-public interface ReceptNyilvantarto {
+public interface ReceptNyilvantarto extends ControlBase {
     /**
      * Recept keresése.
      * @param jellemzok a keresés jellemzői.

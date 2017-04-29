@@ -10,7 +10,7 @@ import hu.hubasky.gastromanager.entity.ECimkeTipus;
  * Created by mirso on 2017. 04. 26..
  */
 
-public interface CimkeNyilvantarto {
+public interface CimkeNyilvantarto extends ControlBase{
     /**
      * Cimkék keresése.
      * @param tipus a cimke típus.

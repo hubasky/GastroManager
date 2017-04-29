@@ -7,10 +7,10 @@ import java.util.List;
 import java.util.Set;
 
 import hu.hubasky.gastromanager.IBuilder;
+import hu.hubasky.gastromanager.common.Helper;
 import hu.hubasky.gastromanager.entity.Cimke;
 import hu.hubasky.gastromanager.entity.Tartomany;
 import hu.hubasky.gastromanager.entity.alapanyag.Alapanyag;
-import hu.hubasky.gastromanager.entity.alapanyag.AlapanyagKeresesiJellemzok;
 import hu.hubasky.gastromanager.entity.felhasznalo.Felhasznalo;
 
 /**
@@ -56,6 +56,31 @@ public final class ReceptKeresesiJellemzok {
      * Adagra vonatkozó feltétel.
      */
     private final Tartomany adagSzures;
+    /**
+     * A találatok maximális száma.
+     */
+    private final int darabszam;
+    /**
+     * Melyik recept utántól keressen.
+     */
+    private final Recept kezdoRecept;
+    /**
+     * Kedvenc recept is kell.
+     * A kiinduló halmaz a kedvencek listája (szűrés).
+     */
+    private final boolean kedvenc;
+    /**
+     * A kiinduló halmaz a sajátok listája (szűrés).
+     */
+    private final boolean sajat;
+    /**
+     * A kiindulo halmaz a teljes adatbázis.
+     */
+    private final boolean teljes;
+    /**
+     * A felhasználó, akire szűrni kell.
+     */
+    private final Felhasznalo felhasznalo;
 
 
     /**
@@ -233,7 +258,7 @@ public final class ReceptKeresesiJellemzok {
         /**
          * Maximális találati darabszám megadása.
          *
-         * @param val a maximális daraszam.
+         * @param val a maximális daraszamm vagy 0 esetén nincs korlát.
          * @return az építő.
          */
         public Builder darabszam(int val) {
@@ -306,6 +331,15 @@ public final class ReceptKeresesiJellemzok {
 
         @Override
         public ReceptKeresesiJellemzok build() {
+            if (teljes && sajat) {
+                throw new IllegalArgumentException("Ha teljes halmazra keresel, akkor a sajátot ne add meg!");
+            }
+            if (teljes && kedvenc) {
+                throw new IllegalArgumentException("Ha teljes halmazra keresel, akkor a kedvencet ne add meg!");
+            }
+            if (felhasznalo == null && (sajat || kedvenc)) {
+                throw new IllegalArgumentException("Ha saját vagy kedvenc halmazra keresel, akkor felhasználót is meg kell adni!");
+            }
             return new ReceptKeresesiJellemzok(
                     nevtoredek,
                     ajanlottEtkezesek.isEmpty() ? null : ajanlottEtkezesek,
@@ -315,9 +349,10 @@ public final class ReceptKeresesiJellemzok {
                     mindetTartalmazza,
                     kizartCimke.isEmpty() ? null : kizartCimke,
                     szavak.isEmpty() ? null : szavak,
-                    adagSzures.build());
+                    adagSzures.build(), darabszam, kezdoRecept, kedvenc, sajat, teljes, felhasznalo);
         }
     }
+
 
     /**
      * Konstuktor.
@@ -331,11 +366,17 @@ public final class ReceptKeresesiJellemzok {
      * @param kizartCimke           kizárt cimke.
      * @param szavak                keresendő szavak a leírásban.
      * @param adagSzures            adagra vonatkozó szűrés.
+     * @param darabszam             a maximális találati darabszám vagy 0 esetén nincs korlát.
+     * @param felhasznalo           a tulajdonos felhasználó.
+     * @param kedvenc               kedvenc receptek benne legyenek-e a kezdő halmazban.
+     * @param kezdoRecept           melyik receptől kezdje a keresést. {@code null} esetén az első megtalálttól.
+     * @param sajat                 true esetén a saját receptek benne vannak a keresőhalmazban.
+     * @param teljes                a teljes recepthalmazban keresünk.
      */
-    private ReceptKeresesiJellemzok(String nevtoredek, Set<EEtkezesek> ajanlottEtkezesek,
-                                    Set<Alapanyag> tartalmazottAlapanyag, Set<Alapanyag> kizartAlapanyag,
-                                    List<Cimke> tartalmazottCimke, boolean mindetTartalmazza,
-                                    List<Cimke> kizartCimke, Set<String> szavak, Tartomany adagSzures) {
+    public ReceptKeresesiJellemzok(String nevtoredek, Set<EEtkezesek> ajanlottEtkezesek, Set<Alapanyag> tartalmazottAlapanyag,
+                                   Set<Alapanyag> kizartAlapanyag, List<Cimke> tartalmazottCimke, boolean mindetTartalmazza,
+                                   List<Cimke> kizartCimke, Set<String> szavak, Tartomany adagSzures, int darabszam,
+                                   Recept kezdoRecept, boolean kedvenc, boolean sajat, boolean teljes, Felhasznalo felhasznalo) {
         this.nevtoredek = nevtoredek;
         this.ajanlottEtkezesek = ajanlottEtkezesek;
         this.tartalmazottAlapanyag = tartalmazottAlapanyag;
@@ -345,6 +386,12 @@ public final class ReceptKeresesiJellemzok {
         this.kizartCimke = kizartCimke;
         this.szavak = szavak;
         this.adagSzures = adagSzures;
+        this.darabszam = darabszam;
+        this.kezdoRecept = kezdoRecept;
+        this.kedvenc = kedvenc;
+        this.sajat = sajat;
+        this.teljes = teljes;
+        this.felhasznalo = felhasznalo;
     }
 
     /**
@@ -354,7 +401,7 @@ public final class ReceptKeresesiJellemzok {
      * @return true, ha igen.
      */
     public boolean isMegfelelo(Recept recept) {
-        if (nevtoredek != null && !recept.getNeve().toUpperCase().contains(nevtoredek)) {
+        if (nevtoredek != null && !Helper.contains(recept.getNeve(),nevtoredek)) {
             // névtöredék nem oké.
             return false;
         }

@@ -1,5 +1,8 @@
 package hu.hubasky.gastromanager.control;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import hu.hubasky.gastromanager.control.impl.dummy.DmyAlapanyagNyilvantarto;
 import hu.hubasky.gastromanager.control.impl.dummy.DmyBevasarloListaNyilvantarto;
 import hu.hubasky.gastromanager.control.impl.dummy.DmyCimkeNyilvantarto;
@@ -74,6 +77,10 @@ public final class Controls {
      */
     private Controls() {
         dummyImpl();
+        for (ControlBase each :
+                controls) {
+            each.init(this);
+        }
 
     }
 
@@ -81,11 +88,11 @@ public final class Controls {
      * Dummy implementációk beállítása.
      */
     private void dummyImpl() {
-        alapanyagNyilvantarto = new DmyAlapanyagNyilvantarto();
-        bevasarloListaNyilvantarto=new DmyBevasarloListaNyilvantarto();
-        cimkeNyilvantarto=new DmyCimkeNyilvantarto();
-        felhasznaloNyilvantarto=new DmyFelhasznaloNyilvantarto();
-        receptNyilvantarto=new DmyReceptNyilvantarto();
+        controls.add(alapanyagNyilvantarto = new DmyAlapanyagNyilvantarto());
+        controls.add(bevasarloListaNyilvantarto=new DmyBevasarloListaNyilvantarto());
+        controls.add(cimkeNyilvantarto=new DmyCimkeNyilvantarto());
+        controls.add(felhasznaloNyilvantarto=new DmyFelhasznaloNyilvantarto());
+        controls.add(receptNyilvantarto=new DmyReceptNyilvantarto());
     }
 
     /**
@@ -108,6 +115,10 @@ public final class Controls {
      * Recept nyilvántartó.
      */
     private ReceptNyilvantarto receptNyilvantarto;
+    /**
+     * Vezérlők.
+     */
+    private final Set<ControlBase> controls = new HashSet<>();
 
 
 }

@@ -8,7 +8,7 @@ import hu.hubasky.gastromanager.entity.felhasznalo.FelhasznaloBevasarloListai;
  * Created by mirso on 2017. 04. 26..
  */
 
-public interface BevasarloListaNyilvantarto {
+public interface BevasarloListaNyilvantarto extends ControlBase{
     /**
      * Létrehoz egy felhasználó-listák összerendelést.
      * @param felhasznalo a felhasználó.

@@ -1,5 +1,7 @@
 package hu.hubasky.gastromanager.entity;
 
+import hu.hubasky.gastromanager.common.Helper;
+
 /**
  * Egy keresési cimkét leíró osztály.
  * Created by mirso on 2017. 04. 26..
@@ -88,6 +90,22 @@ public final class Cimke {
         }
 
         return tipus==vizsgalt;
+
+    }
+
+    /**
+     * Visszaadja, hogy a cimke megfelel-e a felételeknek.
+     * @param vcimke a vizsgált cimke.
+     * @param nevtoredek a névtöredés. Lehet {@code null} is.
+     * @return true, ha igen.
+     */
+    public boolean isMegfelelo(ECimkeTipus vcimke, String nevtoredek){
+        nevtoredek= Helper.trim(nevtoredek);
+        if(nevtoredek.isEmpty()){
+            return isMegfelelo(vcimke);
+        }
+
+        return Helper.contains(szoveg,nevtoredek) && isMegfelelo(vcimke);
 
     }
 

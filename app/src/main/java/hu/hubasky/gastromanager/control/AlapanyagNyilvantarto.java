@@ -10,7 +10,7 @@ import hu.hubasky.gastromanager.entity.alapanyag.AlapanyagKeresesiJellemzok;
  * Created by mirso on 2017. 04. 26..
  */
 
-public interface AlapanyagNyilvantarto {
+public interface AlapanyagNyilvantarto extends ControlBase{
     /**
      * Alapanyag tárolása.
      * @param alapanyag a példány.
