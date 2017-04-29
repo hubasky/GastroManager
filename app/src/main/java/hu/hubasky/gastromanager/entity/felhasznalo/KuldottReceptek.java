@@ -23,11 +23,15 @@ public final class KuldottReceptek {
 
     /**
      * Konstruktor.
-     * @param recept a recept.
+     *
+     * @param recept  a recept.
+     * @param kuldo   a küldő felhasználó.
      * @param cimzett a címzett felhasználó.
-     * @param kuldo a küldő felhasználó.
      */
-    public KuldottReceptek(Recept recept, Felhasznalo cimzett, Felhasznalo kuldo) {
+    public KuldottReceptek(Recept recept, Felhasznalo kuldo, Felhasznalo cimzett) {
+        if (recept == null) throw new IllegalArgumentException();
+        if (cimzett == null) throw new IllegalArgumentException();
+        if (kuldo == null) throw new IllegalArgumentException();
         this.recept = recept;
         this.cimzett = cimzett;
         this.kuldo = kuldo;
@@ -36,6 +40,7 @@ public final class KuldottReceptek {
 
     /**
      * A recept.
+     *
      * @return a példény.
      */
     public Recept getRecept() {
@@ -44,6 +49,7 @@ public final class KuldottReceptek {
 
     /**
      * A címzett felhasználó.
+     *
      * @return a példány.
      */
     public Felhasznalo getCimzett() {
@@ -52,6 +58,7 @@ public final class KuldottReceptek {
 
     /**
      * A küldő felhasználó.
+     *
      * @return a példány.
      */
     public Felhasznalo getKuldo() {

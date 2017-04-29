@@ -58,7 +58,7 @@ public final class Felhasznalo {
      * @param usernev a név.
      */
     private void setUsernev(String usernev) {
-        if (usernev == null) throw new AssertionError();
+        if (usernev == null) throw new IllegalArgumentException();
         usernev = usernev.trim();
 
         if (usernev.length() < MIN_USERNEV_LENGTH) {
@@ -84,7 +84,7 @@ public final class Felhasznalo {
      * @param jelszo a jelszó.
      */
     public void setJelszo(String jelszo) {
-        if (jelszo == null) throw new AssertionError();
+        if (jelszo == null) throw new IllegalArgumentException();
         jelszo = jelszo.trim();
 
         if (jelszo.length() < MIN_JELSZO_LENGTH) {
@@ -111,7 +111,7 @@ public final class Felhasznalo {
      * @param nev a név.
      */
     public void setNev(String nev) {
-        if (nev == null) throw new AssertionError();
+        if (nev == null) throw new IllegalArgumentException();
         nev = nev.trim();
 
         if (nev.isEmpty()) {
@@ -166,7 +166,7 @@ public final class Felhasznalo {
 
         Felhasznalo that = (Felhasznalo) o;
 
-        if (!usernev.equals(that.usernev)) return false;
+        if (!usernev.equalsIgnoreCase(that.usernev)) return false;
         if (jelszo != null ? !jelszo.equals(that.jelszo) : that.jelszo != null) return false;
         return nev != null ? nev.equals(that.nev) : that.nev == null;
 
