@@ -1,3 +1,4 @@
+
 package hu.hubasky.gastromanager.entity.alapanyag;
 
 import java.util.Collections;
@@ -44,7 +45,7 @@ public final class Alapanyag extends Cimkezheto {
      * @param egysegeGramm     a {@link EMennyisegiEgyseg} egységére vonatkozó tömeg.
      */
     public Alapanyag(EMennyisegiEgyseg mennyisegiEgyseg, AlapanyagJellemzok jellemzok, String neve, double egysegeGramm) {
-        if (jellemzok == null) throw new AssertionError();
+        if (jellemzok == null) throw new IllegalArgumentException();
 
         this.jellemzok = jellemzok;
         setMennyisegiEgyseg(mennyisegiEgyseg);
@@ -85,7 +86,7 @@ public final class Alapanyag extends Cimkezheto {
      * @param neve a név.
      */
     public void setNeve(String neve) {
-        if (neve == null) throw new AssertionError();
+        if (neve == null) throw new IllegalArgumentException();
         neve = neve.trim();
         if (neve.isEmpty()) {
             throw new IllegalArgumentException("Az alapanyag neve nem lehet üres!");
@@ -109,13 +110,12 @@ public final class Alapanyag extends Cimkezheto {
      */
     public void setEgysegeGramm(double egysegeGramm) {
         if (Double.isNaN(egysegeGramm) || Double.isInfinite(egysegeGramm))
-            throw new AssertionError();
+            throw new IllegalArgumentException();
         if (egysegeGramm <= 0) {
             throw new IllegalArgumentException("egysegeGramm <= 0");
         }
         this.egysegeGramm = egysegeGramm;
     }
-
 
 
     /**
@@ -125,7 +125,11 @@ public final class Alapanyag extends Cimkezheto {
      */
     public void addVasarolhatoMennyiseg(double mennyiseg) {
         if (Double.isNaN(mennyiseg) || Double.isInfinite(mennyiseg))
-            throw new AssertionError();
+            throw new IllegalArgumentException();
+        if (mennyiseg <= 0) {
+            throw new IllegalArgumentException("A vásárolható mennyiség nem lehet nulla vagy negatív!");
+        }
+
         if (!vasarolhatoMennyisegek.contains(mennyiseg)) {
             vasarolhatoMennyisegek.add(mennyiseg);
         }
