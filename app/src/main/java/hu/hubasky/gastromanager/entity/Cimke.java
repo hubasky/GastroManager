@@ -29,16 +29,16 @@ public final class Cimke {
      * @param szinKodja a színkód, megjelenítéshez.
      */
     public Cimke(ECimkeTipus tipus, String szoveg, String szinKodja) {
-        if (szoveg == null) throw new AssertionError();
-        if (szinKodja == null) throw new AssertionError();
+        if (szoveg == null) throw new IllegalArgumentException();
+        if (szinKodja == null) throw new IllegalArgumentException();
 
         szoveg = szoveg.trim();
         if (szoveg.isEmpty()) {
             throw new IllegalArgumentException("A cimke szövege nem lehet üres!");
         }
-        if (szoveg.contains(" ")) {
-            throw new IllegalArgumentException(String.format("A cimke szövege nem állhat több szóból: %s", szoveg));
-        }
+//        if (szoveg.contains(" ")) {
+//            throw new IllegalArgumentException(String.format("A cimke szövege nem állhat több szóból: %s", szoveg));
+//        }
 
         szinKodja = szinKodja.trim();
         if (szinKodja.isEmpty()) {
@@ -89,23 +89,24 @@ public final class Cimke {
             return true;
         }
 
-        return tipus==vizsgalt;
+        return tipus == vizsgalt;
 
     }
 
     /**
      * Visszaadja, hogy a cimke megfelel-e a felételeknek.
-     * @param vcimke a vizsgált cimke.
+     *
+     * @param vcimke     a vizsgált cimke.
      * @param nevtoredek a névtöredés. Lehet {@code null} is.
      * @return true, ha igen.
      */
-    public boolean isMegfelelo(ECimkeTipus vcimke, String nevtoredek){
-        nevtoredek= Helper.trim(nevtoredek);
-        if(nevtoredek.isEmpty()){
+    public boolean isMegfelelo(ECimkeTipus vcimke, String nevtoredek) {
+        nevtoredek = Helper.trim(nevtoredek);
+        if (nevtoredek.isEmpty()) {
             return isMegfelelo(vcimke);
         }
 
-        return Helper.contains(szoveg,nevtoredek) && isMegfelelo(vcimke);
+        return Helper.contains(szoveg, nevtoredek) && isMegfelelo(vcimke);
 
     }
 

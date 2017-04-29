@@ -8,6 +8,7 @@ import java.util.Set;
 
 /**
  * Cimkézhetőség alaposztálya.
+ * Nincs absztrakt metódusa, de önmagában nem példányosítható.
  * Created by mirso on 2017. 04. 26..
  */
 
@@ -23,7 +24,7 @@ public abstract class Cimkezheto {
      * @param cimke a cimke.
      */
     public void addCimke(Cimke cimke) {
-        if (cimke == null) throw new AssertionError();
+        if (cimke == null) throw new IllegalArgumentException();
         cimkek.add(cimke);
     }
 
@@ -33,7 +34,7 @@ public abstract class Cimkezheto {
      * @param cimke a cimke.
      */
     public void remCimke(Cimke cimke) {
-        if (cimke == null) throw new AssertionError();
+        if (cimke == null) throw new IllegalArgumentException();
         cimkek.remove(cimke);
     }
 
@@ -72,7 +73,13 @@ public abstract class Cimkezheto {
         }
 
         return true;
+    }
 
-
+    /**
+     * Teszt céllal elérhető tároló.
+     * @return a tároló.
+     */
+     Set<Cimke> getCimkek() {
+        return Collections.unmodifiableSet(cimkek);
     }
 }
