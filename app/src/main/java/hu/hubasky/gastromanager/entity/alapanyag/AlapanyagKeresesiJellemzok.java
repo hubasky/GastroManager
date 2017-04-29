@@ -3,6 +3,7 @@ package hu.hubasky.gastromanager.entity.alapanyag;
 import java.util.LinkedList;
 import java.util.List;
 
+import hu.hubasky.gastromanager.common.Helper;
 import hu.hubasky.gastromanager.entity.Cimke;
 import hu.hubasky.gastromanager.entity.Tartomany;
 
@@ -238,7 +239,7 @@ public final class AlapanyagKeresesiJellemzok {
      * @return true, ha igen.
      */
     public boolean isMegfelel(Alapanyag alapanyag) {
-        if (nevtoredek != null && !alapanyag.getNeve().toUpperCase().contains(nevtoredek)) {
+        if (nevtoredek != null && !Helper.contains(alapanyag.getNeve(),nevtoredek)) {
             // névtöredék szerint nem oké.
             return false;
         }

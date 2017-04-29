@@ -11,7 +11,7 @@ import hu.hubasky.gastromanager.entity.recept.Recept;
  * Created by mirso on 2017. 04. 26..
  */
 
-public interface FelhasznaloNyilvantarto {
+public interface FelhasznaloNyilvantarto extends ControlBase{
     /**
      * Felhasználók keresése névtöredék szerint, az aktuális felhasználó kizárásával.
      *

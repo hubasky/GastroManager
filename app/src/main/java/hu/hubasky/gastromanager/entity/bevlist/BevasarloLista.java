@@ -5,7 +5,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import hu.hubasky.gastromanager.entity.Helper;
+import hu.hubasky.gastromanager.common.Helper;
 import hu.hubasky.gastromanager.entity.alapanyag.Alapanyag;
 import hu.hubasky.gastromanager.entity.felhasznalo.Felhasznalo;
 

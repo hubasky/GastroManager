@@ -1,6 +1,5 @@
 package hu.hubasky.gastromanager.entity.recept;
 
-import java.net.URL;
 import java.util.EnumSet;
 import java.util.HashSet;
 import java.util.List;
@@ -9,7 +8,7 @@ import java.util.Set;
 import hu.hubasky.gastromanager.entity.Cimke;
 import hu.hubasky.gastromanager.entity.Cimkezheto;
 import hu.hubasky.gastromanager.entity.ECimkeTipus;
-import hu.hubasky.gastromanager.entity.Helper;
+import hu.hubasky.gastromanager.common.Helper;
 import hu.hubasky.gastromanager.entity.alapanyag.Alapanyag;
 import hu.hubasky.gastromanager.entity.felhasznalo.Felhasznalo;
 
