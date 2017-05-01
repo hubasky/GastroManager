@@ -24,9 +24,9 @@ public class Hozzavalo {
      * @param alapanyag a megvásárolandó alapanyag.
      */
     public Hozzavalo(double mennyiseg, Alapanyag alapanyag) {
-        if (alapanyag == null) throw new AssertionError();
+        if (alapanyag == null) throw new IllegalArgumentException();
         if (!(!Double.isInfinite(mennyiseg) && !Double.isNaN(mennyiseg)))
-            throw new AssertionError();
+            throw new IllegalArgumentException();
 
         if (mennyiseg <= 0) {
             throw new IllegalArgumentException("A hozzávaló alapanyag mennyisége nem lehet 0 vagy negatív!");
@@ -57,16 +57,27 @@ public class Hozzavalo {
 
     /**
      * Mennyiség növelése.
+     *
      * @param novekedes a növekedés.
      */
-    public void addMennyiseg(double novekedes){
-        if(novekedes<=0){
-            throw  new IllegalArgumentException("A hozzávalók mennyisége 0 vagy negatív értékkel nem növelhető!");
+    public void addMennyiseg(double novekedes) {
+        if (Double.isNaN(novekedes) || Double.isInfinite(novekedes))
+            throw new IllegalArgumentException();
+
+        if (novekedes <= 0) {
+            throw new IllegalArgumentException("A hozzávalók mennyisége 0 vagy negatív értékkel nem növelhető!");
         }
-        mennyiseg+=novekedes;
+        mennyiseg += novekedes;
     }
 
-
+    /**
+     * Elkészíti a másolatát.
+     *
+     * @return a másolat.
+     */
+    public Hozzavalo masolas() {
+        return new Hozzavalo(mennyiseg, alapanyag);
+    }
 
 
 }

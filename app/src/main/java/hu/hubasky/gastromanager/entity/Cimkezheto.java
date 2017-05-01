@@ -56,19 +56,28 @@ public abstract class Cimkezheto {
         int kizacnt = 0;
 
         for (Cimke each : tart) {
-            if (cimkek.contains(each)) {
-                tartcnt++;
+            for (Cimke megvan : cimkek) {
+                if (megvan.isMegfelelo(each.getTipus())) {
+                    if (megvan.getSzoveg().equals(each.getSzoveg())) {
+                        tartcnt++;
+                        break;
+                    }
+                }
             }
         }
 
-        if ((mindegyikt && tartcnt < tart.size()) || tartcnt == 0) {
+        if ((mindegyikt && tartcnt < tart.size()) || (tartcnt == 0 && !tart.isEmpty())) {
             return false;
         }
 
 
         for (Cimke each : kiza) {
-            if (cimkek.contains(each)) {
-                return false;
+            for (Cimke megvan : cimkek) {
+                if (megvan.isMegfelelo(each.getTipus())) {
+                    if (megvan.getSzoveg().equals(each.getSzoveg())) {
+                        return false;
+                    }
+                }
             }
         }
 
@@ -76,10 +85,25 @@ public abstract class Cimkezheto {
     }
 
     /**
-     * Teszt céllal elérhető tároló.
+     * Átmásolja a cimkéket egy másik tárolóba.
+     *
+     * @param dest a cél.
+     */
+    protected void masolasIde(Cimkezheto dest) {
+        if (dest == null) {
+            throw new IllegalArgumentException();
+        }
+        for (Cimke each : cimkek) {
+            dest.addCimke(each);
+        }
+    }
+
+    /**
+     * Visszaadja a cimkék halmazát.
+     *
      * @return a tároló.
      */
-     Set<Cimke> getCimkek() {
+    public Set<Cimke> getCimkek() {
         return Collections.unmodifiableSet(cimkek);
     }
 }
