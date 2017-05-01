@@ -49,6 +49,62 @@ public final class AlapanyagKeresesiJellemzok {
     private final Tartomany energia100g;
 
     /**
+     * Névtöredék.
+     */
+    String getNevtoredek() {
+        return nevtoredek;
+    }
+
+    /**
+     * A tartalmazott cimkék.
+     */
+    List<Cimke> getTartalmazottCimke() {
+        return tartalmazottCimke;
+    }
+
+    /**
+     * Az összes cimkét tartalmazza.
+     */
+    boolean isMindetTartalmazza() {
+        return mindetTartalmazza;
+    }
+
+    /**
+     * A kizért cimkék.
+     */
+    List<Cimke> getKizartCimke() {
+        return kizartCimke;
+    }
+
+    /**
+     * A fehérjetartalom 100g-ban.
+     */
+    Tartomany getFeherje100g() {
+        return feherje100g;
+    }
+
+    /**
+     * A zsírtartalom 100g-ban.
+     */
+    Tartomany getZsir100g() {
+        return zsir100g;
+    }
+
+    /**
+     * A szénhidráttartalom 100g-ban.
+     */
+    Tartomany getSzenhidrat100g() {
+        return szenhidrat100g;
+    }
+
+    /**
+     * Az energiatartalom (kj) 100g-ban
+     */
+    Tartomany getEnergia100g() {
+        return energia100g;
+    }
+
+    /**
      * Építő.
      */
     public static class Builder {
@@ -199,8 +255,8 @@ public final class AlapanyagKeresesiJellemzok {
                     mindetTartalmazza,
                     kizartCimke.isEmpty() ? null : kizartCimke,
                     feherje,
-                    szenhidrat,
                     zsir,
+                    szenhidrat,
                     energia100g.build());
 
         }
@@ -239,7 +295,7 @@ public final class AlapanyagKeresesiJellemzok {
      * @return true, ha igen.
      */
     public boolean isMegfelel(Alapanyag alapanyag) {
-        if (nevtoredek != null && !Helper.contains(alapanyag.getNeve(),nevtoredek)) {
+        if (nevtoredek != null && !Helper.contains(alapanyag.getNeve(), nevtoredek)) {
             // névtöredék szerint nem oké.
             return false;
         }
@@ -265,4 +321,6 @@ public final class AlapanyagKeresesiJellemzok {
         }
         return true;
     }
+
+
 }

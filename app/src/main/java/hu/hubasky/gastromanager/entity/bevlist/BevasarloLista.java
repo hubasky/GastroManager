@@ -1,6 +1,7 @@
 package hu.hubasky.gastromanager.entity.bevlist;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -31,6 +32,9 @@ public final class BevasarloLista {
      * @param tulajdonos a tulajdonos.
      */
     public BevasarloLista(Felhasznalo tulajdonos) {
+        if(tulajdonos==null){
+            throw new IllegalArgumentException("A tulajdonos felhasznnáló nem lehet null!");
+        }
         this.tulajdonos = tulajdonos;
         vasarlandok = new HashSet<>();
     }
@@ -42,7 +46,7 @@ public final class BevasarloLista {
      * @param alapanyagok az alapanyagok listája.
      */
     public void addVasarlandok(List<VasarlandoAlapanyag> alapanyagok) {
-        if (alapanyagok == null) throw new AssertionError();
+        if (alapanyagok == null) throw new IllegalArgumentException();
         for (VasarlandoAlapanyag each : alapanyagok) {
 
             VasarlandoAlapanyag fnd = Helper.find(vasarlandok, each.getAlapanyag());
@@ -61,7 +65,7 @@ public final class BevasarloLista {
      * @param alapanyag az anyag.
      */
     public void addVasarlando(VasarlandoAlapanyag alapanyag) {
-        if (alapanyag == null) throw new AssertionError();
+        if (alapanyag == null) throw new IllegalArgumentException();
         addVasarlandok(Arrays.asList(alapanyag));
     }
 
@@ -70,7 +74,7 @@ public final class BevasarloLista {
      * @param alapanyag az anyag.
      */
     public void torol(Alapanyag alapanyag) {
-        if (alapanyag == null) throw new AssertionError();
+        if (alapanyag == null) throw new IllegalArgumentException();
         VasarlandoAlapanyag fnd;
         while((fnd = Helper.find(vasarlandok, alapanyag))!=null){
             vasarlandok.remove(fnd);
@@ -83,13 +87,21 @@ public final class BevasarloLista {
      * @param alapanyag az alapanyag.
      */
     void status(EVasaroltStatus status,Alapanyag alapanyag) {
-        if (alapanyag == null) throw new AssertionError();
+        if (alapanyag == null) throw new IllegalArgumentException();
         for (VasarlandoAlapanyag each : vasarlandok) {
             if (each.getAlapanyag().equals(alapanyag)) {
                 each.setStatus(status);
                 break;
             }
         }
+    }
+
+    /**
+     * Visszadja a vásárlandók listáját.
+     * @return a lista.
+     */
+    public Set<VasarlandoAlapanyag> getVasarlandok() {
+        return Collections.unmodifiableSet(vasarlandok);
     }
 
     /**

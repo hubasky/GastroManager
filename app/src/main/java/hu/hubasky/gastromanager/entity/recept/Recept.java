@@ -1,5 +1,7 @@
 package hu.hubasky.gastromanager.entity.recept;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.EnumSet;
 import java.util.HashSet;
 import java.util.List;
@@ -62,15 +64,12 @@ public final class Recept extends Cimkezheto {
      * @param adag        hány adagra való.
      */
     public Recept(Felhasznalo tulajdonos, EReceptStatus status, String neve, String leirasa, String fenykepeURL, double adag) {
-        if (tulajdonos == null) throw new AssertionError();
-
         setNeve(neve);
         setLeirasa(leirasa);
         setFenykepeURL(fenykepeURL);
         setAdag(adag);
-
-        this.tulajdonos = tulajdonos;
-        this.status = status;
+        setTulajdonos(tulajdonos);
+        setStatus(status);
     }
 
     /**
@@ -88,12 +87,26 @@ public final class Recept extends Cimkezheto {
      * @param neve a név
      */
     public void setNeve(String neve) {
-        if (neve == null) throw new AssertionError();
+        if (neve == null) throw new IllegalArgumentException();
         neve = neve.trim();
         if (neve.isEmpty()) {
             throw new IllegalArgumentException("A recept neve nem lehet üres!");
         }
         this.neve = neve;
+    }
+
+    /**
+     * Visszaadja a recept tulajdonosát.
+     *
+     * @return az tulajdonos.
+     */
+    public Felhasznalo getTulajdonos() {
+        return tulajdonos;
+    }
+
+    public void setTulajdonos(Felhasznalo tulajdonos) {
+        if (tulajdonos == null) throw new IllegalArgumentException();
+        this.tulajdonos = tulajdonos;
     }
 
     /**
@@ -111,7 +124,7 @@ public final class Recept extends Cimkezheto {
      * @param leirasa a leírás
      */
     public void setLeirasa(String leirasa) {
-        if (leirasa == null) throw new AssertionError();
+        if (leirasa == null) throw new IllegalArgumentException();
         leirasa = leirasa.trim();
         if (leirasa.isEmpty()) {
             throw new IllegalArgumentException("A recept leírása nem lehet üres!");
@@ -135,7 +148,7 @@ public final class Recept extends Cimkezheto {
      * @param fenykepeURL az URL.
      */
     public void setFenykepeURL(String fenykepeURL) {
-        if (fenykepeURL == null) throw new AssertionError();
+        if (fenykepeURL == null) throw new IllegalArgumentException();
         fenykepeURL = fenykepeURL.trim();
         if (fenykepeURL.isEmpty()) {
             throw new IllegalArgumentException("A recept képe-URL nem lehet üres");
@@ -158,10 +171,29 @@ public final class Recept extends Cimkezheto {
      * @param adag az adag.
      */
     public void setAdag(double adag) {
+        if (Double.isNaN(adag) || Double.isInfinite(adag)) throw new IllegalArgumentException();
         if (adag <= 0) {
             throw new IllegalArgumentException("Az adag nem lehet nulla vagy negatív!");
         }
         this.adag = adag;
+    }
+
+    /**
+     * Visszaadja a recept státuszát.
+     *
+     * @return a státusz.
+     */
+    public EReceptStatus getStatus() {
+        return status;
+    }
+
+    /**
+     * Beállítja a recept státuszát.
+     *
+     * @param status a státusz.
+     */
+    public void setStatus(EReceptStatus status) {
+        this.status = status;
     }
 
     /**
@@ -170,7 +202,7 @@ public final class Recept extends Cimkezheto {
      * @param hozzavalo a hozzávaló.
      */
     public void addHozzavalo(Hozzavalo hozzavalo) {
-        if (hozzavalo == null) throw new AssertionError();
+        if (hozzavalo == null) throw new IllegalArgumentException();
         Hozzavalo fnd = Helper.find(hozzavalok, hozzavalo.getAlapanyag());
         if (fnd != null) {
             fnd.addMennyiseg(hozzavalo.getMennyiseg());
@@ -185,7 +217,7 @@ public final class Recept extends Cimkezheto {
      * @param alapanyag az alapanyag.
      */
     public void remHozzavalo(Alapanyag alapanyag) {
-        if (alapanyag == null) throw new AssertionError();
+        if (alapanyag == null) throw new IllegalArgumentException();
 
         Hozzavalo fnd;
         while ((fnd = Helper.find(hozzavalok, alapanyag)) != null) {
@@ -194,12 +226,59 @@ public final class Recept extends Cimkezheto {
     }
 
     /**
+     * Visszaadja a hozzávalókat.
+     *
+     * @return a hozzávalók.
+     */
+    public Set<Hozzavalo> getHozzavalok() {
+        return Collections.unmodifiableSet(hozzavalok);
+    }
+
+    /**
+     * Hozzáad egy ajánlott étkezést.
+     *
+     * @param e az érkezés
+     */
+    public void addEtkezes(EEtkezesek e) {
+        ajanlottEtkezesek.add(e);
+    }
+
+    /**
+     * Leválaszt egy ajánlott étkezést.
+     *
+     * @param e az étkezés.
+     */
+    public void remEtkezes(EEtkezesek e) {
+        ajanlottEtkezesek.remove(e);
+    }
+
+    /**
+     * Visszaadja az ajánlott étkezéseket.
+     *
+     * @return az étkezések.
+     */
+    public Set<EEtkezesek> getAjanlottEtkezesek() {
+        return Collections.unmodifiableSet(ajanlottEtkezesek);
+    }
+
+    /**
      * Példány másolása.
      *
      * @return az új példány.
      */
     public Recept masolas() {
-        throw new UnsupportedOperationException("Nincs implementálva!");
+        Recept ret = new Recept(tulajdonos, status, neve, leirasa, fenykepeURL, adag);
+        // cimkék másolása
+        masolasIde(ret);
+
+        for (Hozzavalo each : hozzavalok) {
+            ret.addHozzavalo(each.masolas());
+        }
+        for (EEtkezesek each : ajanlottEtkezesek) {
+            ret.addEtkezes(each);
+        }
+
+        return ret;
     }
 
     /**
@@ -227,6 +306,45 @@ public final class Recept extends Cimkezheto {
      */
     public void publikus() {
         status = EReceptStatus.PUBLIKUS;
+    }
+
+    /**
+     * Tartalmazza-e valamelyik alapanyagot?
+     *
+     * @param vizsgalt a vizsgált alapanyagok.
+     * @return true, ha igen.
+     */
+    public boolean isTartalmazottAlapanyag(Set<Alapanyag> vizsgalt) {
+        if (vizsgalt == null) throw new IllegalArgumentException();
+        for (Alapanyag each : vizsgalt) {
+            if (Helper.find(hozzavalok, each) != null) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Tartalmaz-e a leírás a megadott szavakból.
+     *
+     * @param szavak a szavak nagybetűsítve.
+     * @param mindet minden szóra keresnük
+     * @return true ha igen.
+     */
+    public boolean isTartalmazottSzavak(Set<String> szavak, boolean mindet) {
+        if (szavak == null) throw new IllegalArgumentException();
+        if (szavak.isEmpty()) {
+            return true;
+        }
+
+        Set<String> lszavak = new HashSet<>(Arrays.asList(leirasa.toUpperCase().split("[\\W]")));
+        if (mindet) {
+            Set<String> tmp = new HashSet<>(szavak);
+            tmp.removeAll(lszavak);
+            return tmp.isEmpty();
+        } else {
+            return Helper.isExistsIntersect(lszavak, szavak);
+        }
     }
 
     @Override

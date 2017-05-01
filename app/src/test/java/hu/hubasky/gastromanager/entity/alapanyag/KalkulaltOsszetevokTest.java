@@ -27,31 +27,38 @@ public class KalkulaltOsszetevokTest {
         KalkulaltOsszetevok kalkulal = KalkulaltOsszetevok.kalkulal(a1, 200);
         assertEquals(200, kalkulal.getVizsgaltMennyisegGramm(), 0.0);
         assertEquals(2 * 500, kalkulal.getEnergiaKJ(), 0.0);
-        fail("Nincs befejezve!");
+        assertEquals(2 * 0.1 * 100, kalkulal.getFeherjeGramm(), 0.0);
+        assertEquals(2 * 0.2 * 100, kalkulal.getZsirGramm(), 0.0);
+        assertEquals(2 * 0.3 * 100, kalkulal.getSzenhidratGramm(), 0.0);
+
     }
 
     @Test
     public void getVizsgaltMennyisegGramm() throws Exception {
-
+        // már tesztelt.
     }
 
     @Test
     public void getFeherjeGramm() throws Exception {
+        // már tesztelt.
 
     }
 
     @Test
     public void getZsirGramm() throws Exception {
+        // már tesztelt.
 
     }
 
     @Test
     public void getSzenhidratGramm() throws Exception {
+        // már tesztelt.
 
     }
 
     @Test
     public void getEnergiaKJ() throws Exception {
+        // már tesztelt.
 
     }
 
