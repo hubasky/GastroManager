@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="8dp">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ReciepeListItemHeight"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="96dp"
+            android:layout_height="@dimen/ReciepeListItemHeight"
+            app:srcCompat="@drawable/food_icon"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/ReciepeListItemHeight" android:orientation="vertical"
+            android:paddingLeft="16dp">
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/reciepe_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Provanszi csirke"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentStart="true"
+                android:textSize="24sp"
+                android:paddingBottom="8dp"/>
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/reciepe_abstract"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Elkészítési idő: 30 perc\nAdagok száma: 4\nFűszeres, illatos pihi puhi csibehusi, gyerekek és felnőttek kedvence."
+                android:layout_below="@+id/imageView"
+                android:layout_alignParentStart="true"
+                />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+</RelativeLayout>
