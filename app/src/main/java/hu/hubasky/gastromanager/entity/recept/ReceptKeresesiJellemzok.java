@@ -90,6 +90,126 @@ public final class ReceptKeresesiJellemzok {
      */
     private final Felhasznalo felhasznalo;
 
+    /**
+     * Aki a keresést végzi.
+     */
+    Felhasznalo getKeresoFelhasznalo() {
+        return keresoFelhasznalo;
+    }
+
+    /**
+     * Keresési névtöredés.
+     */
+    String getNevtoredek() {
+        return nevtoredek;
+    }
+
+    /**
+     * Ajánlott étkezések szerint.
+     */
+    Set<EEtkezesek> getAjanlottEtkezesek() {
+        return ajanlottEtkezesek;
+    }
+
+    /**
+     * Tartalmazott alapanyag szerint.
+     */
+    Set<Alapanyag> getTartalmazottAlapanyag() {
+        return tartalmazottAlapanyag;
+    }
+
+    /**
+     * Kizárt alapanyag szerint.
+     */
+    Set<Alapanyag> getKizartAlapanyag() {
+        return kizartAlapanyag;
+    }
+
+    /**
+     * A tartalmazott cimkék.
+     */
+    List<Cimke> getTartalmazottCimke() {
+        return tartalmazottCimke;
+    }
+
+    /**
+     * Az összes cimkét tartalmazza.
+     */
+    boolean isMindenCimketTartalmazzon() {
+        return mindenCimketTartalmazzon;
+    }
+
+    /**
+     * A kizért cimkék.
+     */
+    List<Cimke> getKizartCimke() {
+        return kizartCimke;
+    }
+
+    /**
+     * Szavak a szöveges leírásban.
+     */
+    Set<String> getSzavak() {
+        return szavak;
+    }
+
+    /**
+     * Minden szót tartalmazzon.
+     */
+    boolean isMindenSzotTartalmazzon() {
+        return mindenSzotTartalmazzon;
+    }
+
+    /**
+     * Adagra vonatkozó feltétel.
+     */
+    Tartomany getAdagSzures() {
+        return adagSzures;
+    }
+
+    /**
+     * A találatok maximális száma.
+     */
+    int getDarabszam() {
+        return darabszam;
+    }
+
+    /**
+     * Melyik recept utántól keressen.
+     */
+    Recept getKezdoRecept() {
+        return kezdoRecept;
+    }
+
+    /**
+     * Kedvenc recept is kell.
+     * A kiinduló halmaz a kedvencek listája (szűrés).
+     */
+    boolean isKedvenc() {
+        return kedvenc;
+    }
+
+    /**
+     * A kiinduló halmaz a sajátok listája (szűrés).
+     */
+    boolean isSajat() {
+        return sajat;
+    }
+
+    /**
+     * A kiindulo halmaz a teljes adatbázis.
+     */
+    boolean isTeljes() {
+        return teljes;
+    }
+
+    /**
+     * A felhasználó, akire szűrni kell.
+     */
+    Felhasznalo getFelhasznalo() {
+        return felhasznalo;
+    }
+
 
     /**
      * Az építő.
@@ -347,7 +467,7 @@ public final class ReceptKeresesiJellemzok {
          * ha a saját, bejelentkezett user, akkor a publikus és privát is)
          */
         public Builder felhasznalo(Felhasznalo felhasznalo) {
-            felhasznalo = felhasznalo;
+            this.felhasznalo = felhasznalo;
             return this;
         }
 
@@ -482,4 +602,5 @@ public final class ReceptKeresesiJellemzok {
 
         return true;
     }
+
 }
