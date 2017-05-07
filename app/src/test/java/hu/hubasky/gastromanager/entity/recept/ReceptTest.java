@@ -723,14 +723,14 @@ public class ReceptTest {
 
         // találunk benne (egyet), de nem mindet keressük
         keresett.clear();
-        keresett.add("ALMA");
+        keresett.add("KÖRTE");
         exp = true;
         res = recept.isTartalmazottSzavak(keresett, false);
         assertEquals(exp, res);
 
         // találunk benne (egyet), mindet keressük
         keresett.clear();
-        keresett.add("ALMA");
+        keresett.add("KÖRTE");
         exp = true;
         res = recept.isTartalmazottSzavak(keresett, true);
         assertEquals(exp, res);
