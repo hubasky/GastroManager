@@ -22,7 +22,7 @@ public final class DmyCimkeNyilvantarto implements CimkeNyilvantarto {
 
 
     @Override
-    public void init(Controls controls) {
+    public boolean init(Controls controls) {
         for (Cimke c : Arrays.asList(
                 new Cimke(ECimkeTipus.ALAPANYAG, "Állati eredetű", "FF0000"),
                 new Cimke(ECimkeTipus.ALAPANYAG, "Növényi eredetű", "088A29"),
@@ -33,9 +33,10 @@ public final class DmyCimkeNyilvantarto implements CimkeNyilvantarto {
             try {
                 tarolas(c);
             } catch (Exception e) {
-                e.printStackTrace();
+                throw new RuntimeException(e);
             }
         }
+        return true;
     }
 
     @Override

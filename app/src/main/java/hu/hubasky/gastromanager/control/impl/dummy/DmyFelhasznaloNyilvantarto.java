@@ -18,6 +18,10 @@ import hu.hubasky.gastromanager.entity.recept.Recept;
  */
 
 public final class DmyFelhasznaloNyilvantarto implements FelhasznaloNyilvantarto {
+    public static final String MAKRAAT_USR = "makraat";
+    public static final String HAZAIP_USR = "hazaip";
+    public static final String STICKERB_USR = "stickerb";
+    public static final String ALL_PSW = "123456";
 
     /**
      * Felhasználók.
@@ -39,8 +43,15 @@ public final class DmyFelhasznaloNyilvantarto implements FelhasznaloNyilvantarto
 
 
     @Override
-    public void init(Controls controls) {
-
+    public boolean init(Controls controls) {
+        try {
+            regiszter(MAKRAAT_USR, ALL_PSW, "Makra Attila");
+            regiszter(HAZAIP_USR, ALL_PSW, "Hazai Péter");
+            regiszter(STICKERB_USR, ALL_PSW, "Sticker Balázs");
+            return true;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
