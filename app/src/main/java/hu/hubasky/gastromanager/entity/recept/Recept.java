@@ -337,7 +337,7 @@ public final class Recept extends Cimkezheto {
             return true;
         }
 
-        Set<String> lszavak = new HashSet<>(Arrays.asList(leirasa.toUpperCase().split("[\\W]")));
+        Set<String> lszavak = new HashSet<>(Arrays.asList(leirasa.toUpperCase().split("[\\s]")));
         if (mindet) {
             Set<String> tmp = new HashSet<>(szavak);
             tmp.removeAll(lszavak);
