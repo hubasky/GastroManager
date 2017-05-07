@@ -7,7 +7,7 @@ import hu.hubasky.gastromanager.common.Helper;
  * Created by mirso on 2017. 04. 26..
  */
 
-public final class Cimke {
+public final class Cimke extends EgyediKulcs{
     /**
      * Mihez használható fel a cimke.
      */

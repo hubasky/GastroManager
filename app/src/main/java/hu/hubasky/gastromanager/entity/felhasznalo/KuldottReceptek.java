@@ -1,5 +1,6 @@
 package hu.hubasky.gastromanager.entity.felhasznalo;
 
+import hu.hubasky.gastromanager.entity.EgyediKulcs;
 import hu.hubasky.gastromanager.entity.recept.Recept;
 
 /**
@@ -7,7 +8,7 @@ import hu.hubasky.gastromanager.entity.recept.Recept;
  * Created by mirso on 2017. 04. 26..
  */
 
-public final class KuldottReceptek {
+public final class KuldottReceptek extends EgyediKulcs{
     /**
      * A recept.
      */

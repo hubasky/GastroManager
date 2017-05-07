@@ -369,12 +369,21 @@ public class AlapanyagTest {
         assertTrue(vasarolhatoMennyisegek.isEmpty());
 
         vasarolhatoMennyisegek = a.getVasarolhatoMennyisegek();
-        a.addVasarolhatoMennyiseg(1);
-        a.addVasarolhatoMennyiseg(2);
+        a.addVasarolhatoMennyiseg(10);
+        a.addVasarolhatoMennyiseg(20);
         assertEquals(2, vasarolhatoMennyisegek.size());
-        assertTrue(vasarolhatoMennyisegek.contains(1.0));
-        assertTrue(vasarolhatoMennyisegek.contains(2.0));
+        assertTrue(vasarolhatoMennyisegek.contains(10.0));
+        assertTrue(vasarolhatoMennyisegek.contains(20.0));
         assertFalse(vasarolhatoMennyisegek.contains(3.0));
+
+        // sorrendbe teszi-e?
+        assertEquals(10.0, vasarolhatoMennyisegek.get(1), 0.0);
+        assertEquals(20.0, vasarolhatoMennyisegek.get(0), 0.0);
+        a.addVasarolhatoMennyiseg(100);
+        assertEquals(10.0, vasarolhatoMennyisegek.get(2), 0.0);
+        assertEquals(20.0, vasarolhatoMennyisegek.get(1), 0.0);
+        assertEquals(100.0, vasarolhatoMennyisegek.get(0), 0.0);
+
 
         // nem módosítható
         try {
@@ -427,18 +436,90 @@ public class AlapanyagTest {
         assertEquals(exp, res);
 
         // ha a neve más, akkor más
-        a2 = new Alapanyag(EMennyisegiEgyseg.LITER, jellemzok, neve+"s", egysegeGramm );
+        a2 = new Alapanyag(EMennyisegiEgyseg.LITER, jellemzok, neve + "s", egysegeGramm);
         exp = false;
         res = a1.equals(a2);
         assertEquals(exp, res);
 
         // ha a jellemző más, akkor más
         jellemzok = new AlapanyagJellemzok(100, .2, .1, .1, 111);
-        a2 = new Alapanyag(EMennyisegiEgyseg.LITER, jellemzok, neve, egysegeGramm );
+        a2 = new Alapanyag(EMennyisegiEgyseg.LITER, jellemzok, neve, egysegeGramm);
         exp = false;
         res = a1.equals(a2);
         assertEquals(exp, res);
 
+
+    }
+
+    @Test
+    public void getMennyitVasaroljak() {
+        Alapanyag a1;
+        Alapanyag a2;
+        EMennyisegiEgyseg mennyisegiEgyseg;
+        AlapanyagJellemzok jellemzok;
+        String neve;
+        double egysegeGramm;
+        boolean exp;
+        boolean res;
+
+        mennyisegiEgyseg = EMennyisegiEgyseg.DARAB;
+        jellemzok = new AlapanyagJellemzok(100, .1, .1, .1, 111);
+        neve = "abc";
+        egysegeGramm = 140;
+        a1 = new Alapanyag(mennyisegiEgyseg, jellemzok, neve, egysegeGramm);
+
+        // hibás
+        try {
+            a1.getMennyitVasaroljak(Double.NaN);
+            fail();
+        } catch (IllegalArgumentException ex) {
+        }
+        // hibás
+        try {
+            a1.getMennyitVasaroljak(Double.POSITIVE_INFINITY);
+            fail();
+        } catch (IllegalArgumentException ex) {
+        }
+        // hibás
+        try {
+            a1.getMennyitVasaroljak(0.0);
+            fail();
+        } catch (IllegalArgumentException ex) {
+        }
+        // hibás
+        try {
+            a1.getMennyitVasaroljak(-1);
+            fail();
+        } catch (IllegalArgumentException ex) {
+        }
+
+        // nincsenek vásárolható mennyiségek megadva
+        assertEquals(1.0, a1.getMennyitVasaroljak(0.1), 0.0);
+        assertEquals(2.0, a1.getMennyitVasaroljak(1.1), 0.0);
+
+        // vannak vásárlandó mennyiségek
+        a1.addVasarolhatoMennyiseg(3);
+        a1.addVasarolhatoMennyiseg(5);
+        a1.addVasarolhatoMennyiseg(10);
+
+        // 0.1 --> 3
+        assertEquals(3.0, a1.getMennyitVasaroljak(0.1), 0.0);
+        // 3 --> 3
+        assertEquals(3.0, a1.getMennyitVasaroljak(3.0), 0.0);
+        // 4 --> 5
+        assertEquals(5.0, a1.getMennyitVasaroljak(4.0), 0.0);
+        // 6 -> 3 + 3
+        assertEquals(3 + 3, a1.getMennyitVasaroljak(6.0), 0.0);
+        // 8 -> 5 + 3
+        assertEquals(5 + 3, a1.getMennyitVasaroljak(8.0), 0.0);
+        // 9 -> 3 + 3 + 3
+        assertEquals(3 + 3 + 3, a1.getMennyitVasaroljak(9.0), 0.0);
+        // 10 -> 10
+        assertEquals(10, a1.getMennyitVasaroljak(10.0), 0.0);
+        // 11 -> 5 + 3 + 3= 11
+        assertEquals(11, a1.getMennyitVasaroljak(11.0), 0.0);
+        // 12 -> 3 + 3 + 3 + 3 = 12
+        assertEquals(3 + 3 + 3 + 3, a1.getMennyitVasaroljak(12.0), 0.0);
 
     }
 

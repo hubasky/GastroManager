@@ -756,4 +756,9 @@ public class ReceptTest {
 
     }
 
+    @Test
+    public void vasarlandoKalkulacio() throws Exception {
+        fail("Nem írtam meg!");
+    }
+
 }

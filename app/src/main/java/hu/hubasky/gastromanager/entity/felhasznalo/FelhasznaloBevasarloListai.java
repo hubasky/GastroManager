@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import hu.hubasky.gastromanager.entity.EgyediKulcs;
 import hu.hubasky.gastromanager.entity.bevlist.BevasarloLista;
 
 /**
@@ -11,7 +12,7 @@ import hu.hubasky.gastromanager.entity.bevlist.BevasarloLista;
  * Created by mirso on 2017. 04. 26..
  */
 
-public final class FelhasznaloBevasarloListai {
+public final class FelhasznaloBevasarloListai extends EgyediKulcs {
     /**
      * A felhasználó.
      */
@@ -27,6 +28,9 @@ public final class FelhasznaloBevasarloListai {
      * @param felhasznalo a felhasználó.
      */
     public FelhasznaloBevasarloListai(Felhasznalo felhasznalo) {
+        if (felhasznalo == null) {
+            throw new IllegalArgumentException();
+        }
         this.felhasznalo = felhasznalo;
     }
 
@@ -44,6 +48,7 @@ public final class FelhasznaloBevasarloListai {
 
     /**
      * Visszaadja a felhasználó listáit.
+     *
      * @return a listák.
      */
     public List<BevasarloLista> getListak() {

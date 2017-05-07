@@ -26,7 +26,7 @@ public class ReceptKeresesiJellemzokTest {
         ReceptKeresesiJellemzok jellemzok;
         ReceptKeresesiJellemzok.Builder b;
 
-        Recept recept;
+        Recept recept,recept1;
         Felhasznalo tulajdonos = OKUSER;
         EReceptStatus status = EReceptStatus.PUBLIKUS;
         String neve = "alma, barack";
@@ -373,6 +373,35 @@ public class ReceptKeresesiJellemzokTest {
         exp = true;
         res = jellemzok.isMegfelelo(recept);
         assertEquals(exp, res);
+
+        // ha van kezdő recept megadva, és azután való
+        recept = new Recept(tulajdonos, status, neve,leirasa, fenykepeURL, 5);
+        recept.setUniqueKey("1");
+        recept1 = new Recept(tulajdonos, status, neve,leirasa, fenykepeURL, 5);
+        recept1.setUniqueKey("0");
+        b = new ReceptKeresesiJellemzok.Builder();
+        b.kezdo(recept1);
+
+        jellemzok = b.build(OKUSER);
+        exp = true;
+        res = jellemzok.isMegfelelo(recept);
+        assertEquals(exp, res);
+
+        // ha van kezdő recept megadva, de azelőtti
+        recept = new Recept(tulajdonos, status, neve,leirasa, fenykepeURL, 5);
+        recept.setUniqueKey("0");
+        recept1 = new Recept(tulajdonos, status, neve,leirasa, fenykepeURL, 5);
+        recept1.setUniqueKey("1");
+        b = new ReceptKeresesiJellemzok.Builder();
+        b.kezdo(recept1);
+
+        jellemzok = b.build(OKUSER);
+        exp = false;
+        res = jellemzok.isMegfelelo(recept);
+        assertEquals(exp, res);
+
+
+
     }
 
 }

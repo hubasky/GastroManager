@@ -1,6 +1,5 @@
 package hu.hubasky.gastromanager.common;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -130,14 +129,30 @@ public final class Helper {
     /**
      * Egy gyűjtemény szűrését végzi el.
      *
+     * @param <T>   az elemípus.
      * @param items a vizsgált elemek.
      * @param func  a vizsgálatot végző funckió.
-     * @param <T>   az elemípus.
      * @return a feltételnek megfelelő elemek.
      */
     public static <T> List<T> filter(List<T> items, Checker<T> func) {
+        return filter(items, func, null);
+    }
+
+    /**
+     * Egy gyűjtemény szűrését végzi el.
+     *
+     * @param <T>      az elemípus.
+     * @param items    a vizsgált elemek.
+     * @param func     a vizsgálatot végző funckió.
+     * @param maxcount az elemek maximális száma.
+     * @return a feltételnek megfelelő elemek.
+     */
+    public static <T> List<T> filter(List<T> items, Checker<T> func, Integer maxcount) {
         if (func == null) {
             throw new IllegalArgumentException("A func paraméter nem lehet null!");
+        }
+        if (maxcount != null && maxcount <= 0) {
+            throw new IllegalArgumentException(" maxcount paraméter nem lehet 0 vagy negatív!");
         }
         if (items == null || items.isEmpty()) {
             return Collections.emptyList();
@@ -149,6 +164,9 @@ public final class Helper {
                     ret = new LinkedList<>();
                 }
                 ret.add(each);
+                if (maxcount != null && ret.size() >= maxcount) {
+                    break;
+                }
             }
         }
         return ret == null ? Collections.<T>emptyList() : ret;
@@ -164,8 +182,24 @@ public final class Helper {
      * @return a feltételnek megfelelő elemek.
      */
     public static <T> Set<T> filter(Set<T> items, Checker<T> func) {
+        return filter(items, func, null);
+    }
+
+    /**
+     * Egy gyűjtemény szűrését végzi el.
+     *
+     * @param <T>      az elemípus.
+     * @param items    a vizsgált elemek.
+     * @param func     a vizsgálatot végző funckió.
+     * @param maxcount a maximális elemek száma.
+     * @return a feltételnek megfelelő elemek.
+     */
+    public static <T> Set<T> filter(Set<T> items, Checker<T> func, Integer maxcount) {
         if (func == null) {
             throw new IllegalArgumentException("A func paraméter nem lehet null!");
+        }
+        if (maxcount != null && maxcount <= 0) {
+            throw new IllegalArgumentException(" maxcount paraméter nem lehet 0 vagy negatív!");
         }
         if (items == null || items.isEmpty()) {
             return Collections.emptySet();
@@ -177,6 +211,10 @@ public final class Helper {
                     ret = new HashSet<>();
                 }
                 ret.add(each);
+                if (maxcount != null && ret.size() >= maxcount) {
+                    break;
+                }
+
             }
         }
         return ret == null ? Collections.<T>emptySet() : ret;
@@ -185,12 +223,13 @@ public final class Helper {
 
     /**
      * {@code null}-tűrő összehasonlítás (ignore case).
+     *
      * @param s1 egyik string.
      * @param s2 másik string.
      * @return true, ha egyeznek.
      */
-    public static boolean isEqualsIgnoreCase(String s1,String s2){
-        if(s1==null || s2==null){
+    public static boolean isEqualsIgnoreCase(String s1, String s2) {
+        if (s1 == null || s2 == null) {
             return false;
         }
         return s1.trim().equalsIgnoreCase(s2.trim());

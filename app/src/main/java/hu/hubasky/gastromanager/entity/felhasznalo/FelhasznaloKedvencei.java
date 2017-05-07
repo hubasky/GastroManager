@@ -1,5 +1,6 @@
 package hu.hubasky.gastromanager.entity.felhasznalo;
 
+import hu.hubasky.gastromanager.entity.EgyediKulcs;
 import hu.hubasky.gastromanager.entity.recept.Recept;
 
 /**
@@ -7,7 +8,7 @@ import hu.hubasky.gastromanager.entity.recept.Recept;
  * Created by mirso on 2017. 05. 07..
  */
 
-public class FelhasznaloKedvencei {
+public class FelhasznaloKedvencei extends EgyediKulcs{
     /**
      * A felhasználó.
      */

@@ -28,12 +28,16 @@ public final class DmyBevasarloListaNyilvantarto implements BevasarloListaNyilva
 
     @Override
     public FelhasznaloBevasarloListai letrehoz(Felhasznalo felhasznalo) throws Exception {
-        return null;
+        return new FelhasznaloBevasarloListai(felhasznalo);
     }
 
     @Override
     public void tarolas(BevasarloLista lista) throws Exception {
+        if (lista == null) throw new IllegalArgumentException("lista nem lehet null!");
         if (!listak.contains(lista)) {
+            if (!lista.isUnuiqueKey()) {
+                lista.setUniqueKey(DmyEgyediKulcsKezelo.getInstance().getNext());
+            }
             listak.add(lista);
         }
     }

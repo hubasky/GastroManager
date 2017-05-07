@@ -104,4 +104,12 @@ public interface FelhasznaloNyilvantarto extends ControlBase{
      */
     void remKedvenc(Felhasznalo felhasznalo, Recept recept) throws Exception;
 
+    /**
+     * Visszaadja a felhasználó összes kedvenc receptjét.
+     * @param felhasznalo a felhasználó.
+     * @return a kedvencek listája.
+     * @throws Exception Ha kivétel lépett fel.
+     */
+    List<Recept> getKedvencek(Felhasznalo felhasznalo) throws Exception;
+
 }

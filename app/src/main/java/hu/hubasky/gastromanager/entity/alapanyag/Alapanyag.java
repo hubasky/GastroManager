@@ -2,8 +2,12 @@
 package hu.hubasky.gastromanager.entity.alapanyag;
 
 import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import hu.hubasky.gastromanager.entity.Cimkezheto;
 import hu.hubasky.gastromanager.entity.EMennyisegiEgyseg;
@@ -132,6 +136,13 @@ public final class Alapanyag extends Cimkezheto {
 
         if (!vasarolhatoMennyisegek.contains(mennyiseg)) {
             vasarolhatoMennyisegek.add(mennyiseg);
+            Collections.sort(vasarolhatoMennyisegek, new Comparator<Double>() {
+                @Override
+                public int compare(Double o1, Double o2) {
+                    return -Double.compare(o1, o2);
+
+                }
+            });
         }
     }
 
@@ -160,6 +171,61 @@ public final class Alapanyag extends Cimkezheto {
      */
     public List<Double> getVasarolhatoMennyisegek() {
         return Collections.unmodifiableList(vasarolhatoMennyisegek);
+    }
+
+    /**
+     * A vásárlandó mennyiségek függvényében megadja, hogy mennyit vásároljak az alapanyagvból.
+     * Ha nincsenek megadva vásárolható mennyiségek {@link #addVasarolhatoMennyiseg(double)}}, akkor
+     * 1-nek a többszörösét veszi.
+     *
+     * @param igeny az igény.
+     * @return a vásárlandó mennyiség.
+     */
+    public double getMennyitVasaroljak(double igeny) {
+        if (Double.isInfinite(igeny) || Double.isNaN(igeny)) throw new IllegalArgumentException();
+        if (igeny <= 0)
+            throw new IllegalArgumentException("igeny<=0");
+
+        igeny = Math.ceil(igeny);
+
+        if (vasarolhatoMennyisegek.isEmpty()) {
+            return igeny;
+        }
+
+
+        Set<Double> kosar = new HashSet<>();
+        vasarol(0.0, igeny, vasarolhatoMennyisegek, kosar);
+
+        double maxMaradek = Double.MAX_VALUE;
+        double maxKosar = 0;
+
+        for (double vegyek : kosar) {
+            if(vegyek-igeny<maxMaradek){
+                maxMaradek=vegyek-igeny;
+                maxKosar=vegyek;
+            }
+        }
+        return maxKosar;
+    }
+
+
+    /**
+     * Adott kosártartalomvól kiindulva vásárol a címletmennyiségek szerint.
+     *
+     * @param megvett     hol tart a vásárlás.
+     * @param igeny       mennyi az igény.
+     * @param darabszamok milyen darabszámokat lehet vásárolni.
+     * @param kosar       milyen kosarak alakultak ki.
+     */
+    private void vasarol(double megvett, double igeny, List<Double> darabszamok, Set<Double> kosar) {
+        if (megvett >= igeny) {
+            kosar.add(megvett);
+            return;
+        }
+
+        for (double c : darabszamok) {
+            vasarol(megvett + c, igeny, darabszamok, kosar);
+        }
     }
 
     @Override

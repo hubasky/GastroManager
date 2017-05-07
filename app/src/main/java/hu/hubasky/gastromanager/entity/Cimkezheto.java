@@ -12,7 +12,7 @@ import java.util.Set;
  * Created by mirso on 2017. 04. 26..
  */
 
-public abstract class Cimkezheto {
+public abstract class Cimkezheto extends EgyediKulcs {
     /**
      * A cimkék.
      */

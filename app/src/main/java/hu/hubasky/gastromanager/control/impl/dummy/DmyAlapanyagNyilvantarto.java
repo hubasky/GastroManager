@@ -1,7 +1,6 @@
 package hu.hubasky.gastromanager.control.impl.dummy;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import hu.hubasky.gastromanager.common.Helper;
@@ -53,6 +52,11 @@ public final class DmyAlapanyagNyilvantarto implements AlapanyagNyilvantarto {
                 EMennyisegiEgyseg.LITER,
                 new AlapanyagJellemzok(100, 3.4, 2.8, 5.3, 252),
                 "Tej", 1000));
+        for (Alapanyag a : adatok) {
+            if (!a.isUnuiqueKey()) {
+                a.setUniqueKey(DmyEgyediKulcsKezelo.getInstance().getNext());
+            }
+        }
 
     }
 
@@ -81,6 +85,12 @@ public final class DmyAlapanyagNyilvantarto implements AlapanyagNyilvantarto {
 
     @Override
     public void tarolas(Alapanyag alapanyag) throws Exception {
+        if (alapanyag == null) throw new IllegalArgumentException("alapanyag nem lehet null!");
+
+        if (!alapanyag.isUnuiqueKey()) {
+            alapanyag.setUniqueKey(DmyEgyediKulcsKezelo.getInstance().getNext());
+        }
+
         if (adatok.contains(alapanyag)) {
             adatok.remove(alapanyag);
         }
@@ -89,11 +99,13 @@ public final class DmyAlapanyagNyilvantarto implements AlapanyagNyilvantarto {
 
     @Override
     public void torles(Alapanyag alapanyag) throws Exception {
+        if (alapanyag == null) throw new IllegalArgumentException("alapanyag nem lehet null!");
         adatok.remove(alapanyag);
     }
 
     @Override
     public List<Alapanyag> keres(final AlapanyagKeresesiJellemzok jellemzok) throws Exception {
+        if (jellemzok == null) throw new IllegalArgumentException("jellemzok nem lehet null!");
         return Helper.filter(adatok, new Helper.Checker<Alapanyag>() {
             @Override
             public boolean check(Alapanyag param) {

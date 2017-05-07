@@ -1,5 +1,6 @@
 package hu.hubasky.gastromanager.entity.recept;
 
+import hu.hubasky.gastromanager.entity.EgyediKulcs;
 import hu.hubasky.gastromanager.entity.alapanyag.Alapanyag;
 
 /**
@@ -7,7 +8,7 @@ import hu.hubasky.gastromanager.entity.alapanyag.Alapanyag;
  * Created by mirso on 2017. 04. 26..
  */
 
-public class Hozzavalo {
+public class Hozzavalo extends EgyediKulcs {
     /**
      * Milyen mennyiségben kell megvenni az alapanyagot.
      */

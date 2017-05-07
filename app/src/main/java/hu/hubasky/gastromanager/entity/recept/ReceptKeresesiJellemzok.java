@@ -93,7 +93,7 @@ public final class ReceptKeresesiJellemzok {
     /**
      * Aki a keresést végzi.
      */
-    Felhasznalo getKeresoFelhasznalo() {
+    public Felhasznalo getKeresoFelhasznalo() {
         return keresoFelhasznalo;
     }
 
@@ -170,7 +170,7 @@ public final class ReceptKeresesiJellemzok {
     /**
      * A találatok maximális száma.
      */
-    int getDarabszam() {
+    public int getDarabszam() {
         return darabszam;
     }
 
@@ -185,28 +185,28 @@ public final class ReceptKeresesiJellemzok {
      * Kedvenc recept is kell.
      * A kiinduló halmaz a kedvencek listája (szűrés).
      */
-    boolean isKedvenc() {
+    public boolean isKedvenc() {
         return kedvenc;
     }
 
     /**
      * A kiinduló halmaz a sajátok listája (szűrés).
      */
-    boolean isSajat() {
+    public boolean isSajat() {
         return sajat;
     }
 
     /**
      * A kiindulo halmaz a teljes adatbázis.
      */
-    boolean isTeljes() {
+    public boolean isTeljes() {
         return teljes;
     }
 
     /**
-     * A felhasználó, akire szűrni kell.
+     * A felhasználó, akire szűrni kell. (kedvenc és saját)
      */
-    Felhasznalo getFelhasznalo() {
+    public Felhasznalo getFelhasznalo() {
         return felhasznalo;
     }
 
@@ -597,6 +597,11 @@ public final class ReceptKeresesiJellemzok {
             if (recept.getStatus() != EReceptStatus.PUBLIKUS) {
                 return false;
             }
+        }
+
+        // ha meg van adva kezdő recept
+        if (kezdoRecept != null && kezdoRecept.isUnuiqueKey() && recept.isUnuiqueKey()) {
+            return kezdoRecept.compareTo(recept) < 0;
         }
 
 
