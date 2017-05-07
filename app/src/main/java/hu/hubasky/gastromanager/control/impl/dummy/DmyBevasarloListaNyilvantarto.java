@@ -22,8 +22,8 @@ public final class DmyBevasarloListaNyilvantarto implements BevasarloListaNyilva
 
 
     @Override
-    public void init(Controls controls) {
-
+    public boolean init(Controls controls) {
+        return true;
     }
 
     @Override

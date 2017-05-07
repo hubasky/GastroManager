@@ -8,9 +8,21 @@ import java.util.List;
 import java.util.Set;
 
 import hu.hubasky.gastromanager.common.Helper;
+import hu.hubasky.gastromanager.control.AlapanyagNyilvantarto;
+import hu.hubasky.gastromanager.control.CimkeNyilvantarto;
 import hu.hubasky.gastromanager.control.Controls;
+import hu.hubasky.gastromanager.control.FelhasznaloNyilvantarto;
 import hu.hubasky.gastromanager.control.ReceptNyilvantarto;
+import hu.hubasky.gastromanager.entity.Cimke;
+import hu.hubasky.gastromanager.entity.ECimkeTipus;
+import hu.hubasky.gastromanager.entity.alapanyag.Alapanyag;
+import hu.hubasky.gastromanager.entity.alapanyag.AlapanyagJellemzok;
+import hu.hubasky.gastromanager.entity.alapanyag.AlapanyagKeresesiJellemzok;
 import hu.hubasky.gastromanager.entity.bevlist.VasarlandoAlapanyag;
+import hu.hubasky.gastromanager.entity.felhasznalo.Felhasznalo;
+import hu.hubasky.gastromanager.entity.recept.EEtkezesek;
+import hu.hubasky.gastromanager.entity.recept.EReceptStatus;
+import hu.hubasky.gastromanager.entity.recept.Hozzavalo;
 import hu.hubasky.gastromanager.entity.recept.Recept;
 import hu.hubasky.gastromanager.entity.recept.ReceptKeresesiJellemzok;
 
@@ -26,7 +38,57 @@ public final class DmyReceptNyilvantarto implements ReceptNyilvantarto {
     private final List<Recept> receptek = new ArrayList<>();
 
     @Override
-    public void init(Controls controls) {
+    public boolean init(Controls controls) {
+        FelhasznaloNyilvantarto fn = controls.getFelhasznaloNyilvantarto();
+        CimkeNyilvantarto cimkeNyilvantarto = controls.getCimkeNyilvantarto();
+        AlapanyagNyilvantarto alapanyagNyilvantarto = controls.getAlapanyagNyilvantarto();
+
+        try {
+            List<Felhasznalo> usr;
+            // tulajdonost keresünk.
+
+            usr = fn.keres("makra", null);
+            if (usr.isEmpty()) {
+                return false;
+            }
+            Recept r = new Recept(
+                    usr.get(0),
+                    EReceptStatus.PUBLIKUS,
+                    "Makra recept",
+                    "Ez egy finom kis étel",
+                    "https://www.google.hu/imgres?imgurl=http%3A%2F%2Fbudapestcity.org%2F11-egyeb%2Fhungaricum%2Fetelek%2Fimages%2Fkep-nagy-gulyasleves.jpg&imgrefurl=http%3A%2F%2Fbudapestcity.org%2F11-egyeb%2Fhungaricum%2Fetelek%2Findex-hu.htm&docid=eIT_iFGFSe2eZM&tbnid=NtpzFqzwJ7DPjM%3A&vet=10ahUKEwjM-5iJlN7TAhUMKpoKHVK2B-YQMwg0KAAwAA..i&w=630&h=300&bih=837&biw=1920&q=magyaros%20%C3%A9telek&ved=0ahUKEwjM-5iJlN7TAhUMKpoKHVK2B-YQMwg0KAAwAA&iact=mrc&uact=8",
+                    4.0);
+
+            // aztán cimkét.
+            Cimke c;
+            c = cimkeNyilvantarto.keres(ECimkeTipus.MINDEN, "finom").get(0);
+            if (c == null) return false;
+            r.addCimke(c);
+
+            // majd alapanyagot
+            AlapanyagKeresesiJellemzok.Builder b;
+            AlapanyagKeresesiJellemzok akj;
+            List<Alapanyag> alapanyagTalalatok;
+
+            b = new AlapanyagKeresesiJellemzok.Builder();
+            b.nevtoredek("tojás");
+            akj = b.build();
+            alapanyagTalalatok = alapanyagNyilvantarto.keres(akj);
+            if (alapanyagTalalatok.isEmpty()) {
+                return false;
+            }
+            r.addHozzavalo(new Hozzavalo(6, alapanyagTalalatok.get(0)));
+            // milyen étkezésre
+            r.addEtkezes(EEtkezesek.EBED);
+
+            tarolas(r);
+
+            return true;
+
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
 
     }
 
@@ -112,7 +174,7 @@ public final class DmyReceptNyilvantarto implements ReceptNyilvantarto {
         if (pos >= 0) {
             return;
         }
-        receptek.add(-pos, recept);
+        receptek.add(-(pos + 1), recept);
 
     }
 

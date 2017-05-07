@@ -1,12 +1,14 @@
 package hu.hubasky.gastromanager.control.impl.dummy;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import hu.hubasky.gastromanager.common.Helper;
 import hu.hubasky.gastromanager.control.AlapanyagNyilvantarto;
 import hu.hubasky.gastromanager.control.CimkeNyilvantarto;
 import hu.hubasky.gastromanager.control.Controls;
+import hu.hubasky.gastromanager.entity.Cimke;
 import hu.hubasky.gastromanager.entity.ECimkeTipus;
 import hu.hubasky.gastromanager.entity.EMennyisegiEgyseg;
 import hu.hubasky.gastromanager.entity.alapanyag.Alapanyag;
@@ -28,55 +30,74 @@ public final class DmyAlapanyagNyilvantarto implements AlapanyagNyilvantarto {
      * Konstruktor.
      */
     public DmyAlapanyagNyilvantarto() {
-        adatok.add(new Alapanyag(
-                EMennyisegiEgyseg.DARAB,
-                new AlapanyagJellemzok(100, 5.4, 4.8, .3, 276),
-                "Tojás", 40));
-        adatok.add(new Alapanyag(
-                EMennyisegiEgyseg.GRAMM,
-                new AlapanyagJellemzok(100, 12.3, 1.3, 76.3, 1461),
-                "Liszt", 100));
-        adatok.add(new Alapanyag(
-                EMennyisegiEgyseg.GRAMM,
-                new AlapanyagJellemzok(100, 0, 0, 99.3, 1670),
-                "Cukor", 100));
-        adatok.add(new Alapanyag(
-                EMennyisegiEgyseg.GRAMM,
-                new AlapanyagJellemzok(100, 13.8, 1.4, 9.8, 412),
-                "Élesztő", 100));
-        adatok.add(new Alapanyag(
-                EMennyisegiEgyseg.DARAB,
-                new AlapanyagJellemzok(100, 21.4, 19, 32.4, 1621),
-                "Kakaópor", 100));
-        adatok.add(new Alapanyag(
-                EMennyisegiEgyseg.LITER,
-                new AlapanyagJellemzok(100, 3.4, 2.8, 5.3, 252),
-                "Tej", 1000));
-        for (Alapanyag a : adatok) {
-            if (!a.isUnuiqueKey()) {
-                a.setUniqueKey(DmyEgyediKulcsKezelo.getInstance().getNext());
+        List<Alapanyag> tmp = Arrays.asList(
+                new Alapanyag(
+                        EMennyisegiEgyseg.DARAB,
+                        new AlapanyagJellemzok(100, 5.4 / 100.0, 4.8 / 100.0, .3 / 100.0, 276),
+                        "Tojás", 40),
+                new Alapanyag(
+                        EMennyisegiEgyseg.GRAMM,
+                        new AlapanyagJellemzok(100, 12.3 / 100.0, 1.3 / 100.0, 76.3 / 100.0, 1461),
+                        "Liszt", 100),
+                new Alapanyag(
+                        EMennyisegiEgyseg.GRAMM,
+                        new AlapanyagJellemzok(100, 0, 0, 99.3 / 100.0, 1670),
+                        "Cukor", 100),
+                new Alapanyag(
+                        EMennyisegiEgyseg.GRAMM,
+                        new AlapanyagJellemzok(100, 13.8 / 100.0, 1.4 / 100.0, 9.8 / 100.0, 412),
+                        "Élesztő", 100),
+                new Alapanyag(
+                        EMennyisegiEgyseg.DARAB,
+                        new AlapanyagJellemzok(100, 21.4 / 100.0, 19 / 100.0, 32.4 / 100.0, 1621),
+                        "Kakaópor", 100),
+                new Alapanyag(
+                        EMennyisegiEgyseg.LITER,
+                        new AlapanyagJellemzok(100, 3.4 / 100.0, 2.8 / 100.0, 5.3 / 100.0, 252),
+                        "Tej", 1000));
+        for (Alapanyag x : tmp) {
+            try {
+                tarolas(x);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
             }
         }
-
     }
 
     @Override
-    public void init(Controls controls) {
+    public boolean init(Controls controls) {
+
         CimkeNyilvantarto cimkeNyilvantarto = controls.getCimkeNyilvantarto();
         try {
             // tojás
-            adatok.get(0).addCimke(cimkeNyilvantarto.keres(ECimkeTipus.ALAPANYAG, "állat").get(0));
+            List<Cimke> c;
+            c = cimkeNyilvantarto.keres(ECimkeTipus.ALAPANYAG, "állat");
+            if (c.isEmpty()) return false;
+            adatok.get(0).addCimke(c.get(0));
             // list
-            adatok.get(1).addCimke(cimkeNyilvantarto.keres(ECimkeTipus.ALAPANYAG, "növény").get(0));
+            c = cimkeNyilvantarto.keres(ECimkeTipus.ALAPANYAG, "növény");
+            if (c.isEmpty()) return false;
+            adatok.get(1).addCimke(c.get(0));
             // cukor
-            adatok.get(2).addCimke(cimkeNyilvantarto.keres(ECimkeTipus.ALAPANYAG, "magas").get(0));
+            c = cimkeNyilvantarto.keres(ECimkeTipus.ALAPANYAG, "magas");
+            if (c.isEmpty()) return false;
+            adatok.get(2).addCimke(c.get(0));
             // élesztő
-            adatok.get(3).addCimke(cimkeNyilvantarto.keres(ECimkeTipus.ALAPANYAG, "növény").get(0));
+            c = cimkeNyilvantarto.keres(ECimkeTipus.ALAPANYAG, "növény");
+            if (c.isEmpty()) return false;
+            adatok.get(3).addCimke(c.get(0));
             // kakaó
-            adatok.get(4).addCimke(cimkeNyilvantarto.keres(ECimkeTipus.ALAPANYAG, "növény").get(0));
-            adatok.get(4).addCimke(cimkeNyilvantarto.keres(ECimkeTipus.ALAPANYAG, "magas").get(0));
+            c = cimkeNyilvantarto.keres(ECimkeTipus.ALAPANYAG, "növény");
+            if (c.isEmpty()) return false;
+            adatok.get(4).addCimke(c.get(0));
+            c = cimkeNyilvantarto.keres(ECimkeTipus.ALAPANYAG, "magas");
+            if (c.isEmpty()) return false;
+            adatok.get(4).addCimke(c.get(0));
             // tej
-            adatok.get(5).addCimke(cimkeNyilvantarto.keres(ECimkeTipus.ALAPANYAG, "tej").get(0));
+            c = cimkeNyilvantarto.keres(ECimkeTipus.ALAPANYAG, "tej");
+            if (c.isEmpty()) return false;
+            adatok.get(5).addCimke(c.get(0));
+            return true;
 
         } catch (Exception ex) {
             throw new RuntimeException(ex);

@@ -18,6 +18,7 @@ public final class Controls {
 
     /**
      * Alapanyag nyilvántartó.
+     *
      * @return példány.
      */
     public AlapanyagNyilvantarto getAlapanyagNyilvantarto() {
@@ -26,6 +27,7 @@ public final class Controls {
 
     /**
      * Bevásárlólista nyilvántartó.
+     *
      * @return példány.
      */
     public BevasarloListaNyilvantarto getBevasarloListaNyilvantarto() {
@@ -34,6 +36,7 @@ public final class Controls {
 
     /**
      * Cimke nyilvántartó.
+     *
      * @return példány.
      */
     public CimkeNyilvantarto getCimkeNyilvantarto() {
@@ -42,6 +45,7 @@ public final class Controls {
 
     /**
      * Felhasználó nyilvántartó.
+     *
      * @return példány.
      */
     public FelhasznaloNyilvantarto getFelhasznaloNyilvantarto() {
@@ -50,6 +54,7 @@ public final class Controls {
 
     /**
      * Recept nyilvántartó.
+     *
      * @return példány.
      */
     public ReceptNyilvantarto getReceptNyilvantarto() {
@@ -77,10 +82,18 @@ public final class Controls {
      */
     private Controls() {
         dummyImpl();
-        for (ControlBase each :
-                controls) {
-            each.init(this);
+
+        Set<ControlBase> needInit = new HashSet<>(controls);
+
+        while (!needInit.isEmpty()) {
+            for (ControlBase each : needInit) {
+                if(each.init(this)){
+                    needInit.remove(each);
+                    break;
+                }
+            }
         }
+
 
     }
 
@@ -89,10 +102,10 @@ public final class Controls {
      */
     private void dummyImpl() {
         controls.add(alapanyagNyilvantarto = new DmyAlapanyagNyilvantarto());
-        controls.add(bevasarloListaNyilvantarto=new DmyBevasarloListaNyilvantarto());
-        controls.add(cimkeNyilvantarto=new DmyCimkeNyilvantarto());
-        controls.add(felhasznaloNyilvantarto=new DmyFelhasznaloNyilvantarto());
-        controls.add(receptNyilvantarto=new DmyReceptNyilvantarto());
+        controls.add(bevasarloListaNyilvantarto = new DmyBevasarloListaNyilvantarto());
+        controls.add(cimkeNyilvantarto = new DmyCimkeNyilvantarto());
+        controls.add(felhasznaloNyilvantarto = new DmyFelhasznaloNyilvantarto());
+        controls.add(receptNyilvantarto = new DmyReceptNyilvantarto());
     }
 
     /**

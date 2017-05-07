@@ -8,7 +8,9 @@ package hu.hubasky.gastromanager.control;
 public interface ControlBase {
     /**
      * Inicializálás.
+     *
      * @param controls a vezérlők tárolója.
+     * @return megtörtént-e az inicializálás.
      */
-    void init(Controls controls);
+    boolean init(Controls controls);
 }
