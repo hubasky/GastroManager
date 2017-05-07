@@ -61,8 +61,9 @@ public final class DmyReceptNyilvantarto implements ReceptNyilvantarto {
 
             // aztán cimkét.
             Cimke c;
-            c = cimkeNyilvantarto.keres(ECimkeTipus.MINDEN, "finom").get(0);
-            if (c == null) return false;
+            List<Cimke> cimkeTalalat = cimkeNyilvantarto.keres(ECimkeTipus.MINDEN, "finom");
+            if (cimkeTalalat.isEmpty()) return false;
+            c = cimkeTalalat.get(0);
             r.addCimke(c);
 
             // majd alapanyagot

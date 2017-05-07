@@ -8,12 +8,14 @@ import hu.hubasky.gastromanager.control.AlapanyagNyilvantarto;
 import hu.hubasky.gastromanager.control.CimkeNyilvantarto;
 import hu.hubasky.gastromanager.control.ControlBase;
 import hu.hubasky.gastromanager.control.Controls;
+import hu.hubasky.gastromanager.control.FelhasznaloNyilvantarto;
 import hu.hubasky.gastromanager.entity.Cimke;
 import hu.hubasky.gastromanager.entity.ECimkeTipus;
 import hu.hubasky.gastromanager.entity.EMennyisegiEgyseg;
 import hu.hubasky.gastromanager.entity.alapanyag.Alapanyag;
 import hu.hubasky.gastromanager.entity.alapanyag.AlapanyagJellemzok;
 import hu.hubasky.gastromanager.entity.alapanyag.AlapanyagKeresesiJellemzok;
+import hu.hubasky.gastromanager.entity.felhasznalo.Felhasznalo;
 
 /**
  * Deszka modell
@@ -61,8 +63,22 @@ public class DummyTest {
      * Példák felhasználó kezelésére.
      */
     @Test
-    public void felhasznaloKezeloPeldak() {
+    public void felhasznaloKezeloPeldak() throws Exception {
+        Controls controls = Controls.getInstance();
+        FelhasznaloNyilvantarto felhasznaloNyilvantarto = controls.getFelhasznaloNyilvantarto();
+        Felhasznalo loggedIn;
 
+        // sikeres bejelentkezés
+        loggedIn = felhasznaloNyilvantarto.login(
+                DmyFelhasznaloNyilvantarto.MAKRAAT_USR,
+                DmyFelhasznaloNyilvantarto.ALL_PSW);
+        System.out.printf("%s bejelentkezés%n",loggedIn==null?"Sikertelen":"Sikeres");
+
+        // sikertelen bejelentkezés
+        loggedIn = felhasznaloNyilvantarto.login(
+                DmyFelhasznaloNyilvantarto.MAKRAAT_USR,
+                "xxx");
+        System.out.printf("%s bejelentkezés%n",loggedIn==null?"Sikertelen":"Sikeres");
     }
 
     /**
@@ -156,4 +172,6 @@ public class DummyTest {
         // majd kiírjuk
         System.out.println(talalatok.isEmpty() ? "Nincs találat" : String.format("%d találat van.", talalatok.size()));
     }
+
+
 }
