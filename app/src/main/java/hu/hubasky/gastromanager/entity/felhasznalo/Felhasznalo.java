@@ -1,13 +1,14 @@
 package hu.hubasky.gastromanager.entity.felhasznalo;
 
 import hu.hubasky.gastromanager.common.Helper;
+import hu.hubasky.gastromanager.entity.EgyediKulcs;
 
 /**
  * Egy felhasználót reprezentáló osztály.
  * Created by mirso on 2017. 04. 26..
  */
 
-public final class Felhasznalo {
+public final class Felhasznalo extends EgyediKulcs {
     /**
      * A felhasználói név min hossza.
      */

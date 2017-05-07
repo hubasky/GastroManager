@@ -4,7 +4,6 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -306,6 +305,19 @@ public class HelperTest {
         assertTrue(res.contains(2));
         assertTrue(res.contains(3));
         assertTrue(res.contains(4));
+
+        // felső határral
+
+        miben = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 6, 7, 8, 9));
+        res = Helper.filter(miben, new Helper.Checker<Integer>() {
+            @Override
+            public boolean check(Integer param) {
+                return param < 5;
+            }
+        }, 2);
+        assertEquals(2, res.size());
+        assertTrue(res.contains(1));
+        assertTrue(res.contains(2));
     }
 
     @Test
@@ -363,6 +375,18 @@ public class HelperTest {
         assertTrue(res.contains(2));
         assertTrue(res.contains(3));
         assertTrue(res.contains(4));
+
+        // van benne olyan, amit keresünt, felső határral
+        miben = new HashSet<>(Arrays.asList(1, 2, 3, 4, 6, 7, 8, 9));
+        res = Helper.filter(miben, new Helper.Checker<Integer>() {
+            @Override
+            public boolean check(Integer param) {
+                return param < 5;
+            }
+        }, 2);
+        assertEquals(2, res.size());
+        assertTrue(res.contains(1));
+        assertTrue(res.contains(2));
     }
 
     @Test

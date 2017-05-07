@@ -1,5 +1,6 @@
 package hu.hubasky.gastromanager.entity.recept;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.EnumSet;
@@ -12,6 +13,7 @@ import hu.hubasky.gastromanager.entity.Cimkezheto;
 import hu.hubasky.gastromanager.entity.ECimkeTipus;
 import hu.hubasky.gastromanager.common.Helper;
 import hu.hubasky.gastromanager.entity.alapanyag.Alapanyag;
+import hu.hubasky.gastromanager.entity.bevlist.VasarlandoAlapanyag;
 import hu.hubasky.gastromanager.entity.felhasznalo.Felhasznalo;
 
 /**
@@ -345,6 +347,30 @@ public final class Recept extends Cimkezheto {
         } else {
             return Helper.isExistsIntersect(lszavak, szavak);
         }
+    }
+
+    /**
+     * Kalkulációt készít a vásárlandó alapanyagokról a mennyiség függvényében.
+     *
+     * @param kertAdag a kívánt adag.
+     * @return a vásárlandók listája.
+     * @throws Exception Ha kivétel lépett fel.
+     */
+    public List<VasarlandoAlapanyag> vasarlandoKalkulacio(double kertAdag) {
+        if (Double.isInfinite(kertAdag) || Double.isNaN(kertAdag) || kertAdag <= 0)
+            throw new IllegalArgumentException("az kertAdag értéke érvénytelen!");
+
+        List<VasarlandoAlapanyag> ret = new ArrayList<>();
+
+        double arany = kertAdag / adag;
+
+
+        for (Hozzavalo h : hozzavalok) {
+            double hMennyiseg = h.getMennyiseg() * arany;
+            hMennyiseg = h.getAlapanyag().getMennyitVasaroljak(hMennyiseg);
+            ret.add(new VasarlandoAlapanyag(hMennyiseg, h.getAlapanyag()));
+        }
+        return ret;
     }
 
     @Override
