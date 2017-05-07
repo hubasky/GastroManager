@@ -109,4 +109,14 @@ public final class DmyFelhasznaloNyilvantarto implements FelhasznaloNyilvantarto
         }
         recepts.add(recept);
     }
+
+    @Override
+    public void addKedvenc(Felhasznalo felhasznalo, Recept recept) throws Exception {
+
+    }
+
+    @Override
+    public void remKedvenc(Felhasznalo felhasznalo, Recept recept) throws Exception {
+
+    }
 }

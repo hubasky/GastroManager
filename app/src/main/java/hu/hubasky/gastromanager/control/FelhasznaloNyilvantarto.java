@@ -88,4 +88,20 @@ public interface FelhasznaloNyilvantarto extends ControlBase{
      */
     void kuldes(Felhasznalo felhasznalo, Recept recept) throws Exception;
 
+    /**
+     * Felvesz egy receptet kedvencként a felhasználóhoz.
+     * @param felhasznalo a felhasználó.
+     * @param recept a recept.
+     * @throws Exception Ha kivétel lépett fel.
+     */
+    void addKedvenc(Felhasznalo felhasznalo, Recept recept) throws Exception;
+
+    /**
+     * Leválaszt egy receptet kedvencként a felhasználóról.
+     * @param felhasznalo a felhasználó.
+     * @param recept a recept.
+     * @throws Exception Ha kivétel lépett fel.
+     */
+    void remKedvenc(Felhasznalo felhasznalo, Recept recept) throws Exception;
+
 }
