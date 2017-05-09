@@ -1,31 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".ReciepeManagerActivity"
+    android:padding="8dp">
 
-    <android.support.v7.widget.AppCompatButton
-        android:id="@+id/search_reciepe_btn"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/search_reciepe_str"
-        />
+        android:orientation="horizontal"
+        android:id="@+id/reciepe_navigation_layout">
 
-    <android.support.v7.widget.AppCompatButton
-        android:id="@+id/favourite_reciepes_btn"
+        <android.support.v7.widget.AppCompatButton
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/favourite_reciepes_button"
+            android:layout_weight="1"/>
+
+        <android.support.v7.widget.AppCompatButton
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/public_reciepes_button"
+            android:layout_weight="1"/>
+
+        <android.support.v7.widget.AppCompatButton
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/my_reciepes_button"
+            android:layout_weight="1"/>
+
+    </LinearLayout>
+
+    <android.support.v7.widget.AppCompatEditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/favourite_reciepes_str"
-        android:layout_below="@+id/search_reciepe_btn"
-        android:layout_alignParentStart="true"
-        />
+        android:id="@+id/reciepe_searchfield"
+        android:layout_below="@+id/reciepe_navigation_layout"/>
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/reciepe_list"
+        android:layout_below="@+id/reciepe_searchfield">
+    </ListView>
 
     <android.support.v7.widget.AppCompatButton
         android:id="@+id/add_reciepe_btn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/new_reciepe_str"
-        android:layout_below="@+id/favourite_reciepes_btn"
-        android:layout_alignParentStart="true"/>
-
+        style="@style/AddButtonStyle"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true" />
 
 </RelativeLayout>
