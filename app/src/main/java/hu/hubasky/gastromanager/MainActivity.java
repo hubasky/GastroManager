@@ -32,10 +32,19 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+//        shopping_list.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//            }
+//        });
+
         shopping_list.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
+                Intent shoppingListIntent = new Intent(self, ShoppingListActivity.class);
+                startActivity(shoppingListIntent);
             }
         });
 
