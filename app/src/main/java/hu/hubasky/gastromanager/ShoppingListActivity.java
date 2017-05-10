@@ -11,64 +11,47 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-
-public class ShoppingListActivity extends AppCompatActivity implements CompoundButton.OnCheckedChangeListener {
-
-    private static final String TAG = "ShoppingListActivity";
+public class ShoppingListActivity extends AppCompatActivity implements
+        android.widget.CompoundButton.OnCheckedChangeListener {
 
     ListView lv;
-    ArrayList<CartItem> cartItemsList;
-    ShoppingAdapter shoppingAdapter;
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        return super.onOptionsItemSelected(item);
-    }
+    ArrayList<ShopItem> shopItemList;
+    ShoppingAdapter siAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shopping_manager);
 
-
-
-        lv = (ListView) findViewById(R.id.listview_cartItem);
-        //itt miért nem jön létre a ojjektum?
-        Log.d(TAG, "onCreate: listview is created with tag: " + lv.getTag());
-
-        displayShoppingList();
-
+        lv = (ListView) findViewById(R.id.listview);
+        displayShopItemList();
     }
 
-    private void displayShoppingList() {
+    private void displayShopItemList() {
 
-        cartItemsList = new ArrayList<CartItem>();
-        cartItemsList.add(new CartItem("Répa", 3, "csokor"));
-        cartItemsList.add(new CartItem("Retek", 2, "csokor"));
-        cartItemsList.add(new CartItem("Mogyoró", 100, "g"));
-        cartItemsList.add(new CartItem("Korán", 10, "perc"));
-        cartItemsList.add(new CartItem("Rigó", 1, "db"));
+        shopItemList = new ArrayList<>();
+        shopItemList.add(new ShopItem("Répa", 3, "csokor"));
+        shopItemList.add(new ShopItem("Retek", 2, "csokor"));
+        shopItemList.add(new ShopItem("Mogyoró", 1, "kiló"));
+        shopItemList.add(new ShopItem("Korán", 30, "perc"));
+        shopItemList.add(new ShopItem("Rigó", 7, "darab"));
 
-        shoppingAdapter = new ShoppingAdapter(cartItemsList, this);
-        Log.d(TAG, "displayShoppingList: listview tag = " + lv.getTag());
-        lv.setAdapter(shoppingAdapter);
+        siAdapter = new ShoppingAdapter(shopItemList, this);
+        lv.setAdapter(siAdapter);
     }
 
     @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
         int pos = lv.getPositionForView(buttonView);
-        if (pos != ListView.INVALID_POSITION){
-            CartItem ci = cartItemsList.get(pos);
-            ci.setSelected(isChecked);
+        if (pos != ListView.INVALID_POSITION) {
+            ShopItem p = shopItemList.get(pos);
+            p.setSelected(isChecked);
 
-            Toast.makeText(this, "Clicked on item:" + ci.getName() + ". Status: " + isChecked, Toast.LENGTH_SHORT).show();
-
+            Toast.makeText(
+                    this,
+                    "Clicked on shopitem: " + p.getName() + ". State: is "
+                            + isChecked, Toast.LENGTH_SHORT).show();
         }
     }
 }
