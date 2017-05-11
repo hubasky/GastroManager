@@ -8,6 +8,7 @@ import hu.hubasky.gastromanager.control.impl.dummy.DmyBevasarloListaNyilvantarto
 import hu.hubasky.gastromanager.control.impl.dummy.DmyCimkeNyilvantarto;
 import hu.hubasky.gastromanager.control.impl.dummy.DmyFelhasznaloNyilvantarto;
 import hu.hubasky.gastromanager.control.impl.dummy.DmyReceptNyilvantarto;
+import hu.hubasky.gastromanager.control.impl.firebase.FirebaseIngredientManager;
 
 /**
  * A vezérlőket tartalmazó egyke.
@@ -81,7 +82,8 @@ public final class Controls {
      * Privát konstruktor.
      */
     private Controls() {
-        dummyImpl();
+        // dummyImpl();
+        firebaseImpl();
 
         Set<ControlBase> needInit = new HashSet<>(controls);
 
@@ -106,6 +108,10 @@ public final class Controls {
         controls.add(cimkeNyilvantarto = new DmyCimkeNyilvantarto());
         controls.add(felhasznaloNyilvantarto = new DmyFelhasznaloNyilvantarto());
         controls.add(receptNyilvantarto = new DmyReceptNyilvantarto());
+    }
+
+    private void firebaseImpl() {
+        controls.add(alapanyagNyilvantarto = new FirebaseIngredientManager());
     }
 
     /**
