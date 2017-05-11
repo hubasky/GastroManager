@@ -1,5 +1,7 @@
 package hu.hubasky.gastromanager.control;
 
+import android.content.Context;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -16,6 +18,15 @@ import hu.hubasky.gastromanager.control.impl.firebase.FirebaseIngredientManager;
  */
 
 public final class Controls {
+
+    private Context actualContext;
+
+    public Context getActualContext() {
+        return actualContext;
+    }
+    public void setActualContext(Context actualContext) {
+        this.actualContext = actualContext;
+    }
 
     /**
      * Alapanyag nyilvántartó.

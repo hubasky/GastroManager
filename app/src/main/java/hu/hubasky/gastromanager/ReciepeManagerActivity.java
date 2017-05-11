@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import hu.hubasky.gastromanager.control.Controls;
 import hu.hubasky.gastromanager.viewmodel.IngredientVM;
 import hu.hubasky.gastromanager.viewmodel.ReciepeAdapter;
 import hu.hubasky.gastromanager.viewmodel.ReciepeVM;
@@ -32,5 +33,12 @@ public class ReciepeManagerActivity extends AppCompatActivity {
 
         reciepeListView.setAdapter(reciepeAdapter);
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        Controls.getInstance().setActualContext(this);
     }
 }
