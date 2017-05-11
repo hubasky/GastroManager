@@ -1,5 +1,7 @@
 package hu.hubasky.gastromanager;
 
+import hu.hubasky.gastromanager.viewmodel.IngerdientUnit;
+
 class ShopItem {
 
     private String name;
@@ -12,6 +14,7 @@ class ShopItem {
         this.name = name;
         this.quantity = quantity;
         this.quantityType = quantityType;
+
     }
 
     public String getQuantityType() {
