@@ -1,6 +1,8 @@
 
 package hu.hubasky.gastromanager.entity.alapanyag;
 
+import com.google.firebase.database.IgnoreExtraProperties;
+
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
@@ -17,6 +19,7 @@ import hu.hubasky.gastromanager.entity.EMennyisegiEgyseg;
  * Created by mirso on 2017. 04. 26..
  */
 
+@IgnoreExtraProperties
 public final class Alapanyag extends Cimkezheto {
 
     /**
