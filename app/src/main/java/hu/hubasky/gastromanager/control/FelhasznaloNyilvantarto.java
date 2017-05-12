@@ -11,7 +11,7 @@ import hu.hubasky.gastromanager.entity.recept.Recept;
  * Created by mirso on 2017. 04. 26..
  */
 
-public interface FelhasznaloNyilvantarto extends ControlBase{
+public interface FelhasznaloNyilvantarto extends ControlBase {
     /**
      * Felhasználók keresése névtöredék szerint, az aktuális felhasználó kizárásával.
      *
@@ -21,6 +21,16 @@ public interface FelhasznaloNyilvantarto extends ControlBase{
      * @throws Exception Ha kivétel történt.
      */
     List<Felhasznalo> keres(String nevtoredek, Felhasznalo kizart) throws Exception;
+
+    /**
+     * Felhasználók keresése névtöredék szerint, az aktuális felhasználó kizárásával,
+     * aszinkron verzió.
+     *
+     * @param nevtoredek a névtöredék.
+     * @param kizart     a kizárt felhasználó.
+     * @param callback   a callback az eredményhez.
+     */
+    void keres(String nevtoredek, Felhasznalo kizart, ControlResultListener<Felhasznalo> callback);
 
     /**
      * Felhasználó bejelentkezése.
@@ -53,6 +63,15 @@ public interface FelhasznaloNyilvantarto extends ControlBase{
     List<Recept> getKapottReceptek(Felhasznalo felhasznalo) throws Exception;
 
     /**
+     * Visszaadja a felhasználó számára mások által elküldött recepteket.
+     * Aszinkron verzió.
+     *
+     * @param felhasznalo a felhasználó.
+     * @param callback    ide hív vissza az eredményyel.
+     */
+    void getKapottReceptek(Felhasznalo felhasznalo, ControlResultListener<Recept> callback);
+
+    /**
      * A felhasználó eldobja (törli) a kapott receptet.
      *
      * @param felhasznalo a felhasználó.
@@ -69,6 +88,15 @@ public interface FelhasznaloNyilvantarto extends ControlBase{
      * @throws Exception Ha kivétel lépett fel.
      */
     List<BevasarloLista> getBevasarloListak(Felhasznalo felhasznalo) throws Exception;
+
+    /**
+     * Visszaadja a felhasználó által kezelt (kapott, továbbított) bevásárlólistákat.
+     * Aszinkron verzió.
+     *
+     * @param felhasznalo a felhasználó.
+     * @param callback    ide hív vissza az eredménnyel.
+     */
+    void getBevasarloListak(Felhasznalo felhasznalo, ControlResultListener<BevasarloLista> callback);
 
     /**
      * Felhasználóhoz egy új bevásárlólistát rendel.
@@ -90,26 +118,38 @@ public interface FelhasznaloNyilvantarto extends ControlBase{
 
     /**
      * Felvesz egy receptet kedvencként a felhasználóhoz.
+     *
      * @param felhasznalo a felhasználó.
-     * @param recept a recept.
+     * @param recept      a recept.
      * @throws Exception Ha kivétel lépett fel.
      */
     void addKedvenc(Felhasznalo felhasznalo, Recept recept) throws Exception;
 
     /**
      * Leválaszt egy receptet kedvencként a felhasználóról.
+     *
      * @param felhasznalo a felhasználó.
-     * @param recept a recept.
+     * @param recept      a recept.
      * @throws Exception Ha kivétel lépett fel.
      */
     void remKedvenc(Felhasznalo felhasznalo, Recept recept) throws Exception;
 
     /**
      * Visszaadja a felhasználó összes kedvenc receptjét.
+     *
      * @param felhasznalo a felhasználó.
      * @return a kedvencek listája.
      * @throws Exception Ha kivétel lépett fel.
      */
     List<Recept> getKedvencek(Felhasznalo felhasznalo) throws Exception;
+
+    /**
+     * Visszaadja a felhasználó összes kedvenc receptjét.
+     * Aszinkron verzió.
+     *
+     * @param felhasznalo a felhasználó.
+     * @param callback    ide hív vissza az eredménnyel.
+     */
+    void getKedvencek(Felhasznalo felhasznalo, ControlResultListener<Recept> callback);
 
 }

@@ -3,10 +3,13 @@ package hu.hubasky.gastromanager.control.impl.dummy;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.Executors;
 
 import hu.hubasky.gastromanager.common.Helper;
 import hu.hubasky.gastromanager.control.AlapanyagNyilvantarto;
+import hu.hubasky.gastromanager.control.AsyncControlBase;
 import hu.hubasky.gastromanager.control.CimkeNyilvantarto;
+import hu.hubasky.gastromanager.control.ControlResultListener;
 import hu.hubasky.gastromanager.control.Controls;
 import hu.hubasky.gastromanager.entity.Cimke;
 import hu.hubasky.gastromanager.entity.ECimkeTipus;
@@ -19,12 +22,13 @@ import hu.hubasky.gastromanager.entity.alapanyag.AlapanyagKeresesiJellemzok;
  * Created by hallgato on 2017-04-27.
  */
 
-public final class DmyAlapanyagNyilvantarto implements AlapanyagNyilvantarto {
+public final class DmyAlapanyagNyilvantarto extends AsyncControlBase implements AlapanyagNyilvantarto {
 
     /**
      * Tesztadatok.
      */
     private final List<Alapanyag> adatok = new ArrayList<>();
+
 
     /**
      * Konstruktor.
@@ -134,5 +138,38 @@ public final class DmyAlapanyagNyilvantarto implements AlapanyagNyilvantarto {
             }
         });
 
+    }
+
+    @Override
+    public void keres(final AlapanyagKeresesiJellemzok jellemzok, final ControlResultListener<Alapanyag> callback) {
+        if (jellemzok == null) throw new IllegalArgumentException("jellemzok nem lehet null!");
+        if (callback == null) throw new IllegalArgumentException("A callback nem lehet null!");
+
+        Executors.newSingleThreadExecutor().submit(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    // itt megy le a tényleges keresés
+                    final List<Alapanyag> retval = keres(jellemzok);
+                    // itt hívunk vissza, de már a UI szálon keresztük
+                    callbackUI(new Runnable() {
+                        @Override
+                        public void run() {
+                            callback.onSuccess(retval);
+                        }
+                    });
+
+                } catch (final Exception e) {
+                    // ha hiba lépett fel.
+                    callbackUI(new Runnable() {
+                        @Override
+                        public void run() {
+                            callback.onFailed(e);
+                        }
+                    });
+                }
+
+            }
+        });
     }
 }

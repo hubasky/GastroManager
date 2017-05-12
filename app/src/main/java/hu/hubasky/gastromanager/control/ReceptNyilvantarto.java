@@ -14,6 +14,7 @@ import hu.hubasky.gastromanager.entity.recept.ReceptKeresesiJellemzok;
 public interface ReceptNyilvantarto extends ControlBase {
     /**
      * Recept keresése.
+     *
      * @param jellemzok a keresés jellemzői.
      * @return a találatok.
      * @throws Exception Ha kivétel lépett fel.
@@ -21,16 +22,37 @@ public interface ReceptNyilvantarto extends ControlBase {
     List<Recept> keres(ReceptKeresesiJellemzok jellemzok) throws Exception;
 
     /**
+     * Recept keresése.
+     * Aszinkron verzió.
+     *
+     * @param jellemzok a keresés jellemzői.
+     * @param callback  ide hív vissza az eredménnyel.
+     * @return a találatok.
+     */
+    void keres(ReceptKeresesiJellemzok jellemzok, ControlResultListener<Recept> callback);
+
+    /**
      * Kalkulációt készít a vásárlandó alapanyagokról a mennyiség függvényében.
+     *
      * @param recept a recept.
-     * @param adag a kívánt adag.
+     * @param adag   a kívánt adag.
      * @return a vásárlandók listája.
      * @throws Exception Ha kivétel lépett fel.
      */
     List<VasarlandoAlapanyag> vasarlandoKalkulacio(Recept recept, double adag) throws Exception;
 
     /**
+     * Kalkulációt készít a vásárlandó alapanyagokról a mennyiség függvényében.
+     *
+     * @param recept   a recept.
+     * @param adag     a kívánt adag.
+     * @param callback ide hív vissza az eredménnyel.
+     */
+    void vasarlandoKalkulacio(Recept recept, double adag, ControlResultListener<VasarlandoAlapanyag> callback);
+
+    /**
      * Recept tárolása.
+     *
      * @param recept a példány.
      * @throws Exception Ha kivétel lépett fel.
      */
@@ -38,6 +60,7 @@ public interface ReceptNyilvantarto extends ControlBase {
 
     /**
      * Recept törlése.
+     *
      * @param recept a recept.
      * @throws Exception Ha kivétel lépett fel.
      */

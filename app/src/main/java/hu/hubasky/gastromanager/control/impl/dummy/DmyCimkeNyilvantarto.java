@@ -3,9 +3,12 @@ package hu.hubasky.gastromanager.control.impl.dummy;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.Executors;
 
 import hu.hubasky.gastromanager.common.Helper;
+import hu.hubasky.gastromanager.control.AsyncControlBase;
 import hu.hubasky.gastromanager.control.CimkeNyilvantarto;
+import hu.hubasky.gastromanager.control.ControlResultListener;
 import hu.hubasky.gastromanager.control.Controls;
 import hu.hubasky.gastromanager.entity.Cimke;
 import hu.hubasky.gastromanager.entity.ECimkeTipus;
@@ -14,7 +17,7 @@ import hu.hubasky.gastromanager.entity.ECimkeTipus;
  * Created by hallgato on 2017-04-27.
  */
 
-public final class DmyCimkeNyilvantarto implements CimkeNyilvantarto {
+public final class DmyCimkeNyilvantarto extends AsyncControlBase implements CimkeNyilvantarto {
     /**
      * Adatok.
      */
@@ -45,6 +48,35 @@ public final class DmyCimkeNyilvantarto implements CimkeNyilvantarto {
             @Override
             public boolean check(Cimke param) {
                 return param.isMegfelelo(tipus, nevtoredek);
+            }
+        });
+    }
+
+    @Override
+    public void keres(final ECimkeTipus tipus, final String nevtoredek, final ControlResultListener<Cimke> callback) {
+        if (callback == null) throw new IllegalArgumentException("A callback nem lehet null!");
+
+        Executors.newSingleThreadExecutor().submit(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    final List<Cimke> keres = keres(tipus, nevtoredek);
+                    // itt hívunk vissza az eredménnyel, de már a UI szálon
+                    callbackUI(new Runnable() {
+                        @Override
+                        public void run() {
+                            callback.onSuccess(keres);
+                        }
+                    });
+                } catch (final Exception e) {
+                    // itt hívunk vissza a hibával, de már a UI szálon
+                    callbackUI(new Runnable() {
+                        @Override
+                        public void run() {
+                            callback.onFailed(e);
+                        }
+                    });
+                }
             }
         });
     }
