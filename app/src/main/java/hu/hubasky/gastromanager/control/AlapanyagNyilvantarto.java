@@ -32,4 +32,11 @@ public interface AlapanyagNyilvantarto extends ControlBase{
      * @throws Exception Ha kivétel lépett fel.
      */
     List<Alapanyag> keres(AlapanyagKeresesiJellemzok jellemzok) throws Exception;
+
+    /**
+     * Aszinkron keresésé végrehajtása.
+     * @param jellemzok a keresési jellemzők.
+     * @param callback a callback, ahová vissza kell jelezni.
+     */
+    void keres(AlapanyagKeresesiJellemzok jellemzok,ControlResultListener<Alapanyag> callback);
 }

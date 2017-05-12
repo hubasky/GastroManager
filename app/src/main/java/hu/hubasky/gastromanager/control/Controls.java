@@ -21,7 +21,7 @@ public final class Controls {
      *
      * @return példány.
      */
-    public AlapanyagNyilvantarto getAlapanyagNyilvantarto() {
+    public hu.hubasky.gastromanager.control.AlapanyagNyilvantarto getAlapanyagNyilvantarto() {
         return alapanyagNyilvantarto;
     }
 
@@ -30,7 +30,7 @@ public final class Controls {
      *
      * @return példány.
      */
-    public BevasarloListaNyilvantarto getBevasarloListaNyilvantarto() {
+    public hu.hubasky.gastromanager.control.BevasarloListaNyilvantarto getBevasarloListaNyilvantarto() {
         return bevasarloListaNyilvantarto;
     }
 
@@ -39,7 +39,7 @@ public final class Controls {
      *
      * @return példány.
      */
-    public CimkeNyilvantarto getCimkeNyilvantarto() {
+    public hu.hubasky.gastromanager.control.CimkeNyilvantarto getCimkeNyilvantarto() {
         return cimkeNyilvantarto;
     }
 
@@ -48,7 +48,7 @@ public final class Controls {
      *
      * @return példány.
      */
-    public FelhasznaloNyilvantarto getFelhasznaloNyilvantarto() {
+    public hu.hubasky.gastromanager.control.FelhasznaloNyilvantarto getFelhasznaloNyilvantarto() {
         return felhasznaloNyilvantarto;
     }
 
@@ -57,7 +57,7 @@ public final class Controls {
      *
      * @return példány.
      */
-    public ReceptNyilvantarto getReceptNyilvantarto() {
+    public hu.hubasky.gastromanager.control.ReceptNyilvantarto getReceptNyilvantarto() {
         return receptNyilvantarto;
     }
 
@@ -111,23 +111,23 @@ public final class Controls {
     /**
      * Alapanyag nyilvántartó.
      */
-    private AlapanyagNyilvantarto alapanyagNyilvantarto;
+    private hu.hubasky.gastromanager.control.AlapanyagNyilvantarto alapanyagNyilvantarto;
     /**
      * Bevásárlólista nyilvántartó.
      */
-    private BevasarloListaNyilvantarto bevasarloListaNyilvantarto;
+    private hu.hubasky.gastromanager.control.BevasarloListaNyilvantarto bevasarloListaNyilvantarto;
     /**
      * Cimke nyilvántartó.
      */
-    private CimkeNyilvantarto cimkeNyilvantarto;
+    private hu.hubasky.gastromanager.control.CimkeNyilvantarto cimkeNyilvantarto;
     /**
      * Felhasználó nyilvántartó.
      */
-    private FelhasznaloNyilvantarto felhasznaloNyilvantarto;
+    private hu.hubasky.gastromanager.control.FelhasznaloNyilvantarto felhasznaloNyilvantarto;
     /**
      * Recept nyilvántartó.
      */
-    private ReceptNyilvantarto receptNyilvantarto;
+    private hu.hubasky.gastromanager.control.ReceptNyilvantarto receptNyilvantarto;
     /**
      * Vezérlők.
      */

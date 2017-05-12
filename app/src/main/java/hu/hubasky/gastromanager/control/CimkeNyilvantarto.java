@@ -10,10 +10,11 @@ import hu.hubasky.gastromanager.entity.ECimkeTipus;
  * Created by mirso on 2017. 04. 26..
  */
 
-public interface CimkeNyilvantarto extends ControlBase{
+public interface CimkeNyilvantarto extends ControlBase {
     /**
      * Cimkék keresése.
-     * @param tipus a cimke típus.
+     *
+     * @param tipus      a cimke típus.
      * @param nevtoredek a cimkében szereplő névtöredék.
      * @return a találatok.
      * @throws Exception Ha kivétel lépett fel.
@@ -21,7 +22,17 @@ public interface CimkeNyilvantarto extends ControlBase{
     List<Cimke> keres(ECimkeTipus tipus, String nevtoredek) throws Exception;
 
     /**
+     * Aszinkron keresés végrehajtása.
+     *
+     * @param tipus      a cimke típus.
+     * @param nevtoredek a cimkében szereplő névtöredék.
+     * @param callback   ide hív vissza az eredménnyel.
+     */
+    void keres(ECimkeTipus tipus, String nevtoredek, ControlResultListener<Cimke> callback);
+
+    /**
      * Cimke tárolása.
+     *
      * @param cimke a cimke példány.
      * @throws Exception Ha kivétel lépett fel.
      */
