@@ -7,7 +7,7 @@ package hu.hubasky.gastromanager.viewmodel;
 
 public enum IngerdientUnitType{
     weight("kg"),
-    volume("lit"),
+    volume("liter"),
     piece("piece"),
     smallamount("kis"),
     unspecified("unspec")
