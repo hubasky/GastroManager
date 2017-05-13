@@ -29,7 +29,7 @@ public class ShoppingListActivity extends AppCompatActivity implements
 
     private void displayShopItemList() {
 
-        shopItemList = new ArrayList<>();
+        shopItemList = new ArrayList<>(32);
         shopItemList.add(new ShopItem("Répa", 3, "csokor"));
         shopItemList.add(new ShopItem("Retek", 2, "csokor"));
         shopItemList.add(new ShopItem("Mogyoró", 1, "kiló"));
