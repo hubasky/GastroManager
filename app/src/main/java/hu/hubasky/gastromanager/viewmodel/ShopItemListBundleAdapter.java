@@ -18,14 +18,14 @@ import hu.hubasky.gastromanager.R;
  * Created by Balu on 2017-05-13.
  */
 
-public class ShoppingCartListAdapter extends ArrayAdapter<ShoppingCart> {
-    private static final String TAG = "ShoppingCartListAdapter";
+public class ShopItemListBundleAdapter extends ArrayAdapter<ShopItemListBundle> {
+    private static final String TAG = "ShopItemListBundleAdapter";
 
     private Context mContext;
     private int mResource;
     private int lastPosition = -1;
 
-    public ShoppingCartListAdapter(Context context, int resource, ArrayList<ShoppingCart> objects) {
+    public ShopItemListBundleAdapter(Context context, int resource, ArrayList<ShopItemListBundle> objects) {
         super(context, resource, objects);
         mContext = context;
         mResource = resource;
@@ -46,10 +46,11 @@ public class ShoppingCartListAdapter extends ArrayAdapter<ShoppingCart> {
     @Override
     public View getView(int position, View convertView, @NonNull ViewGroup parent) {
         String name = getItem(position).getName();
-        String birthday = getItem(position).getSenderName();
-        String sex = getItem(position).getSharedWith();
+        String senderName = getItem(position).getSenderName();
+        String sharedWith = getItem(position).getSharedWith();
+        ArrayList<ShopItem> siList = getItem(position).getSiList();
 
-        ShoppingCart shoppingCart = new ShoppingCart(name, birthday, sex);
+        ShopItemListBundle shopItemListBundle = new ShopItemListBundle(name, senderName, sharedWith, siList);
 
         final View result;
         ViewHolder holder = new ViewHolder();
@@ -75,8 +76,8 @@ public class ShoppingCartListAdapter extends ArrayAdapter<ShoppingCart> {
         lastPosition = position;
 
         holder.name.setText(name);
-        holder.senderName.setText(birthday);
-        holder.sharedWith.setText(sex);
+        holder.senderName.setText(senderName);
+        holder.sharedWith.setText(sharedWith);
 
 
         return convertView;

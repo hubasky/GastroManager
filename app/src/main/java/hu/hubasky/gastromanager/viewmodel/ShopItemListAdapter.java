@@ -12,15 +12,14 @@ import android.widget.TextView;
 import java.util.List;
 
 import hu.hubasky.gastromanager.R;
-import hu.hubasky.gastromanager.ShoppingListActivity;
-import hu.hubasky.gastromanager.viewmodel.ShopItem;
+import hu.hubasky.gastromanager.ShopItemPickerActivity;
 
-public class ShoppingAdapter extends ArrayAdapter<ShopItem>{
+public class ShopItemListAdapter extends ArrayAdapter<ShopItem>{
 
     private List<ShopItem> shopItemtList;
     private Context context;
 
-    public ShoppingAdapter(List<ShopItem> shopItemtList, Context context) {
+    public ShopItemListAdapter(List<ShopItem> shopItemtList, Context context) {
         super(context, R.layout.shopping_list_layout, shopItemtList);
         this.shopItemtList = shopItemtList;
         this.context = context;
@@ -51,7 +50,7 @@ public class ShoppingAdapter extends ArrayAdapter<ShopItem>{
             holder.qtyTypeView = (TextView) v.findViewById(R.id.quantityType);
             holder.chkBox = (CheckBox) v.findViewById(R.id.chk_box);
 
-            holder.chkBox.setOnCheckedChangeListener((ShoppingListActivity) context);
+            holder.chkBox.setOnCheckedChangeListener((ShopItemPickerActivity) context);
 
         } else {
             holder = (ShopItemHolder) v.getTag();
@@ -59,8 +58,8 @@ public class ShoppingAdapter extends ArrayAdapter<ShopItem>{
 
         ShopItem si = shopItemtList.get(position);
         holder.itemName.setText(si.getName());
-        holder.qtyView.setText("" + si.getQuantity());
-        holder.qtyTypeView.setText("" + si.getQuantityType());
+        holder.qtyView.setText(si.getQuantity());
+        holder.qtyTypeView.setText(si.getQuantityType());
         holder.chkBox.setChecked(si.isSelected());
         holder.chkBox.setTag(si);
 

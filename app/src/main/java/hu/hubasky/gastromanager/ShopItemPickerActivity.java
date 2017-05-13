@@ -4,19 +4,23 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.CompoundButton;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 
 import hu.hubasky.gastromanager.viewmodel.ShopItem;
-import hu.hubasky.gastromanager.viewmodel.ShoppingAdapter;
+import hu.hubasky.gastromanager.viewmodel.ShopItemListAdapter;
 
-public class ShoppingListActivity extends AppCompatActivity implements
+public class ShopItemPickerActivity extends AppCompatActivity implements
         android.widget.CompoundButton.OnCheckedChangeListener {
 
     ListView lv;
-    ArrayList<ShopItem> shopItemList;
-    ShoppingAdapter siAdapter;
+    TextView tv;
+    ArrayList<ShopItem> shopItemList; //ezt kell firebase-ről lekapni ID alapján!
+    ShopItemListAdapter siAdapter;
+
+    String passedName = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,19 +28,27 @@ public class ShoppingListActivity extends AppCompatActivity implements
         setContentView(R.layout.activity_shopping_manager);
 
         lv = (ListView) findViewById(R.id.listview);
+        tv = (TextView) findViewById(R.id.textView_shhoppingListLabel);
+
+        //passedID = getIntent().getStringExtra(ShopItemListPickerActivity.EXTRA_ID);
+        passedName = getIntent().getStringExtra(ShopItemListPickerActivity.EXTRA_NAME); //befejezni!
+
+        // shopItemList //ha parcelable, akkor átadni - elkapni!
         displayShopItemList();
     }
 
     private void displayShopItemList() {
 
+        tv.setText(passedName);
         shopItemList = new ArrayList<>(32);
+        //ID extra alapján lekérni a cuccokat a listába, meg a labelt
         shopItemList.add(new ShopItem("Répa", 3, "csokor"));
-        shopItemList.add(new ShopItem("Retek", 2, "csokor"));
-        shopItemList.add(new ShopItem("Mogyoró", 1, "kiló"));
-        shopItemList.add(new ShopItem("Korán", 30, "perc"));
-        shopItemList.add(new ShopItem("Rigó", 7, "darab"));
+//        shopItemList.add(new ShopItem("Retek", 2, "csokor"));
+//        shopItemList.add(new ShopItem("Mogyoró", 1, "kiló"));
+//        shopItemList.add(new ShopItem("Korán", 30, "perc"));
+//        shopItemList.add(new ShopItem("Rigó", 7, "darab"));
 
-        siAdapter = new ShoppingAdapter(shopItemList, this);
+        siAdapter = new ShopItemListAdapter(shopItemList, this);
         lv.setAdapter(siAdapter);
     }
 

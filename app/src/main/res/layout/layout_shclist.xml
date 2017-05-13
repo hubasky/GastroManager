@@ -4,14 +4,13 @@
     android:id="@+id/activity_shclist"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ShoppingCartPickerActivity">
+    tools:context=".ShopItemListPickerActivity">
 
 
     <ListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:id="@+id/listView_shclist"
         />

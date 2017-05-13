@@ -7,12 +7,13 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/shopping_list_str"
+        android:text="@string/plcholder"
         android:layout_centerHorizontal="true"
         android:textAlignment="center"
         android:textSize="20sp"
         android:layout_margin="10dp"
         android:textColor="@color/colorPrimaryDark"
+        android:id="@+id/textView_shhoppingListLabel"
 
         />
 
