@@ -1,7 +1,12 @@
 package hu.hubasky.gastromanager.entity.recept;
 
+import java.text.DecimalFormat;
+
+import hu.hubasky.gastromanager.entity.EMennyisegiEgyseg;
 import hu.hubasky.gastromanager.entity.EgyediKulcs;
 import hu.hubasky.gastromanager.entity.alapanyag.Alapanyag;
+
+import static hu.hubasky.gastromanager.entity.EMennyisegiEgyseg.*;
 
 /**
  * A recept egy hozzávlóját tartalmazzza.
@@ -37,6 +42,30 @@ public class Hozzavalo extends EgyediKulcs {
         this.alapanyag = alapanyag;
     }
 
+    public String displayQuantity() {
+        DecimalFormat df = new DecimalFormat("#.00");
+        String valueUnit = "";
+        switch (alapanyag.getMennyisegiEgyseg()) {
+            case GRAMM:
+                if (mennyiseg >= 1000)
+                    valueUnit = df.format(mennyiseg / 1000) + " kg";
+                else if (mennyiseg >= 10)
+                    valueUnit = df.format(mennyiseg / 10) + " dkg";
+                else valueUnit = String.valueOf(mennyiseg) + " g";
+                break;
+            case LITER:
+                if (mennyiseg >= 1)
+                    valueUnit = String.valueOf(mennyiseg) + " l";
+                else if (mennyiseg >= 0.1)
+                    valueUnit = String.valueOf(mennyiseg * 10) + " dl";
+                else valueUnit = String.valueOf(mennyiseg * 1000) + " ml";
+                break;
+            case DARAB:
+                valueUnit = String.valueOf(mennyiseg) + " db";
+                break;
+        }
+        return valueUnit;
+    }
 
     /**
      * Milyen mennyiségben kell megvenni az alapanyagot.ű
