@@ -12,6 +12,9 @@
     <string name="delete_ingredient_text">Hozzávaló törlése</string>
     <string name="add_ingredient">Új hozzávaló</string>
     <string name="edit_reciepe_description_hint_text">Írd le a recept elkészítési módját.</string>
+    <string name="shclist_sender">Bekűtte:</string>
+    <string name="shclist_sharedwith">Láttya ő is:</string>
+    <string name="plcholder">PlaceholderText</string>
 
 
 </resources>

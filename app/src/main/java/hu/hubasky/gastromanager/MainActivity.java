@@ -67,8 +67,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Intent shoppingListIntent = new Intent(self, ShoppingListActivity.class);
-                startActivity(shoppingListIntent);
+//                Intent shoppingListIntent = new Intent(self, ShoppingListActivity.class);
+//                startActivity(shoppingListIntent);
+                Intent shoppingCartPickerIntent = new Intent(self, ShoppingCartPickerActivity.class);
+                startActivity(shoppingCartPickerIntent);
             }
         });
 

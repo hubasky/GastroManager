@@ -21,7 +21,8 @@
         </activity>
         <activity android:name=".ReciepeManagerActivity" />
         <activity android:name=".EditReciepeActivity" />
-        <activity android:name=".ShoppingListActivity"></activity>
+        <activity android:name=".ShoppingListActivity" />
+        <activity android:name=".ShoppingCartPickerActivity"/>
     </application>
 
 </manifest>
