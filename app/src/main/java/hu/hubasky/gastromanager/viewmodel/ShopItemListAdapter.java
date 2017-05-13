@@ -56,6 +56,8 @@ public class ShopItemListAdapter extends ArrayAdapter<ShopItem>{
 
             holder.chkBox.setOnCheckedChangeListener((ShopItemPickerActivity) context);
 
+            v.setTag(holder);
+
         } else {
             holder = (ShopItemHolder) v.getTag();
         }

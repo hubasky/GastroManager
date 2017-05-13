@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import hu.hubasky.gastromanager.viewmodel.ShopItem;
 import hu.hubasky.gastromanager.viewmodel.ShopItemListBundle;
 import hu.hubasky.gastromanager.viewmodel.ShopItemListBundleAdapter;
+import hu.hubasky.gastromanager.viewmodel.SwipeDismissListViewTouchListener;
 
 public class ShopItemListPickerActivity extends AppCompatActivity {
 
@@ -21,8 +22,9 @@ public class ShopItemListPickerActivity extends AppCompatActivity {
     public static final String EXTRA_CONTENT = "hu.hubasky.gastromanager._CONTENT";
     public static final String EXTRA_NAME = "hu.hubasky.gastromanager._NAME";
 
-    //nempublik!
-    public ArrayList<ShopItemListBundle> shcList;
+    ListView mListView;
+    ShopItemListBundleAdapter adapter;
+    private ArrayList<ShopItemListBundle> shcList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +32,7 @@ public class ShopItemListPickerActivity extends AppCompatActivity {
         setContentView(R.layout.layout_shclist);
 
         Log.d(TAG, "onCreate: Started.");
-        ListView mListView = (ListView) findViewById(R.id.listView_shclist);
+        mListView = (ListView) findViewById(R.id.listView_shclist);
 
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -96,9 +98,33 @@ public class ShopItemListPickerActivity extends AppCompatActivity {
 
 
 
-        ShopItemListBundleAdapter adapter = new ShopItemListBundleAdapter(this, R.layout.layout_shclist_details, shcList);
+        adapter = new ShopItemListBundleAdapter(this, R.layout.layout_shclist_details, shcList);
         mListView.setAdapter(adapter);
 
+        SwipeDismissListViewTouchListener touchListener =
+                new SwipeDismissListViewTouchListener(
+                        mListView,
+                        new SwipeDismissListViewTouchListener.DismissCallbacks() {
+                            @Override
+                            public boolean canDismiss(int position) {
+                                return true;
+                            }
+
+                            @Override
+                            public void onDismiss(ListView listView, int[] reverseSortedPositions) {
+                                for (int position : reverseSortedPositions) {
+
+                                    shcList.remove(position);
+                                    adapter.notifyDataSetChanged();
+                                }
+
+
+                            }
+                        });
+        mListView.setOnTouchListener(touchListener);
 
     }
+
+
+
 }

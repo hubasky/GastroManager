@@ -3,6 +3,9 @@ package hu.hubasky.gastromanager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.DragEvent;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.CompoundButton;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -12,6 +15,7 @@ import java.util.ArrayList;
 
 import hu.hubasky.gastromanager.viewmodel.ShopItem;
 import hu.hubasky.gastromanager.viewmodel.ShopItemListAdapter;
+import hu.hubasky.gastromanager.viewmodel.SwipeDismissListViewTouchListener;
 
 public class ShopItemPickerActivity extends AppCompatActivity implements
         android.widget.CompoundButton.OnCheckedChangeListener {
@@ -42,6 +46,42 @@ public class ShopItemPickerActivity extends AppCompatActivity implements
 //            Log.d(TAG, "Selection info: " +  shopItemList.get(i).isSelected());
 //
 //        }
+
+
+        lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                shopItemList.remove(position);
+                siAdapter.notifyDataSetChanged();
+                lv.requestLayout();
+                return true;
+            }
+        });
+        SwipeDismissListViewTouchListener touchListener =
+                new SwipeDismissListViewTouchListener(
+                        lv,
+                        new SwipeDismissListViewTouchListener.DismissCallbacks() {
+                            @Override
+                            public boolean canDismiss(int position) {
+                                return true;
+                            }
+
+                            @Override
+                            public void onDismiss(ListView listView, int[] reverseSortedPositions) {
+                                for (int position : reverseSortedPositions) {
+
+                                    shopItemList.remove(position);
+                                    lv.requestLayout();
+                                    Log.d(TAG, "onDismiss: removed from model");
+                                    siAdapter.notifyDataSetChanged();
+
+                                }
+
+
+                            }
+                        });
+        lv.setOnTouchListener(touchListener);
+
 
 
         displayShopItemList();
