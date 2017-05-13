@@ -1,5 +1,6 @@
 package hu.hubasky.gastromanager.control.impl.firebase;
 
+import com.google.firebase.database.Exclude;
 import com.google.firebase.database.IgnoreExtraProperties;
 
 import hu.hubasky.gastromanager.entity.EMennyisegiEgyseg;

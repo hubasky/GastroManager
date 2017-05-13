@@ -20,11 +20,13 @@ import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 
 import hu.hubasky.gastromanager.control.AlapanyagNyilvantarto;
+import hu.hubasky.gastromanager.control.AsyncControlBase;
+import hu.hubasky.gastromanager.control.ControlResultListener;
 import hu.hubasky.gastromanager.control.Controls;
 import hu.hubasky.gastromanager.entity.alapanyag.Alapanyag;
 import hu.hubasky.gastromanager.entity.alapanyag.AlapanyagKeresesiJellemzok;
 
-public final class FirebaseIngredientManager implements AlapanyagNyilvantarto {
+public final class FirebaseIngredientManager extends AsyncControlBase implements AlapanyagNyilvantarto {
 
     private final FirebaseDatabase db;
     private final DatabaseReference ingredientsDbRef;
@@ -71,6 +73,11 @@ public final class FirebaseIngredientManager implements AlapanyagNyilvantarto {
 
     @Override
     public List<Alapanyag> keres(AlapanyagKeresesiJellemzok jellemzok) throws Exception {
+        return null;
+    }
+
+    @Override
+    public void keres(AlapanyagKeresesiJellemzok jellemzok,  final ControlResultListener<Alapanyag> callback) {
         // FirebaseAccess.getInstance().getIngredients();
         ingredientsDbRef.runTransaction(new Transaction.Handler() {
             @Override
@@ -95,8 +102,14 @@ public final class FirebaseIngredientManager implements AlapanyagNyilvantarto {
             @Override
             public void onComplete(DatabaseError databaseError, boolean b, DataSnapshot dataSnapshot) {
                 Log.d("FB_LOG", "Transaction complete.");
+
+                callbackUI(new Runnable() {
+                    @Override
+                    public void run() {
+                        callback.onSuccess(ingredients);
+                    }
+                });
             }
         });
-        return null;
     }
 }

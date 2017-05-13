@@ -4,10 +4,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+import java.util.List;
+
+import hu.hubasky.gastromanager.control.ControlResultListener;
 import hu.hubasky.gastromanager.control.Controls;
+import hu.hubasky.gastromanager.entity.alapanyag.Alapanyag;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -21,6 +26,21 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+        Controls.getInstance().getAlapanyagNyilvantarto().keres(null, new ControlResultListener<Alapanyag>() {
+            @Override
+            public void onSuccess(List<Alapanyag> resultList) {
+                for (Alapanyag a : resultList) {
+                    Log.d("FB_LOG", a.getNeve() + ", " + Thread.currentThread().getName());
+                }
+            }
+
+            @Override
+            public void onFailed(Exception ex) {
+
+            }
+        });
 
 
         reciepe_manager = (Button) findViewById(R.id.reciepe_button);

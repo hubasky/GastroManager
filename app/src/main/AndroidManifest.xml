@@ -20,6 +20,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".ReciepeManagerActivity" />
+        <activity android:name=".EditReciepeActivity" />
         <activity android:name=".ShoppingListActivity"></activity>
     </application>
 
