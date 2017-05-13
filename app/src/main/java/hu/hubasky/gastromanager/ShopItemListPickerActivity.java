@@ -37,10 +37,11 @@ public class ShopItemListPickerActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent shoppingListIntent = new Intent(ShopItemListPickerActivity.this, ShopItemPickerActivity.class);
 
-                ShopItemListBundle selectedList = shcList.get(position); //ezt kell parcellázni!
+                ShopItemListBundle selectedList = shcList.get(position); //lehet, hogy ezt is kell parcellázni!
                 String selectedName = selectedList.getName();
+
                 //parcelable kell, hogy legyen a shoppingcart!
-                //shoppingListIntent.putExtra(EXTRA_CONTENT,  //ID_EXTRA, String.valueOf(id));
+                shoppingListIntent.putExtra(EXTRA_CONTENT, selectedList.getSiList());
                 shoppingListIntent.putExtra(EXTRA_NAME, selectedName);
                 startActivity(shoppingListIntent);
             }

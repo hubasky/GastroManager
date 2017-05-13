@@ -2,6 +2,7 @@ package hu.hubasky.gastromanager.viewmodel;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,7 @@ public class ShopItemListAdapter extends ArrayAdapter<ShopItem>{
 
     private List<ShopItem> shopItemtList;
     private Context context;
+    private static final String TAG = "ShopItemListAdapter";
 
     public ShopItemListAdapter(List<ShopItem> shopItemtList, Context context) {
         super(context, R.layout.shopping_list_layout, shopItemtList);
@@ -34,7 +36,9 @@ public class ShopItemListAdapter extends ArrayAdapter<ShopItem>{
 
     @NonNull
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(int position, View convertView, @NonNull ViewGroup parent) {
+
+
 
         View v = convertView;
 
@@ -56,9 +60,10 @@ public class ShopItemListAdapter extends ArrayAdapter<ShopItem>{
             holder = (ShopItemHolder) v.getTag();
         }
 
+
         ShopItem si = shopItemtList.get(position);
         holder.itemName.setText(si.getName());
-        holder.qtyView.setText(si.getQuantity());
+        holder.qtyView.setText(Integer.toString(si.getQuantity()));
         holder.qtyTypeView.setText(si.getQuantityType());
         holder.chkBox.setChecked(si.isSelected());
         holder.chkBox.setTag(si);
