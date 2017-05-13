@@ -1,9 +1,11 @@
 package hu.hubasky.gastromanager;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.InputType;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 
@@ -19,10 +21,11 @@ import hu.hubasky.gastromanager.viewmodel.EditIngredientListAdapter;
 public class EditReciepeActivity extends AppCompatActivity {
 
     private final AppCompatActivity self = this;
-
+    private final int ADD_INGREDIENT_REQUEST = 1000;
 
     ListView ingredientsListView;
     EditText descriptionEditText;
+    Button addIngredient;
 
     List<Hozzavalo> ingredients;
 
@@ -31,8 +34,11 @@ public class EditReciepeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_reciepe);
 
+        final Context self = this;
+
         descriptionEditText = (EditText) findViewById(R.id.edit_reciepe_description_text);
         ingredientsListView = (ListView) findViewById(R.id.edit_reciepe_ingredients_list);
+        addIngredient = (Button) findViewById(R.id.edit_reciepe_add_ingredient);
 
         ingredients = new ArrayList<>();
         ingredients.add(new Hozzavalo(1020,
@@ -48,7 +54,15 @@ public class EditReciepeActivity extends AppCompatActivity {
 
         EditIngredientListAdapter ingredientAdapter = new EditIngredientListAdapter(ingredients);
         ingredientsListView.setAdapter(ingredientAdapter);
-        ingredientsListView.invalidate();
+
+
+        addIngredient.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent ingredientEditIntent = new Intent(self, AddIngredientActivity.class);
+                startActivityForResult(ingredientEditIntent, ADD_INGREDIENT_REQUEST);
+            }
+        });
 
     }
 }

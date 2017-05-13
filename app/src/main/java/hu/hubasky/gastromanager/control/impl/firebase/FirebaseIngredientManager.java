@@ -31,17 +31,18 @@ public final class FirebaseIngredientManager extends AsyncControlBase implements
     private final FirebaseDatabase db;
     private final DatabaseReference ingredientsDbRef;
 
-    private List<Alapanyag> ingredients;
-    public List<Alapanyag> getIngredients() {
-        return ingredients;
-    }
+    private final String TAG = "Firebase DB LOG";
+//
+//    private List<Alapanyag> ingredients;
+//    public List<Alapanyag> getIngredients() {
+//        return ingredients;
+//    }
 
     private final String INGREDIENTS_SCHEMA = "ingredients";
 
     public FirebaseIngredientManager() {
         this.db = FirebaseDatabase.getInstance();
         this.ingredientsDbRef = db.getReference(INGREDIENTS_SCHEMA);
-        this.ingredients = new ArrayList<Alapanyag>();
     }
 
     @Override
@@ -79,21 +80,14 @@ public final class FirebaseIngredientManager extends AsyncControlBase implements
     @Override
     public void keres(AlapanyagKeresesiJellemzok jellemzok,  final ControlResultListener<Alapanyag> callback) {
         // FirebaseAccess.getInstance().getIngredients();
+        final List<Alapanyag> ingredients = new ArrayList<Alapanyag>(50);
+
         ingredientsDbRef.runTransaction(new Transaction.Handler() {
             @Override
             public Transaction.Result doTransaction(MutableData mutableData) {
                 if (mutableData.getValue() != null) {
                     for (MutableData m : mutableData.getChildren()) {
-                        boolean found = false;
-                        for (Alapanyag i : ingredients) {
-                            if (i.getUniqueKey().equals(m.getKey())) {
-                                found = true;
-                                break;
-                            }
-                        }
-                        if (!found) {
-                            ingredients.add(m.getValue(FirebaseIngredient.class).convertToIngredient(m.getKey()));
-                        }
+                        ingredients.add(m.getValue(FirebaseIngredient.class).convertToIngredient(m.getKey()));
                     }
                 }
                 return Transaction.success(mutableData);
@@ -101,7 +95,9 @@ public final class FirebaseIngredientManager extends AsyncControlBase implements
 
             @Override
             public void onComplete(DatabaseError databaseError, boolean b, DataSnapshot dataSnapshot) {
-                Log.d("FB_LOG", "Transaction complete.");
+                Log.d(TAG, "Transaction complete.");
+
+                Log.d(TAG, String.valueOf(ingredients.size()));
 
                 callbackUI(new Runnable() {
                     @Override

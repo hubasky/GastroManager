@@ -112,4 +112,12 @@ public class FirebaseIngredient {
     public void setEnergyPercent(double energyPercent) {
         this.energyPercent = energyPercent;
     }
+
+    public double getUnitInG() {
+        return unitInG;
+    }
+
+    public void setUnitInG(double unitInG) {
+        this.unitInG = unitInG;
+    }
 }
