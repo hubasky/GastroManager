@@ -1,16 +1,16 @@
 package hu.hubasky.gastromanager;
 
-import android.support.v4.media.session.MediaControllerCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.CompoundButton;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+
+import hu.hubasky.gastromanager.viewmodel.ShopItem;
+import hu.hubasky.gastromanager.viewmodel.ShoppingAdapter;
+
 public class ShoppingListActivity extends AppCompatActivity implements
         android.widget.CompoundButton.OnCheckedChangeListener {
 
