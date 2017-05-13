@@ -1,4 +1,4 @@
-package hu.hubasky.gastromanager;
+package hu.hubasky.gastromanager.viewmodel;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -10,6 +10,10 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 
 import java.util.List;
+
+import hu.hubasky.gastromanager.R;
+import hu.hubasky.gastromanager.ShoppingListActivity;
+import hu.hubasky.gastromanager.viewmodel.ShopItem;
 
 public class ShoppingAdapter extends ArrayAdapter<ShopItem>{
 

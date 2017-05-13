@@ -1,8 +1,8 @@
-package hu.hubasky.gastromanager;
+package hu.hubasky.gastromanager.viewmodel;
 
 import hu.hubasky.gastromanager.viewmodel.IngerdientUnit;
 
-class ShopItem {
+public class ShopItem {
 
     private String name;
     private int quantity;
