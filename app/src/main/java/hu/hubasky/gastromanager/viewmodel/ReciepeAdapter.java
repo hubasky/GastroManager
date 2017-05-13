@@ -10,9 +10,6 @@ import java.util.List;
 
 import hu.hubasky.gastromanager.R;
 
-/**
- * Created by Peet on 2017. 04. 27..
- */
 
 public class ReciepeAdapter extends BaseAdapter {
 
