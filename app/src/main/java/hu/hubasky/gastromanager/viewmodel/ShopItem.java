@@ -11,7 +11,7 @@ public class ShopItem {
 
     public ShopItem(String name, int quantity, String quantityType) {
         super();
-        this.name = name;
+        this.name =  name;
         this.quantity = quantity;
         this.quantityType = quantityType;
 
