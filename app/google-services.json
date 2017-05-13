@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "1017273516664",
+    "firebase_url": "https://gastromanager-bc4d5.firebaseio.com",
+    "project_id": "gastromanager-bc4d5",
+    "storage_bucket": "gastromanager-bc4d5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1017273516664:android:186fa982ab3585e5",
+        "android_client_info": {
+          "package_name": "hu.hubasky.gastromanager"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1017273516664-7eql4mi61bm62ctms0hf28u9sba4m0vs.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "hu.hubasky.gastromanager",
+            "certificate_hash": "b2416ac41e5ce053bd7b645b6b946cd621dcd507"
+          }
+        },
+        {
+          "client_id": "1017273516664-nuf4io5us75fuuel9n8qfrurt7scnu57.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBFBp-AtbLshn3UZV9ElvNDs1rxIktFiGw"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1017273516664-nuf4io5us75fuuel9n8qfrurt7scnu57.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
