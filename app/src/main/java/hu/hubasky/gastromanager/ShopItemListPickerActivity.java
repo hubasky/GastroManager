@@ -61,17 +61,34 @@ public class ShopItemListPickerActivity extends AppCompatActivity {
 
 
         //megosztáshoz long click on item
+
+
         mListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
 
                 final AlertDialog.Builder alertDialog = new AlertDialog.Builder(self);
-                final ArrayAdapter<String> adapter = new ArrayAdapter<>(self,android.R.layout.simple_list_item_multiple_choice);
-                adapter.add("DummyUser1");
-                adapter.add("DummyUser2");
-                adapter.add("DummyUser3");
-                adapter.add("DummyUser4");
-                adapter.add("DummyUser5");
+
+//                final ArrayAdapter<String> adapter = new ArrayAdapter<>(self,android.R.layout.simple_list_item_multiple_choice);
+//                adapter.add("DummyUser1");
+//                adapter.add("DummyUser2");
+//                adapter.add("DummyUser3");
+//                adapter.add("DummyUser4");
+//                adapter.add("DummyUser5");
+
+                CharSequence[] sq = new CharSequence[5];
+                sq[0]=("DummyUser1");
+                sq[1]=("DummyUser2");
+                sq[2]=("DummyUser3");
+                sq[3]=("DummyUser4");
+                sq[4]=("DummyUser5");
+
+                int len = adapter.getCount();
+                final boolean[] checkArray = new boolean[len];
+                for (int i = 0; i < checkArray.length; i++) {
+                    checkArray[i] = false;
+
+                }
 
                 alertDialog
                         .setTitle(R.string.share_shclist_prompt_title)
@@ -94,6 +111,12 @@ public class ShopItemListPickerActivity extends AppCompatActivity {
                         })
 
 
+                        .setMultiChoiceItems(sq, checkArray, new DialogInterface.OnMultiChoiceClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+                                checkArray[which]=isChecked;
+                            }
+                        })
 
 
                         .show();
