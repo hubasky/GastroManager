@@ -50,13 +50,13 @@
             <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/appCompatTextView2"
                 style="@style/MainButtonTextStyle"
-                android:text="@string/shopping_list_str"
+                android:text="@string/reciepe_str"
                 />
 
             <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/appCompatTextView3"
                 style="@style/MainButtonTextStyle"
-                android:text="@string/diet_manager_str"
+                android:text="@string/shopping_list_str"
                 />
         </GridLayout>
     </RelativeLayout>

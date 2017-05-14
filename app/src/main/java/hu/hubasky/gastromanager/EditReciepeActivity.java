@@ -34,6 +34,7 @@ public class EditReciepeActivity extends AppCompatActivity {
     public static final String EXTRA_INVALIDATEVISUAL = "";
     ListView ingredientsListView;
     EditText descriptionEditText;
+    EditText titleEditText;
     Button btnaddIngredient;
     Button btncancelEdit;
     Button btnsaveEdit;
@@ -48,6 +49,7 @@ public class EditReciepeActivity extends AppCompatActivity {
         final Context self = this;
 
         descriptionEditText = (EditText) findViewById(R.id.edit_reciepe_description_text);
+        titleEditText = (EditText) findViewById(R.id.edit_reciepe_title_text);
         ingredientsListView = (ListView) findViewById(R.id.edit_reciepe_ingredients_list);
         btnaddIngredient = (Button) findViewById(R.id.edit_reciepe_add_ingredient);
         btncancelEdit = (Button) findViewById(R.id.edit_reciepe_cancel_button);

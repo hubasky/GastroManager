@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
@@ -15,7 +16,7 @@
         android:paddingTop="@dimen/activity_vertical_margin">
 
         <ListView
-            android:layout_width="match_parent"
+            android:layout_width="200dp"
             android:layout_height="200dp"
             android:id="@+id/edit_reciepe_ingredients_list"
             android:background="@color/listBackground"
@@ -26,28 +27,27 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/edit_reciepe_description_hint_text"
+            android:inputType="text"
+            android:background="@color/listBackground"
+            android:padding="8dp"
+            android:id="@+id/edit_reciepe_title_text"
+            android:layout_below="@+id/edit_reciepe_add_ingredient"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:maxLines="1"
+            />
+
+        <android.support.v7.widget.AppCompatEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/edit_reciepe_description_hint_text"
             android:inputType="textCapSentences|textMultiLine|text"
             android:background="@color/listBackground"
             android:padding="8dp"
             android:id="@+id/edit_reciepe_description_text"
-            android:layout_below="@+id/edit_reciepe_add_ingredient"
+            android:layout_below="@+id/edit_reciepe_title_text"
             android:layout_marginTop="16dp"
             android:layout_marginBottom="16dp"/>
-
-        <android.support.v7.widget.AppCompatButton
-            android:text="@string/cancel_button_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/edit_reciepe_description_text"
-            android:id="@+id/edit_reciepe_cancel_button" />
-
-        <android.support.v7.widget.AppCompatButton
-            android:text="@string/save_button_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/edit_reciepe_save_button"
-            android:layout_alignRight="@id/edit_reciepe_ingredients_list"
-            android:layout_below="@+id/edit_reciepe_description_text"/>
 
         <android.support.v7.widget.AppCompatButton
             android:text="@string/add_ingredient"
@@ -56,6 +56,32 @@
             android:id="@+id/edit_reciepe_add_ingredient"
             android:layout_below="@+id/edit_reciepe_ingredients_list"
             android:layout_centerHorizontal="true" />
+
+        <android.support.v7.widget.AppCompatButton
+            android:text="@string/cancel_button_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/edit_reciepe_cancel_button"
+            android:layout_below="@+id/edit_reciepe_ingredients_list"
+            android:layout_alignParentStart="true" />
+
+        <android.support.v7.widget.AppCompatButton
+            android:text="@string/save_button_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/edit_reciepe_save_button"
+            android:layout_below="@+id/edit_reciepe_ingredients_list"
+            android:layout_alignParentEnd="true" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageView2"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="20dp"
+            android:layout_toEndOf="@+id/edit_reciepe_ingredients_list"
+            android:layout_alignBottom="@+id/edit_reciepe_ingredients_list" />
 
     </RelativeLayout>
 </ScrollView>
