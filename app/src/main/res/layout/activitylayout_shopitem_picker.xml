@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/plcholder"
+        android:layout_centerHorizontal="true"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        android:layout_margin="10dp"
+        android:textColor="@color/colorPrimaryDark"
+        android:id="@+id/textView_shhoppingListLabel"
+        />
+
+    <ListView
+        android:id="@+id/listview"
+        android:layout_below="@id/textView_shhoppingListLabel"
+        android:layout_marginTop="25dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+    </ListView>
+
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/add_shopitem_btn"
+        style="@style/AddButtonStyle"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true" />
+
+
+
+
+</RelativeLayout>

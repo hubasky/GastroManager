@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+
+    <TextView
+        android:gravity="center_vertical"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="60dp"
+        android:textSize="18sp"
+        android:text="@string/plcholder"
+        android:id="@+id/textView1"
+        android:layout_alignParentTop="true"
+         android:layout_alignParentStart="true"
+        android:maxLines="1"
+        />
+
+    <TextView
+        android:gravity="center_vertical"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:layout_marginTop="-60dp"
+        android:text="@string/shclist_sender"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:id="@+id/textView2"
+        android:layout_below="@+id/textView1"
+        />
+    <TextView
+        android:gravity="center_vertical"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:layout_marginTop="-60dp"
+        android:text="@string/plcholder"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:id="@+id/textView2_dyn"
+        android:layout_below="@+id/textView1"
+        android:layout_toEndOf="@+id/textView2"
+        android:maxLines="1"
+        />
+
+    <TextView
+        android:gravity="center_vertical"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:text="@string/shclist_sharedwith"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:id="@+id/textView3"
+        android:layout_below="@+id/textView2"
+        />
+
+    <TextView
+        android:gravity="center_vertical"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:text="@string/plcholder"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:id="@+id/textView3_dyn"
+        android:layout_below="@+id/textView2"
+        android:layout_toEndOf="@+id/textView3"
+        android:maxLines="1"
+        />
+
+
+
+
+
+</RelativeLayout>
