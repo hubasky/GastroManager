@@ -1,27 +1,19 @@
 package hu.hubasky.gastromanager;
 
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.InputType;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CompoundButton;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 
-import hu.hubasky.gastromanager.control.Controls;
-import hu.hubasky.gastromanager.entity.EgyediKulcs;
 import hu.hubasky.gastromanager.entity.bevlist.VasarlandoAlapanyag;
-import hu.hubasky.gastromanager.viewmodel.ShopItem;
 import hu.hubasky.gastromanager.viewmodel.ShopItemListAdapter;
 import hu.hubasky.gastromanager.viewmodel.SwipeDismissListViewTouchListener;
 
@@ -36,11 +28,11 @@ public class ShopItemPickerActivity extends AppCompatActivity implements
     private ListView lv;
     private TextView tv;
 
-    private ArrayList<VasarlandoAlapanyag> shopItemList;
+    private ArrayList<VasarlandoAlapanyag> kosar;
     private ShopItemListAdapter siAdapter;
     public static final String EXTRA_ID = "hu.hubasky.gastromanager._ID";
 
-    private String loggedinUsrID;
+    private String passedID;
 
     String passedName = null;
 
@@ -54,23 +46,29 @@ public class ShopItemPickerActivity extends AppCompatActivity implements
         lv = (ListView) findViewById(R.id.listview);
         tv = (TextView) findViewById(R.id.textView_shhoppingListLabel);
 
-        passedName = getIntent().getStringExtra(ShopItemListPickerActivity.EXTRA_NAME); //befejezni!
-        loggedinUsrID = getIntent().getStringExtra(Controls.EXTRA_loggedinUsrID);
+        passedName = getIntent().getStringExtra(ShopItemListPickerActivity.EXTRA_NAME);
+        passedID = getIntent().getStringExtra(ShopItemListPickerActivity.EXTRA_ID);
+        //loggedinUsrID = getIntent().getStringExtra(Controls.EXTRA_loggedinUsrID);
+
+        //TODO: Firebase-ből lekérni, különben null lesz!
 
         //kivételesen elkapjuk a nullt, hogy ne kelljen visszanyomozni idáig - úgyis hibára fut
-        if (shopItemList == null) {
-            throw new NullPointerException("Nullpointer: hiányzik az arraylist a shopitem objektumból!");
+        if (kosar == null) {
+
+            kosar = new ArrayList<>(32);
+
+//            throw new NullPointerException("Nullpointer: hiányzik az arraylist a shopitem objektumból!");
         }
 
-        for (int i = 0; i < shopItemList.size(); i++) {
-            Log.d(TAG, "onCreate: " +  shopItemList.get(i).getAlapanyag().getNeve());
+        for (int i = 0; i < kosar.size(); i++) {
+            Log.d(TAG, "onCreate: " +  kosar.get(i).getAlapanyag().getNeve());
 
         }
 
 //        lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
 //            @Override
 //            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-//                shopItemList.remove(position);
+//                kosar.remove(position);
 //                siAdapter.notifyDataSetChanged();
 //                lv.requestLayout();
 //                return true;
@@ -91,7 +89,7 @@ public class ShopItemPickerActivity extends AppCompatActivity implements
 
 
 //                                    lv.requestLayout();
-//                                    shopItemList.remove(position);
+//                                    kosar.remove(position);
 //                                    siAdapter.notifyDataSetChanged();
                                     deleteShopItem(position);
 
@@ -112,7 +110,7 @@ public class ShopItemPickerActivity extends AppCompatActivity implements
 
                 Intent addShopItem = new Intent(self, AddIngredientActivity.class);
 
-                addShopItem.putExtra(EXTRA_ID, loggedinUsrID);
+                addShopItem.putExtra(EXTRA_ID, passedID);
                 startActivity(addShopItem);
 
             }
@@ -123,7 +121,7 @@ public class ShopItemPickerActivity extends AppCompatActivity implements
 
         //this.play (Display)
         tv.setText(passedName);
-        siAdapter = new ShopItemListAdapter(shopItemList, this);
+        siAdapter = new ShopItemListAdapter(kosar, this);
         lv.setAdapter(siAdapter);
     }
 
@@ -133,7 +131,7 @@ public class ShopItemPickerActivity extends AppCompatActivity implements
 
         int pos = lv.getPositionForView(buttonView);
         if (pos != ListView.INVALID_POSITION) {
-            VasarlandoAlapanyag p = shopItemList.get(pos);
+            VasarlandoAlapanyag p = kosar.get(pos);
             p.setStatus(isChecked);
 
             Toast.makeText(
@@ -146,8 +144,8 @@ public class ShopItemPickerActivity extends AppCompatActivity implements
     public int deleteShopItem(int position){
 
         //TODO: firebase implementáció
-        if(position<=shopItemList.size()) {
-            shopItemList.remove(position);
+        if(position<= kosar.size()) {
+            kosar.remove(position);
             siAdapter.notifyDataSetChanged();
             return 0;
 
@@ -158,8 +156,8 @@ public class ShopItemPickerActivity extends AppCompatActivity implements
 
     public void deleteAll(){
         //TODO: firebase implementáció
-        for (int i = 0; i < shopItemList.size(); i++) {
-            shopItemList.clear();
+        for (int i = 0; i < kosar.size(); i++) {
+            kosar.clear();
         }
 
         siAdapter.notifyDataSetChanged();

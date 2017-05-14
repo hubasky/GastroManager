@@ -52,7 +52,7 @@ public final class DmyReceptNyilvantarto extends AsyncControlBase implements Rec
                 return false;
             }
             Recept r = new Recept(
-                    usr.get(0),
+
                     EReceptStatus.PUBLIKUS,
                     "Makra recept",
                     "Ez egy finom kis étel",
@@ -116,15 +116,15 @@ public final class DmyReceptNyilvantarto extends AsyncControlBase implements Rec
         // saját vagy kedvenc
         List<Recept> ret = new ArrayList<>(32);
 
-        if (jellemzok.isSajat()) {
-            // sajátok kellenek.
-            ret.addAll(Helper.filter(receptek, new Helper.Checker<Recept>() {
-                @Override
-                public boolean check(Recept param) {
-                    return param.getTulajdonos().isAzonos(jellemzok.getFelhasznalo().getUsernev());
-                }
-            }));
-        }
+//        if (jellemzok.isSajat()) {
+//            // sajátok kellenek.
+//            ret.addAll(Helper.filter(receptek, new Helper.Checker<Recept>() {
+//                @Override
+//                public boolean check(Recept param) {
+//                    return param.getTulajdonos().isAzonos(jellemzok.getFelhasznalo().getUsernev());
+//                }
+//            }));
+//        }
 
         if (jellemzok.isKedvenc()) {
             // kedvencek kellenek.

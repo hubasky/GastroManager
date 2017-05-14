@@ -30,7 +30,7 @@ public final class Recept extends Cimkezheto {
     /**
      * A recept tulajdonosa.
      */
-    private Felhasznalo tulajdonos;
+//    private Felhasznalo tulajdonos;
     /**
      * Az érkezések.
      */
@@ -65,19 +65,18 @@ public final class Recept extends Cimkezheto {
     /**
      * Recept létrehozása.
      *
-     * @param tulajdonos  a recept tulajdonosa.
+//     * @param tulajdonos  a recept tulajdonosa.
      * @param status      a recept státusza.
      * @param neve        a recept neve.
      * @param leirasa     a szöveges leírása.
      * @param fenykepeURL a fénykép URL.
      * @param adag        hány adagra való.
      */
-    public Recept(Felhasznalo tulajdonos, EReceptStatus status, String neve, String leirasa, String fenykepeURL, double adag) {
+    public Recept(EReceptStatus status, String neve, String leirasa, String fenykepeURL, double adag) {
         setNeve(neve);
         setLeirasa(leirasa);
         setFenykepeURL(fenykepeURL);
         setAdag(adag);
-        setTulajdonos(tulajdonos);
         setStatus(status);
     }
 
@@ -109,14 +108,14 @@ public final class Recept extends Cimkezheto {
      *
      * @return az tulajdonos.
      */
-    public Felhasznalo getTulajdonos() {
-        return tulajdonos;
-    }
+//    public Felhasznalo getTulajdonos() {
+//        return tulajdonos;
+//    }
 
-    public void setTulajdonos(Felhasznalo tulajdonos) {
-        if (tulajdonos == null) throw new IllegalArgumentException();
-        this.tulajdonos = tulajdonos;
-    }
+//    public void setTulajdonos(Felhasznalo tulajdonos) {
+//        if (tulajdonos == null) throw new IllegalArgumentException();
+//        this.tulajdonos = tulajdonos;
+//    }
 
     /**
      * Visszaadja a recept szöveges leírását.
@@ -276,7 +275,7 @@ public final class Recept extends Cimkezheto {
      * @return az új példány.
      */
     public Recept masolas() {
-        Recept ret = new Recept(tulajdonos, status, neve, leirasa, fenykepeURL, adag);
+        Recept ret = new Recept(status, neve, leirasa, fenykepeURL, adag);
         // cimkék másolása
         masolasIde(ret);
 
@@ -295,20 +294,20 @@ public final class Recept extends Cimkezheto {
      *
      * @param felhasznalo a felhasználó.
      */
-    public void privat(Felhasznalo felhasznalo) {
-        tulajdonos = felhasznalo;
-        status = EReceptStatus.PRIVAT;
-    }
+//    public void privat(Felhasznalo felhasznalo) {
+//        tulajdonos = felhasznalo;
+//        status = EReceptStatus.PRIVAT;
+//    }
 
     /**
      * Megosztottá teszi a receptet.
      *
      * @param felhasznalo a felhasználó.
      */
-    public void megosztott(Felhasznalo felhasznalo) {
-        tulajdonos = felhasznalo;
-        status = EReceptStatus.MEGOSZTOTT;
-    }
+//    public void megosztott(Felhasznalo felhasznalo) {
+//        tulajdonos = felhasznalo;
+//        status = EReceptStatus.MEGOSZTOTT;
+//    }
 
     /**
      * Publikussá teszi a receptet.

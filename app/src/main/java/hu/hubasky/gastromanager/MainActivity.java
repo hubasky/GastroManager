@@ -98,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
 
         reciepe_manager = (Button) findViewById(R.id.reciepe_button);
         shopping_list = (Button) findViewById(R.id.shopping_list_button);
-        diet_manager = (Button) findViewById(R.id.diet_manager_buton);
+        //diet_manager = (Button) findViewById(R.id.diet_manager_buton);
 
         reciepe_manager.setOnClickListener(new View.OnClickListener() {
             @Override

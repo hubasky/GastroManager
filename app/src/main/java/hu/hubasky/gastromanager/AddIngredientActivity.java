@@ -24,6 +24,7 @@ import hu.hubasky.gastromanager.entity.alapanyag.Alapanyag;
 import hu.hubasky.gastromanager.entity.alapanyag.AlapanyagKeresesiJellemzok;
 import hu.hubasky.gastromanager.viewmodel.IngredientListAdapter;
 import hu.hubasky.gastromanager.viewmodel.SingleTextAdapter;
+import hu.hubasky.gastromanager.viewmodel.SwipeDismissListViewTouchListener;
 
 import static android.R.attr.data;
 
@@ -108,19 +109,22 @@ public class AddIngredientActivity extends AppCompatActivity {
             }
         });
 
-        ingredientsListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                view.setSelected(true);
-                Alapanyag ingredient = selectIngredient(position);
+//        ingredientsListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+//            @Override
+//            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+//                view.setSelected(true);
+//                Alapanyag ingredient = selectIngredient(position);
+//
+//                Intent editIngredient = new Intent(self, EditIngredientActivity.class);
+//                editIngredient.putExtra("ingredient", ingredient.getUniqueKey());
+//                startActivityForResult(editIngredient, 1001);
+//
+//                return true;
+//            }
+//        });
 
-                Intent editIngredient = new Intent(self, EditIngredientActivity.class);
-                editIngredient.putExtra("ingredient", ingredient.getUniqueKey());
-                startActivityForResult(editIngredient, 1001);
 
-                return true;
-            }
-        });
+
 
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override

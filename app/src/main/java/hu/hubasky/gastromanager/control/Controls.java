@@ -29,6 +29,8 @@ public final class Controls {
         this.actualContext = actualContext;
     }
 
+    public static final String EXTRA_INVALIDATEVISUAL = "INVALIDATEBOOL";
+
     /**
      * Alapanyag nyilvántartó.
      *

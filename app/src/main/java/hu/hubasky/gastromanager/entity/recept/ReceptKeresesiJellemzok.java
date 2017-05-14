@@ -592,12 +592,12 @@ public final class ReceptKeresesiJellemzok {
             // adag szerint nem jó
             return false;
         }
-        if (keresoFelhasznalo.equals(recept.getTulajdonos())) {
-            // a keresést végző felhasználó nem tulajdonosa a receptnek.
-            if (recept.getStatus() != EReceptStatus.PUBLIKUS) {
-                return false;
-            }
-        }
+//        if (keresoFelhasznalo.equals(recept.getTulajdonos())) {
+//            // a keresést végző felhasználó nem tulajdonosa a receptnek.
+//            if (recept.getStatus() != EReceptStatus.PUBLIKUS) {
+//                return false;
+//            }
+//        }
 
         // ha meg van adva kezdő recept
         if (kezdoRecept != null && kezdoRecept.isUnuiqueKey() && recept.isUnuiqueKey()) {

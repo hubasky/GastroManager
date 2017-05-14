@@ -28,7 +28,7 @@ public class FirebaseReciepe {
     }
 
     public FirebaseReciepe(Recept reciepe) {
-        this.userId = reciepe.getTulajdonos().getUniqueKey();
+//        this.userId = reciepe.getTulajdonos().getUniqueKey();
         this.state = "PUBLIKUS";
         this.name = reciepe.getNeve();
         this.description = reciepe.getLeirasa();
@@ -42,7 +42,7 @@ public class FirebaseReciepe {
 
     public Recept convertToReciepe(String reciepeId, Felhasznalo user) {
         Recept result = new Recept(
-                user,
+//                user,
                 EReceptStatus.PUBLIKUS,
                 name,
                 description,

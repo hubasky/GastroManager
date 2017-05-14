@@ -19,14 +19,14 @@ import hu.hubasky.gastromanager.entity.felhasznalo.Felhasznalo;
 public final class BevasarloLista extends EgyediKulcs{
 
 
-    public Felhasznalo getTulajdonos() {
-        return tulajdonos;
-    }
+//    public Felhasznalo getTulajdonos() {
+//        return tulajdonos;
+//    }
 
     /**
      * A lista létrehozó tulajdonosa.
      */
-    private final Felhasznalo tulajdonos;
+    //private final Felhasznalo tulajdonos;
 
     public String getBevasarloListaNev() {
         return bevasarloListaNev;
@@ -56,29 +56,29 @@ public final class BevasarloLista extends EgyediKulcs{
     /**
      * Üres lista létrehozása.
      *
-     * @param tulajdonos a tulajdonos.
+//     * @param tulajdonos a tulajdonos.
      */
-    public BevasarloLista(Felhasznalo tulajdonos, String label) {
-        if (tulajdonos == null) {
-            throw new IllegalArgumentException("A tulajdonos felhasznnáló nem lehet null!");
-        }
-        this.tulajdonos = tulajdonos;
+//    public BevasarloLista(String label) {
+////        if (tulajdonos == null) {
+////            throw new IllegalArgumentException("A tulajdonos felhasznnáló nem lehet null!");
+////        }
+////        this.tulajdonos = tulajdonos;
+//
+//        //uniqueKey alapján lekérni a tartalmat
+//        vasarlandok = new HashSet<>();
+//
+//        sharedWith = new HashSet<>();
+//
+//        bevasarloListaNev = label;
+//
+//    }
 
-        //uniqueKey alapján lekérni a tartalmat
-        vasarlandok = new HashSet<>();
-
-        sharedWith = new HashSet<>();
-
-        bevasarloListaNev = label;
-
-    }
-
-    public BevasarloLista(String tulajdonosUniqueKey, String label) {
-        if (tulajdonosUniqueKey == null) {
-            throw new IllegalArgumentException("A tulajdonos felhasznnáló ID nem lehet null!");
-        }
-        //TODO: implementlni a uniquekey alapján a felhasználó lekérését
-        this.tulajdonos = new Felhasznalo(null, null, null);
+    public BevasarloLista(String label) {
+//        if (tulajdonosUniqueKey == null) {
+//            throw new IllegalArgumentException("A tulajdonos felhasznnáló ID nem lehet null!");
+//        }
+//        TODO: implementlni a uniquekey alapján a felhasználó lekérését
+//        this.tulajdonos = new Felhasznalo(null, null, null);
 
         //uniqueKey alapján lekérni a tartalmat
         vasarlandok = new HashSet<>();

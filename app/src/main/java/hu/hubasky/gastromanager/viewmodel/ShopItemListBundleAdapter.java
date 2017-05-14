@@ -48,14 +48,14 @@ public class ShopItemListBundleAdapter extends ArrayAdapter<BevasarloLista> {
     @Override
     public View getView(int position, View convertView, @NonNull ViewGroup parent) {
         String name = getItem(position).getBevasarloListaNev();
-        String senderName = getItem(position).getTulajdonos().getNev();
+//        String senderName = getItem(position).getTulajdonos().getNev();
 
-        ArrayList<Felhasznalo> tmp = new ArrayList<>(getItem(position).getSharedWith());
-        String sharedWith = "";
-        for (int i = 0; i < tmp.size(); i++) {
-            sharedWith = tmp.get(i).getNev() + " ";
-
-        }
+//        ArrayList<Felhasznalo> tmp = new ArrayList<>(getItem(position).getSharedWith());
+//        String sharedWith = "";
+//        for (int i = 0; i < tmp.size(); i++) {
+//            sharedWith = tmp.get(i).getNev() + " ";
+//
+//        }
 
 
         final View result;
@@ -85,8 +85,8 @@ public class ShopItemListBundleAdapter extends ArrayAdapter<BevasarloLista> {
         lastPosition = position;
 
         holder.name.setText(name);
-        holder.senderName.setText(senderName);
-        holder.sharedWith.setText(sharedWith);
+//        holder.senderName.setText(senderName);
+//        holder.sharedWith.setText(sharedWith);
 
 
         return convertView;

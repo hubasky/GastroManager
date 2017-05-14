@@ -51,7 +51,7 @@ public class ShopItemListPickerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activitylayout_shopitemlist_picker);
 
-        loggedinUsrID = getIntent().getStringExtra(Controls.EXTRA_loggedinUsrID);
+        //loggedinUsrID = getIntent().getStringExtra(Controls.EXTRA_loggedinUsrID);
 
         Log.d(TAG, "onCreate: Started.");
         mListView = (ListView) findViewById(R.id.listView_shclist);
@@ -68,7 +68,7 @@ public class ShopItemListPickerActivity extends AppCompatActivity {
 
                 shoppingListIntent.putExtra(EXTRA_ID, selectedList.getUniqueKey());
                 shoppingListIntent.putExtra(EXTRA_NAME, selectedName);
-                shoppingListIntent.putExtra(Controls.EXTRA_loggedinUsrID, loggedinUsrID); //session
+                //shoppingListIntent.putExtra(Controls.EXTRA_loggedinUsrID, loggedinUsrID); //session
                 startActivity(shoppingListIntent);
             }
         });
@@ -165,7 +165,7 @@ public class ShopItemListPickerActivity extends AppCompatActivity {
                                 String selectedName = input.getText().toString();
 
                                 //TODO: firebase-ből loggedinUsrID alapján a felhasználót lekérni a konstruktorban
-                                BevasarloLista selectedList = new BevasarloLista(loggedinUsrID, selectedName);
+                                BevasarloLista selectedList = new BevasarloLista(selectedName);
 
                                 //parcelable kell, hogy legyen a shoppingcart!
                                 shoppingListIntent.putExtra(EXTRA_ID, selectedList.getUniqueKey());
