@@ -14,6 +14,7 @@
     <string name="delete_ingredient_text">Hozzávaló törlése</string>
     <string name="add_ingredient">Új hozzávaló</string>
     <string name="edit_reciepe_description_hint_text">Írd le a recept elkészítési módját.</string>
+    <string name="edit_reciepe_title_hint_text">Írd be a recept címét</string>
 
     <string name="title_activity_login">Bejelentkezés</string>
 

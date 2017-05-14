@@ -12,24 +12,6 @@
         android:orientation="horizontal"
         android:id="@+id/reciepe_navigation_layout">
 
-        <android.support.v7.widget.AppCompatButton
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:id="@+id/favourite_reciepes_button"
-            android:layout_weight="1"/>
-
-        <android.support.v7.widget.AppCompatButton
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:id="@+id/public_reciepes_button"
-            android:layout_weight="1"/>
-
-        <android.support.v7.widget.AppCompatButton
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:id="@+id/my_reciepes_button"
-            android:layout_weight="1"/>
-
     </LinearLayout>
 
     <android.support.v7.widget.AppCompatEditText

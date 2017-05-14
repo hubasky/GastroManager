@@ -109,19 +109,19 @@ public class AddIngredientActivity extends AppCompatActivity {
             }
         });
 
-//        ingredientsListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-//            @Override
-//            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-//                view.setSelected(true);
-//                Alapanyag ingredient = selectIngredient(position);
-//
-//                Intent editIngredient = new Intent(self, EditIngredientActivity.class);
-//                editIngredient.putExtra("ingredient", ingredient.getUniqueKey());
-//                startActivityForResult(editIngredient, 1001);
-//
-//                return true;
-//            }
-//        });
+        ingredientsListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                view.setSelected(true);
+                Alapanyag ingredient = selectIngredient(position);
+
+                Intent editIngredient = new Intent(self, EditIngredientActivity.class);
+                editIngredient.putExtra("ingredient", ingredient.getUniqueKey());
+                startActivityForResult(editIngredient, 1001);
+
+                return true;
+            }
+        });
 
 
 

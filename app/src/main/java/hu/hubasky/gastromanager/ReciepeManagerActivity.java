@@ -3,6 +3,8 @@ package hu.hubasky.gastromanager;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -28,6 +30,8 @@ public class ReciepeManagerActivity extends AppCompatActivity {
     private final AppCompatActivity self = this;
     private boolean invalidateVisual;
     public static final String EXTRA_RECIPE = "recipe_extra";
+    private TextView searchBox;
+    private ReciepeAdapter reciepeAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +40,9 @@ public class ReciepeManagerActivity extends AppCompatActivity {
 
         invalidateVisual = getIntent().getBooleanExtra(Controls.EXTRA_INVALIDATEVISUAL, true);
 
-        Log.d(TAG, "onCreate: INVALIDATEVISUAL:" + Boolean.toString(invalidateVisual));
+
+
+
 
         List<ReciepeVM> reciepesList = new ArrayList<ReciepeVM>();
         Random rand = new Random();
@@ -46,10 +52,10 @@ public class ReciepeManagerActivity extends AppCompatActivity {
                     new ArrayList<IngredientVM>()));
         }
 
-        final ReciepeAdapter reciepeAdapter = new ReciepeAdapter(reciepesList, this);
-        ListView reciepeListView = (ListView) findViewById(R.id.reciepe_list);
-
+        reciepeAdapter = new ReciepeAdapter(reciepesList, this);
+        final ListView reciepeListView = (ListView) findViewById(R.id.reciepe_list);
         reciepeListView.setAdapter(reciepeAdapter);
+
 
         addReciepeButton = (Button) findViewById(R.id.add_reciepe_btn);
         addReciepeButton.setOnClickListener(new View.OnClickListener() {
@@ -64,11 +70,32 @@ public class ReciepeManagerActivity extends AppCompatActivity {
             }
         });
 
+        searchBox = (TextView) findViewById(R.id.reciepe_searchfield);
+        searchBox.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                reciepeAdapter.setSearchString(searchBox.getText());
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
         if (invalidateVisual) {
             reciepeAdapter.notifyDataSetChanged();
         }
 
     }
+
 
     @Override
     protected void onResume() {
@@ -76,4 +103,5 @@ public class ReciepeManagerActivity extends AppCompatActivity {
 
         Controls.getInstance().setActualContext(this);
     }
+
 }

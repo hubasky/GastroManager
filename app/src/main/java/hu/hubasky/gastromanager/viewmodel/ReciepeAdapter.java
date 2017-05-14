@@ -19,11 +19,25 @@ public class ReciepeAdapter extends BaseAdapter {
 
     private List<ReciepeVM> reciepes;
     private Context context;
+    private RelativeLayout rootView;
+    private ReciepeViewHolder holder;
+
+    public CharSequence getSearchString() {
+        return searchString;
+    }
+
+    public void setSearchString(CharSequence searchString) {
+        this.searchString = searchString;
+    }
+
+    private CharSequence searchString;
 
     public ReciepeAdapter(List<ReciepeVM> reciepes, Context context) {
         this.reciepes = reciepes;
         this.context = context;
     }
+
+
 
     @Override
     public int getCount() {
@@ -43,9 +57,9 @@ public class ReciepeAdapter extends BaseAdapter {
     @NotNull
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        RelativeLayout rootView = (RelativeLayout) convertView;
+        rootView = (RelativeLayout) convertView;
 
-        ReciepeViewHolder holder = new ReciepeViewHolder();
+        holder = new ReciepeViewHolder();
 
         if (rootView == null) {
             // rootView = (RelativeLayout) View.inflate(parent.getContext(), R.layout.reciepe_list_layout, null);
@@ -64,6 +78,21 @@ public class ReciepeAdapter extends BaseAdapter {
 
         holder.titleText.setText(reciepe.getName());
         holder.descriptionText.setText(reciepe.getDescription());
+
+
+        if(searchString != null){
+            if(searchString.toString() == "" || reciepe.getName().contains(searchString.toString())) {
+                rootView.setVisibility(View.VISIBLE);
+            } else {
+                rootView.setVisibility(View.INVISIBLE);
+            }
+        } else {
+
+                rootView.setVisibility(View.VISIBLE);
+
+        }
+
+
 
         return rootView;
     }

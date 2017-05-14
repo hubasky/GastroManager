@@ -27,20 +27,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/edit_reciepe_description_hint_text"
-            android:inputType="text"
-            android:background="@color/listBackground"
-            android:padding="8dp"
-            android:id="@+id/edit_reciepe_title_text"
-            android:layout_below="@+id/edit_reciepe_add_ingredient"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="16dp"
-            android:maxLines="1"
-            />
-
-        <android.support.v7.widget.AppCompatEditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/edit_reciepe_description_hint_text"
             android:inputType="textCapSentences|textMultiLine|text"
             android:background="@color/listBackground"
             android:padding="8dp"
@@ -82,6 +68,19 @@
             android:layout_marginStart="20dp"
             android:layout_toEndOf="@+id/edit_reciepe_ingredients_list"
             android:layout_alignBottom="@+id/edit_reciepe_ingredients_list" />
+
+        <android.support.v7.widget.AppCompatEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/edit_reciepe_title_hint_text"
+            android:inputType="text"
+            android:background="@color/listBackground"
+            android:padding="8dp"
+            android:id="@+id/edit_reciepe_title_text"
+            android:layout_marginTop="16dp"
+            android:maxLines="1"
+            android:layout_below="@+id/edit_reciepe_add_ingredient"
+            android:layout_alignParentStart="true" />
 
     </RelativeLayout>
 </ScrollView>
