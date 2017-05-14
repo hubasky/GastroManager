@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_edit_ingredient"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        tools:context="hu.hubasky.gastromanager.AddIngredientActivity">
+
+        <android.support.v7.widget.AppCompatEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/edit_ingredient_search_ingredient_hint"
+            android:id="@+id/edit_ingredient_search_edit_text"
+            android:background="@color/listBackground"
+            android:padding="8dp"
+            android:layout_marginBottom="16dp"/>
+
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:id="@+id/edit_ingredient_ingredients_list"
+            android:layout_below="@+id/edit_ingredient_search_edit_text"
+            android:background="@color/listBackground"
+            android:choiceMode="singleChoice"
+            android:listSelector="#BBBBBB"
+            android:layout_marginBottom="16dp"
+            android:divider="@color/transparent"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/edit_ingredient_ingredients_list"
+            android:id="@+id/edit_ingredient_add_quantity_wrapper"
+            android:layout_marginBottom="16dp">
+
+            <android.support.v7.widget.AppCompatEditText
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:padding="8dp"
+                android:background="@color/listBackground"
+                android:hint="@string/add_quantity"
+                android:id="@+id/edit_ingredient_quantity_edit_text"/>
+
+            <android.support.v7.widget.AppCompatSpinner
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/edit_ingredient_unit_type_spinner"/>
+
+        </LinearLayout>
+
+        <android.support.v7.widget.AppCompatButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/cancel_button_text"
+            android:id="@+id/edit_ingredient_cancel_button"
+            android:layout_below="@+id/edit_ingredient_add_quantity_wrapper"/>
+
+        <android.support.v7.widget.AppCompatButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/new_button_text"
+            android:id="@+id/edit_ingredient_new_button"
+            android:layout_below="@+id/edit_ingredient_add_quantity_wrapper"
+            android:layout_centerHorizontal="true"/>
+
+        <android.support.v7.widget.AppCompatButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/ok_button_text"
+            android:id="@+id/edit_ingredient_ok_button"
+            android:layout_below="@+id/edit_ingredient_add_quantity_wrapper"
+            android:layout_alignRight="@+id/edit_ingredient_ingredients_list"/>
+
+    </RelativeLayout>
+</ScrollView>
