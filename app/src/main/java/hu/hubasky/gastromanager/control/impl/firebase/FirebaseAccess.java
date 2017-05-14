@@ -1,48 +1,43 @@
 package hu.hubasky.gastromanager.control.impl.firebase;
 
-import android.app.ActivityManager;
-import android.app.Application;
-import android.content.Context;
-import android.util.Log;
-
-import com.google.firebase.database.ChildEventListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.MutableData;
-import com.google.firebase.database.OnDisconnect;
-import com.google.firebase.database.Transaction;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import hu.hubasky.gastromanager.entity.alapanyag.Alapanyag;
-
-/**
- * Created by Peet on 2017. 05. 11..
- */
+import hu.hubasky.gastromanager.entity.bevlist.BevasarloLista;
+import hu.hubasky.gastromanager.entity.recept.Hozzavalo;
+import hu.hubasky.gastromanager.entity.recept.Recept;
 
 public class FirebaseAccess {
 
     private static FirebaseAccess instance = null;
 
-    private final FirebaseDatabase db;
-    private final DatabaseReference ingredientsRef;
+    private List<Alapanyag> ingredients;
+    private List<Hozzavalo> ingredientQuantities;
+    private List<Recept> reciepes;
+    private List<BevasarloLista> shoppingLists;
 
+    public FirebaseAccess() {
+        ingredients = new ArrayList<>();
+        ingredientQuantities = new ArrayList<>();
+        reciepes = new ArrayList<>();
+        shoppingLists = new ArrayList<>();
+    }
 
-    private final String INGREDIENTS_SCHEMA = "ingredients";
-
-//    private final List<Alapanyag> ingredients = new ArrayList<>();
-    private List<MutableData> ingredients;
-    public List<MutableData> getIngredients() {
+    public List<Alapanyag> getIngredients() {
         return ingredients;
     }
 
-    private FirebaseAccess() {
-        db = FirebaseDatabase.getInstance();
-        ingredientsRef = db.getReference(INGREDIENTS_SCHEMA);
-        getIngredientsList();
+    public List<Hozzavalo> getIngredientQuantities() {
+        return ingredientQuantities;
+    }
+
+    public List<Recept> getReciepes() {
+        return reciepes;
+    }
+
+    public List<BevasarloLista> getShoppingLists() {
+        return shoppingLists;
     }
 
     public static FirebaseAccess getInstance() {
@@ -50,27 +45,6 @@ public class FirebaseAccess {
             FirebaseAccess.instance = new FirebaseAccess();
         }
         return FirebaseAccess.instance;
-    }
-
-    public void getIngredientsList() {
-        ingredientsRef.runTransaction(new Transaction.Handler() {
-            @Override
-            public Transaction.Result doTransaction(MutableData mutableData) {
-                for (MutableData m : mutableData.getChildren()) {
-                    Log.d("FB_LOG", m.getKey());
-                }
-
-                FirebaseAccess.getInstance().ingredients = (ArrayList<MutableData>) mutableData.getChildren();
-
-                return Transaction.success(mutableData);
-            }
-
-            @Override
-            public void onComplete(DatabaseError databaseError, boolean b, DataSnapshot dataSnapshot) {
-                Log.d("FB_LOG", "Transaction complete");
-
-            }
-        });
     }
 
 }

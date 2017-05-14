@@ -61,6 +61,37 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
+    <string name="shclist_sender">Bekűtte:</string>
+    <string name="shclist_sharedwith">Láttya ő is:</string>
+    <string name="new_shclist_prompt_title">Adj egy címet a bevásárlólistádnak!</string>
+    <string name="share_shclist_prompt_title">Bevásárlólista megosztása…</string>
+    <string name="plcholder">PlaceholderText</string>
+    <string name="edit_ingredient_search_ingredient_hint">Írd be a keresendő alapanyag nevét...</string>
+    <string name="ok_button_text">OK</string>
+    <string name="new_button_text">Új</string>
+    <string name="edit_ingredient_quantity_text">Mennyiség:</string>
+    <string name="add_quantity">Add meg a mennyiséget...</string>
+
+
+    <string name="default_data">Alap adatok</string>
+    <string name="ingredient_name">Alapanyag neve</string>
+    <string name="unit_type">Métrékegység fajtája</string>
+    <string name="unit_in_gramms">Egy egység tömege grammban</string>
+    <string name="ingredient_details">Összetétel jellemzők</string>
+    <string name="protein_content">Fehérje tartalom (%)</string>
+    <string name="fat_content">Zsír tartalom (%)</string>
+    <string name="carbo_content">Szénhidrát tartalom (%)</string>
+    <string name="energy_content">Energia tartalom 100g-ban (kJ)</string>
+
+    <string name="weight">súly</string>
+    <string name="liquid">űrmérték</string>
+    <string name="piece">darab</string>
+    <string name="write_ingredient_name">Írd be az alapanyag nevét</string>
+    <string-array name="unit_types">
+        <item>@string/weight</item>
+        <item>@string/liquid</item>
+        <item>@string/piece</item>
+    </string-array>
 
 
 </resources>

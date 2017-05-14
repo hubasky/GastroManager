@@ -21,7 +21,7 @@ public class FirebaseIngredient {
     private double energyPercent;
 
     public FirebaseIngredient() {
-        unitInG = 1;
+//        unitInG = 1;
     }
 
     public FirebaseIngredient(Alapanyag ingredient) {
@@ -46,6 +46,18 @@ public class FirebaseIngredient {
         );
         result.setUniqueKey(uniqueKey);
         return result;
+    }
+
+    public void updateIngredient(Alapanyag ingredient) {
+        ingredient.setNeve(name);
+        ingredient.setMennyisegiEgyseg(convertToUnit());
+        ingredient.setEgysegeGramm(unitInG);
+        AlapanyagJellemzok details = ingredient.getJellemzok();
+        details.setFeherjeSzazalek(proteinPercent);
+        details.setZsirSzazalek(fatPercent);
+        details.setSzenhidratSzazalek(chPercent);
+        details.setEnergiaKJ(energyPercent);
+        details.setVonatkoztatasGramm(referenceG);
     }
 
     private EMennyisegiEgyseg convertToUnit() {

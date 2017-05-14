@@ -79,35 +79,45 @@ public final class FirebaseIngredientManager extends AsyncControlBase implements
 
     @Override
     public void keres(AlapanyagKeresesiJellemzok jellemzok,  final ControlResultListener<Alapanyag> callback) {
-        // FirebaseAccess.getInstance().getIngredients();
-        // final List<Alapanyag> ingredients = new ArrayList<Alapanyag>();
 
         ingredientsDbRef.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                if (dataSnapshot != null) {
+                    final List<Alapanyag> ingredients = FirebaseAccess.getInstance().getIngredients();
 
-                final List<Alapanyag> ingredients = new ArrayList<Alapanyag>();
-                ingredients.add(dataSnapshot.getValue(FirebaseIngredient.class).convertToIngredient(dataSnapshot.getKey()));
-
-                callbackUI(new Runnable() {
-                    @Override
-                    public void run() {
-                        callback.onSuccess(ingredients);
+                    Alapanyag ingredient = findItem(dataSnapshot, ingredients);
+                    if (ingredient == null) {
+                        ingredients.add(dataSnapshot.getValue(FirebaseIngredient.class).convertToIngredient(dataSnapshot.getKey()));
                     }
-                });
+
+                    callbackUI(new Runnable() {
+                        @Override
+                        public void run() {
+                            callback.onSuccess(ingredients);
+                        }
+                    });
+                }
             }
 
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-                final List<Alapanyag> ingredients = new ArrayList<Alapanyag>();
-                ingredients.add(dataSnapshot.getValue(FirebaseIngredient.class).convertToIngredient(dataSnapshot.getKey()));
 
-                callbackUI(new Runnable() {
-                    @Override
-                    public void run() {
-                        callback.onSuccess(ingredients);
+                if (dataSnapshot != null) {
+                    final List<Alapanyag> ingredients = FirebaseAccess.getInstance().getIngredients();
+
+                    Alapanyag ingredient = findItem(dataSnapshot, ingredients);
+                    if (ingredient != null) {
+                        (dataSnapshot.getValue(FirebaseIngredient.class)).updateIngredient(ingredient);
                     }
-                });
+
+                    callbackUI(new Runnable() {
+                        @Override
+                        public void run() {
+                            callback.onSuccess(ingredients);
+                        }
+                    });
+                }
             }
 
             @Override
@@ -126,32 +136,18 @@ public final class FirebaseIngredientManager extends AsyncControlBase implements
             }
         });
 
-        /*
-        ingredientsDbRef.runTransaction(new Transaction.Handler() {
-            @Override
-            public Transaction.Result doTransaction(MutableData mutableData) {
-                if (mutableData.getValue() != null) {
-                    for (MutableData m : mutableData.getChildren()) {
-                        ingredients.add(m.getValue(FirebaseIngredient.class).convertToIngredient(m.getKey()));
-                    }
-                }
-                return Transaction.success(mutableData);
+    }
+
+    private Alapanyag findItem(DataSnapshot dataSnapshot, List<Alapanyag> ingredients) {
+        boolean found = false;
+        Alapanyag result = null;
+        for (Alapanyag i : ingredients) {
+            if (i.getUniqueKey().equals(dataSnapshot.getKey())) {
+                found = true;
+                result = i;
+                break;
             }
-
-            @Override
-            public void onComplete(DatabaseError databaseError, boolean b, DataSnapshot dataSnapshot) {
-                Log.d(TAG, "Transaction complete.");
-
-                Log.d(TAG, String.valueOf(ingredients.size()));
-
-                callbackUI(new Runnable() {
-                    @Override
-                    public void run() {
-                        callback.onSuccess(ingredients);
-                    }
-                });
-            }
-        });
-        */
+        }
+        return result;
     }
 }

@@ -76,6 +76,10 @@ public class Hozzavalo extends EgyediKulcs {
         return mennyiseg;
     }
 
+    public void setMennyiseg(double mennyiseg) {
+        this.mennyiseg = mennyiseg;
+    }
+
     /**
      * Milyen alapanyagot kell megvenni.
      *
