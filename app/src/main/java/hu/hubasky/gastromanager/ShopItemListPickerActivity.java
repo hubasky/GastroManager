@@ -15,14 +15,18 @@ import android.widget.EditText;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 import hu.hubasky.gastromanager.entity.bevlist.BevasarloLista;
+import hu.hubasky.gastromanager.entity.felhasznalo.Felhasznalo;
 import hu.hubasky.gastromanager.viewmodel.ShopItem;
 import hu.hubasky.gastromanager.viewmodel.ShopItemListBundle;
 import hu.hubasky.gastromanager.viewmodel.ShopItemListBundleAdapter;
 import hu.hubasky.gastromanager.viewmodel.SwipeDismissListViewTouchListener;
 
 public class ShopItemListPickerActivity extends AppCompatActivity {
+
+
 
     private static final String TAG = "ShoppingCartPickerAct";
     public static final String EXTRA_ID = "hu.hubasky.gastromanager._ID";
@@ -32,8 +36,12 @@ public class ShopItemListPickerActivity extends AppCompatActivity {
     private Button addShopItemListBundleButton;
     private final AppCompatActivity self = this;
 
+    private String loggedinUsrID;
+    private final String EXTRA_loggedinUsrID = "loggedinUsrID";
+
     ListView mListView;
     ShopItemListBundleAdapter adapter;
+
 
     private ArrayList<BevasarloLista> shcList;
 
@@ -41,6 +49,8 @@ public class ShopItemListPickerActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activitylayout_shopitemlist_picker);
+
+        loggedinUsrID = getIntent().getStringExtra(EXTRA_loggedinUsrID);
 
         Log.d(TAG, "onCreate: Started.");
         mListView = (ListView) findViewById(R.id.listView_shclist);
@@ -54,9 +64,10 @@ public class ShopItemListPickerActivity extends AppCompatActivity {
                 String selectedName = selectedList.getBevasarloListaNev();
 
                 //parcelable kell, hogy legyen a shoppingcart!
-//                shoppingListIntent.putExtra(EXTRA_CONTENT, selectedList.getUniqueKey());
+
                 shoppingListIntent.putExtra(EXTRA_ID, selectedList.getUniqueKey());
                 shoppingListIntent.putExtra(EXTRA_NAME, selectedName);
+                shoppingListIntent.putExtra(EXTRA_loggedinUsrID, loggedinUsrID); //session
                 startActivity(shoppingListIntent);
             }
         });
@@ -157,10 +168,13 @@ public class ShopItemListPickerActivity extends AppCompatActivity {
                                 Intent shoppingListIntent = new Intent(self, ShopItemPickerActivity.class);
 
                                 String selectedName = input.getText().toString();
-                                ShopItemListBundle selectedList = new ShopItemListBundle(selectedName, "SenDeRNaMe", null, new ArrayList<ShopItem>());
+
+                                //TODO: firebase-ből loggedinUsrID alapján a felhasználót lekérni
+
+                                BevasarloLista selectedList = new BevasarloLista(loggedinUsrID, );
 
                                 //parcelable kell, hogy legyen a shoppingcart!
-//                                shoppingListIntent.putExtra(EXTRA_CONTENT, selectedList.getSiList());
+                                shoppingListIntent.putExtra(EXTRA_ID, selectedList.getUniqueKey());
                                 shoppingListIntent.putExtra(EXTRA_NAME, selectedName);
                                 startActivity(shoppingListIntent);
 
@@ -174,57 +188,14 @@ public class ShopItemListPickerActivity extends AppCompatActivity {
             }
         });
 
-        ArrayList<ShopItem> shopItemList1 = new ArrayList<>(32);
-        ArrayList<ShopItem> shopItemList2 = new ArrayList<>(32);
-        ArrayList<ShopItem> shopItemList3 = new ArrayList<>(32);
-        shopItemList1.add(new ShopItem("Répa", 3, "csokor"));
-        shopItemList1.add(new ShopItem("Retek", 2, "csokor"));
-        shopItemList1.add(new ShopItem("Mogyoró", 1, "kiló"));
-        shopItemList1.add(new ShopItem("Korán", 30, "perc"));
-        shopItemList1.add(new ShopItem("Rigó", 7, "darab"));
-        shopItemList2.add(new ShopItem("Répa", 3, "csokor"));
-        shopItemList2.add(new ShopItem("Rigó", 2, "csokor"));
-        shopItemList2.add(new ShopItem("Rigó", 1, "kiló"));
-        shopItemList2.add(new ShopItem("Mogyoró", 30, "perc"));
-        shopItemList2.add(new ShopItem("Rigó", 7, "darab"));
 
-        ShopItemListBundle a = new ShopItemListBundle("Tejszínes csirke", "Béla", "Gizike",shopItemList3);
-        ShopItemListBundle b = new ShopItemListBundle("Majorannás torta", "Béla", "Terka", shopItemList1);
-        ShopItemListBundle c = new ShopItemListBundle("Uzsonnás bütyök kékvér-lekvárral, ahogy a nagyanyám 10 éves kora előtt csinálta hajnalban mielőtt megetette a tyukokat a lánya helyett", "Béla", "Gabriella, Etelka", shopItemList2);
-        ShopItemListBundle d = new ShopItemListBundle("Hagymás torma", "Béla", "Gizike", shopItemList1);
-        ShopItemListBundle e = new ShopItemListBundle("Porhanyós porhamu", "Béla", "Gizike", shopItemList2);
-        ShopItemListBundle f = new ShopItemListBundle("Szentséges kenyér", "Gyulus", "Gizike", shopItemList2);
-        ShopItemListBundle g = new ShopItemListBundle("Kinyíró kenyér", "Gyulus", "Gizike", shopItemList1);
-        ShopItemListBundle h = new ShopItemListBundle("Kanyarós lapos kalács", "Béla", "Gizike", shopItemList2);
-        ShopItemListBundle i = new ShopItemListBundle("Kakaós tevepata", "Istvánus", "Gabriella, Etelka, jÁn0s1lel, nemszabolcs_bazsi123, szekptikussPolitikuss, dejóhosszúezafelhasználónév", shopItemList2);
-        ShopItemListBundle j = new ShopItemListBundle("Tekercses vakarcs", "Gyulus", "Gizike", shopItemList1);
-        ShopItemListBundle k = new ShopItemListBundle("Vakarós vakaró", "Béla", "Gizike", shopItemList1);
-        ShopItemListBundle l = new ShopItemListBundle("Huszonéves pipi", "Gyulus", "Gizike", shopItemList2);
-        ShopItemListBundle m = new ShopItemListBundle("Borban tartott bourbon", "Béla", "Etelka", shopItemList1);
-        ShopItemListBundle n = new ShopItemListBundle("Borleves", "Istvánus", "Gizike", shopItemList1);
-        ShopItemListBundle o = new ShopItemListBundle("Korhelyes korhelyleves", "Pistabá", "LoremIpsum", shopItemList1);
 
+        //TODO: konstruktorba a lekért firebase hashset-et
         shcList = new ArrayList<>();
-
-//        shcList.add(a);
-//        shcList.add(b);
-//        shcList.add(c);
-//        shcList.add(d);
-//        shcList.add(e);
-//        shcList.add(f);
-//        shcList.add(g);
-//        shcList.add(h);
-//        shcList.add(i);
-//        shcList.add(j);
-//        shcList.add(k);
-//        shcList.add(l);
-//        shcList.add(m);
-//        shcList.add(n);
-//        shcList.add(o);
 
 
         //TÖRLÉSHEZ
-//        adapter = new ShopItemListBundleAdapter(this, R.layout.layout_shopitemlist_bundle, shcList);
+        adapter = new ShopItemListBundleAdapter(this, R.layout.layout_shopitemlist_bundle, shcList);
         mListView.setAdapter(adapter);
 
         SwipeDismissListViewTouchListener touchListener =

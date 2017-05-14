@@ -93,6 +93,9 @@ public final class Controls {
      * Privát konstruktor.
      */
     private Controls() {
+
+
+
         //dummyImpl();
         firebaseImpl();
 
@@ -142,6 +145,8 @@ public final class Controls {
      * Felhasználó nyilvántartó.
      */
     private hu.hubasky.gastromanager.control.FelhasznaloNyilvantarto felhasznaloNyilvantarto;
+
+    private String LIUSRID;
     /**
      * Recept nyilvántartó.
      */

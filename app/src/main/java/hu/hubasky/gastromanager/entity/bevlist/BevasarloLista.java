@@ -17,6 +17,12 @@ import hu.hubasky.gastromanager.entity.felhasznalo.Felhasznalo;
  */
 
 public final class BevasarloLista extends EgyediKulcs{
+
+
+    public Felhasznalo getTulajdonos() {
+        return tulajdonos;
+    }
+
     /**
      * A lista létrehozó tulajdonosa.
      */
@@ -30,7 +36,7 @@ public final class BevasarloLista extends EgyediKulcs{
         this.bevasarloListaNev = bevasarloListaNev;
     }
 
-    private Set<Felhasznalo> getSharedWith() {
+    public Set<Felhasznalo> getSharedWith() {
         return sharedWith;
     }
 
@@ -57,6 +63,8 @@ public final class BevasarloLista extends EgyediKulcs{
             throw new IllegalArgumentException("A tulajdonos felhasznnáló nem lehet null!");
         }
         this.tulajdonos = tulajdonos;
+
+        //uniqueKey alapján lekérni a tartalmat
         vasarlandok = new HashSet<>();
 
         sharedWith = new HashSet<>();
