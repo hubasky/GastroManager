@@ -22,6 +22,26 @@ public final class BevasarloLista extends EgyediKulcs{
      */
     private final Felhasznalo tulajdonos;
 
+    public String getBevasarloListaNev() {
+        return bevasarloListaNev;
+    }
+
+    public void setBevasarloListaNev(String bevasarloListaNev) {
+        this.bevasarloListaNev = bevasarloListaNev;
+    }
+
+    private Set<Felhasznalo> getSharedWith() {
+        return sharedWith;
+    }
+
+    public void setSharedWith(Set<Felhasznalo> sharedWith) {
+        this.sharedWith = sharedWith;
+    }
+
+    private String bevasarloListaNev;
+
+    private Set<Felhasznalo> sharedWith;
+
     /**
      * A vásárlandó alapanyagokat tartalmazza.
      */
@@ -32,12 +52,17 @@ public final class BevasarloLista extends EgyediKulcs{
      *
      * @param tulajdonos a tulajdonos.
      */
-    public BevasarloLista(Felhasznalo tulajdonos) {
+    public BevasarloLista(Felhasznalo tulajdonos, String label) {
         if (tulajdonos == null) {
             throw new IllegalArgumentException("A tulajdonos felhasznnáló nem lehet null!");
         }
         this.tulajdonos = tulajdonos;
         vasarlandok = new HashSet<>();
+
+        sharedWith = new HashSet<>();
+
+        bevasarloListaNev = label;
+
     }
 
     /**
@@ -88,15 +113,15 @@ public final class BevasarloLista extends EgyediKulcs{
      * @param status    a státusz.
      * @param alapanyag az alapanyag.
      */
-    void status(EVasaroltStatus status, Alapanyag alapanyag) {
-        if (alapanyag == null) throw new IllegalArgumentException();
-        for (VasarlandoAlapanyag each : vasarlandok) {
-            if (each.getAlapanyag().equals(alapanyag)) {
-                each.setStatus(status);
-                break;
-            }
-        }
-    }
+//    void status(EVasaroltStatus status, Alapanyag alapanyag) {
+//        if (alapanyag == null) throw new IllegalArgumentException();
+//        for (VasarlandoAlapanyag each : vasarlandok) {
+//            if (each.getAlapanyag().equals(alapanyag)) {
+//                each.setStatus(status);
+//                break;
+//            }
+//        }
+//    }
 
     /**
      * Visszadja a vásárlandók listáját.
@@ -110,11 +135,11 @@ public final class BevasarloLista extends EgyediKulcs{
     /**
      * Bevásárlólista lezárása.
      */
-    public void lezaras() {
-        for (VasarlandoAlapanyag each : vasarlandok) {
-            if (each.getStatus() == EVasaroltStatus.BESZERZENDO) {
-                each.setStatus(EVasaroltStatus.KIHAGYOTT);
-            }
-        }
-    }
+//    public void lezaras() {
+//        for (VasarlandoAlapanyag each : vasarlandok) {
+//            if (each.getStatus() == EVasaroltStatus.BESZERZENDO) {
+//                each.setStatus(EVasaroltStatus.KIHAGYOTT);
+//            }
+//        }
+//    }
 }

@@ -2,6 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="hu.hubasky.gastromanager">
 
+    <!-- To auto-complete the email text field in the login form with the user's emails -->
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.READ_PROFILE" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -13,24 +18,42 @@
             android:name=".MainActivity"
             android:configChanges="orientation|screenSize"
             android:screenOrientation="sensorPortrait">
+
+        </activity>
+        <activity
+            android:name=".ReciepeManagerActivity"
+            android:configChanges="orientation|screenSize"
+            />
+
+
+        <activity android:name=".EditReciepeActivity"
+            android:configChanges="orientation|screenSize"/>
+
+        <activity android:name=".ShopItemPickerActivity"
+            android:configChanges="orientation|screenSize"/>
+
+        <activity android:name=".ShopItemListPickerActivity"
+            android:configChanges="orientation|screenSize"/>
+
+        <activity
+            android:name=".AddIngredientActivity"
+            android:configChanges="orientation|screenSize"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".EditIngredientActivity"
+            android:configChanges="orientation|screenSize"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".LoginActivity"
+            android:label="@string/title_activity_login"
+            android:configChanges="orientation|screenSize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ReciepeManagerActivity" />
-        <activity android:name=".EditReciepeActivity" />
-        <activity android:name=".ShopItemPickerActivity" />
-        <activity android:name=".ShopItemListPickerActivity"/>
 
-        <activity
-            android:name=".AddIngredientActivity"
-            android:configChanges="orientation|screenSize"
-            android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".EditIngredientActivity"
-            android:configChanges="orientation|screenSize"
-            android:windowSoftInputMode="adjustResize" />
     </application>
 
 </manifest>

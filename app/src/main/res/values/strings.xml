@@ -15,6 +15,22 @@
     <string name="delete_ingredient_text">Hozzávaló törlése</string>
     <string name="add_ingredient">Új hozzávaló</string>
     <string name="edit_reciepe_description_hint_text">Írd le a recept elkészítési módját.</string>
+
+    <string name="title_activity_login">Bejelentkezés</string>
+
+    <!-- Strings related to login -->
+    <string name="prompt_email">Email-cím / felhasználói név</string>
+    <string name="prompt_password">Jelszó</string>
+    <string name="action_sign_in">Belépés / Regisztráció</string>
+    <string name="menu_sign_out">Kijelentkezés</string>
+    <string name="action_sign_in_short">Belépés</string>
+    <string name="error_invalid_email">Érvénytelen email-cím</string>
+    <string name="error_invalid_password">Érvénytelen (túl rövid) jelszó!</string>
+    <string name="error_incorrect_password">Helytelen felhasználónév/jelszó!</string>
+    <string name="error_field_required">This field is required</string>
+    <string name="permission_rationale">"Contacts permissions are needed for providing email
+        completions."
+    </string>
     <string name="shclist_sender">Bekűtte:</string>
     <string name="shclist_sharedwith">Láttya ő is:</string>
     <string name="new_shclist_prompt_title">Adj egy címet a bevásárlólistádnak!</string>

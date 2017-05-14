@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+import hu.hubasky.gastromanager.entity.EgyediKulcs;
 import hu.hubasky.gastromanager.viewmodel.ShopItem;
 import hu.hubasky.gastromanager.viewmodel.ShopItemListAdapter;
 import hu.hubasky.gastromanager.viewmodel.SwipeDismissListViewTouchListener;
@@ -35,6 +36,7 @@ public class ShopItemPickerActivity extends AppCompatActivity implements
 
     private ArrayList<ShopItem> shopItemList;
     private ShopItemListAdapter siAdapter;
+    public static final String EXTRA_ID = "hu.hubasky.gastromanager._ID";
 
     String passedName = null;
 
@@ -49,7 +51,7 @@ public class ShopItemPickerActivity extends AppCompatActivity implements
         passedName = getIntent().getStringExtra(ShopItemListPickerActivity.EXTRA_NAME); //befejezni!
 
 
-        shopItemList = getIntent().getParcelableArrayListExtra(ShopItemListPickerActivity.EXTRA_CONTENT);
+//        shopItemList = getIntent().getParcelableArrayListExtra(ShopItemListPickerActivity.EXTRA_CONTENT);
 
         //kivételesen elkapjuk a nullt, hogy ne kelljen visszanyomozni idáig - úgyis hibára fut
         if (shopItemList == null) {
@@ -61,15 +63,15 @@ public class ShopItemPickerActivity extends AppCompatActivity implements
 
         }
 
-        lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                shopItemList.remove(position);
-                siAdapter.notifyDataSetChanged();
-                lv.requestLayout();
-                return true;
-            }
-        });
+//        lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+//            @Override
+//            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+//                shopItemList.remove(position);
+//                siAdapter.notifyDataSetChanged();
+//                lv.requestLayout();
+//                return true;
+//            }
+//        });
         SwipeDismissListViewTouchListener touchListener =
                 new SwipeDismissListViewTouchListener(
                         lv,
@@ -98,47 +100,53 @@ public class ShopItemPickerActivity extends AppCompatActivity implements
 
 
 
-        //HOZZÁADÓ GOMB (még nincs implementálva)
+        //HOZZÁADÓ GOMB
         addShopItemButton = (Button) findViewById(R.id.add_shopitem_btn);
         addShopItemButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                final AlertDialog.Builder alertDialog = new AlertDialog.Builder(self);
+                Intent addShopItem = new Intent(self, AddIngredientActivity.class);
 
-//                final EditText input = new EditText(self);
-//                input.setInputType(InputType.TYPE_CLASS_TEXT);
+                //TODO: passedName helyett unique ID-t kell átpasszolni!
+                addShopItem.putExtra(EXTRA_ID, passedName);
+                startActivity(addShopItem);
 
-                alertDialog
-//                        .setTitle(R.string.new_shclist_prompt_title)
-                        .setNegativeButton(R.string.cancel_button_text, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                            }
-                        })
+//                final AlertDialog.Builder alertDialog = new AlertDialog.Builder(self);
 //
-                        .setPositiveButton(R.string.create_button_text, new DialogInterface.OnClickListener(){
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-
-                                dialog.dismiss();
-//                                Intent shoppingListIntent = new Intent(self, ShopItemPickerActivity.class);
-
-//                                String selectedName = input.getText().toString();
-//                                ShopItemListBundle selectedList = new ShopItemListBundle(selectedName, "SenDeRNaMe", null, new ArrayList<ShopItem>());
+////                final EditText input = new EditText(self);
+////                input.setInputType(InputType.TYPE_CLASS_TEXT);
 //
-//                                //parcelable kell, hogy legyen a shoppingcart!
-//                                shoppingListIntent.putExtra(EXTRA_CONTENT, selectedList.getSiList());
-//                                shoppingListIntent.putExtra(EXTRA_NAME, selectedName);
-//                                startActivity(shoppingListIntent);
-
-                            }
-                        })
+//                alertDialog
+////                        .setTitle(R.string.new_shclist_prompt_title)
+//                        .setNegativeButton(R.string.cancel_button_text, new DialogInterface.OnClickListener() {
+//                            @Override
+//                            public void onClick(DialogInterface dialog, int which) {
+//                                dialog.dismiss();
+//                            }
+//                        })
+////
+//                        .setPositiveButton(R.string.create_button_text, new DialogInterface.OnClickListener(){
+//                            @Override
+//                            public void onClick(DialogInterface dialog, int which) {
 //
-//                        .setView(input)
-
-                        .show();
+//                                dialog.dismiss();
+////                                Intent shoppingListIntent = new Intent(self, ShopItemPickerActivity.class);
+//
+////                                String selectedName = input.getText().toString();
+////                                ShopItemListBundle selectedList = new ShopItemListBundle(selectedName, "SenDeRNaMe", null, new ArrayList<ShopItem>());
+////
+////                                //parcelable kell, hogy legyen a shoppingcart!
+////                                shoppingListIntent.putExtra(EXTRA_CONTENT, selectedList.getSiList());
+////                                shoppingListIntent.putExtra(EXTRA_NAME, selectedName);
+////                                startActivity(shoppingListIntent);
+//
+//                            }
+//                        })
+////
+////                        .setView(input)
+//
+//                        .show();
 
             }
         });

@@ -13,7 +13,7 @@ public final class VasarlandoAlapanyag extends Hozzavalo {
     /**
      * A vásárlási státusz.
      */
-    private EVasaroltStatus status;
+    private boolean status = false;
     /**
      * Az opcionális recept kapcsolat (ha recept miatt került fel.)
      */
@@ -25,9 +25,11 @@ public final class VasarlandoAlapanyag extends Hozzavalo {
      * @param mennyiseg a kívánt mennyiség.
      * @param alapanyag az alapanyag.
      */
+
+    //hozzávalóból getanyag, getmennyiség
     public VasarlandoAlapanyag(double mennyiseg, Alapanyag alapanyag) {
         super(mennyiseg, alapanyag);
-        setStatus(EVasaroltStatus.BESZERZENDO);
+        status = false;
     }
 
 
@@ -36,7 +38,7 @@ public final class VasarlandoAlapanyag extends Hozzavalo {
      *
      * @return a státuszinfo.
      */
-    public EVasaroltStatus getStatus() {
+    public boolean getStatus() {
         return status;
     }
 
@@ -45,7 +47,7 @@ public final class VasarlandoAlapanyag extends Hozzavalo {
      *
      * @param status info.
      */
-    public void setStatus(EVasaroltStatus status) {
+    public void setStatus(boolean status) {
         this.status = status;
     }
 

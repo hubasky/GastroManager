@@ -125,6 +125,7 @@ public final class Controls {
     private void firebaseImpl() {
         controls.add(alapanyagNyilvantarto = new FirebaseIngredientManager());
         controls.add(receptNyilvantarto = new FirebaseReciepeManager());
+        controls.add(felhasznaloNyilvantarto = new DmyFelhasznaloNyilvantarto());
     }
 
     /**

@@ -135,6 +135,7 @@ public final class FirebaseIngredientManager extends AsyncControlBase implements
 
             }
         });
+
     }
 
     private Alapanyag findItem(DataSnapshot dataSnapshot, List<Alapanyag> ingredients) {

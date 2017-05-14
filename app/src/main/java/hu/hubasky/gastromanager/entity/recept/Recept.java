@@ -34,10 +34,12 @@ public final class Recept extends Cimkezheto {
     /**
      * Az érkezések.
      */
+    //kihagyjuk
     private final Set<EEtkezesek> ajanlottEtkezesek = EnumSet.noneOf(EEtkezesek.class);
     /**
      * A recept hozzávalói.
      */
+    //recept details paneljén
     private final Set<Hozzavalo> hozzavalok = new HashSet<>();
     /**
      * A recept státusza.
