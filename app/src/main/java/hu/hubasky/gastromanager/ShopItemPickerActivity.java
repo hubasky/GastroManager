@@ -63,15 +63,15 @@ public class ShopItemPickerActivity extends AppCompatActivity implements
 
         }
 
-        lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                shopItemList.remove(position);
-                siAdapter.notifyDataSetChanged();
-                lv.requestLayout();
-                return true;
-            }
-        });
+//        lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+//            @Override
+//            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+//                shopItemList.remove(position);
+//                siAdapter.notifyDataSetChanged();
+//                lv.requestLayout();
+//                return true;
+//            }
+//        });
         SwipeDismissListViewTouchListener touchListener =
                 new SwipeDismissListViewTouchListener(
                         lv,
