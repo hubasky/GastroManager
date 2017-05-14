@@ -9,18 +9,20 @@ import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import hu.hubasky.gastromanager.R;
 import hu.hubasky.gastromanager.ShopItemPickerActivity;
+import hu.hubasky.gastromanager.entity.bevlist.VasarlandoAlapanyag;
 
-public class ShopItemListAdapter extends ArrayAdapter<ShopItem>{
+public class ShopItemListAdapter extends ArrayAdapter<VasarlandoAlapanyag>{
 
-    private List<ShopItem> shopItemtList;
+    private List<VasarlandoAlapanyag> shopItemtList;
     private Context context;
     private static final String TAG = "ShopItemListAdapter";
 
-    public ShopItemListAdapter(List<ShopItem> shopItemtList, Context context) {
+    public ShopItemListAdapter(List<VasarlandoAlapanyag> shopItemtList, Context context) {
         super(context, R.layout.layout_shopitem, shopItemtList);
         this.shopItemtList = shopItemtList;
         this.context = context;
@@ -62,11 +64,11 @@ public class ShopItemListAdapter extends ArrayAdapter<ShopItem>{
         }
 
 
-        ShopItem si = shopItemtList.get(position);
-        holder.itemName.setText(si.getName());
-        holder.qtyView.setText(Integer.toString(si.getQuantity()));
-        holder.qtyTypeView.setText(si.getQuantityType());
-        holder.chkBox.setChecked(si.isSelected());
+        VasarlandoAlapanyag si = shopItemtList.get(position);
+        holder.itemName.setText(si.getAlapanyag().getNeve());
+        holder.qtyView.setText(Double.toString(si.getMennyiseg()));
+        holder.qtyTypeView.setText(si.displayQuantity());
+        holder.chkBox.setChecked(si.getStatus());
         holder.chkBox.setTag(si);
 
         return v;

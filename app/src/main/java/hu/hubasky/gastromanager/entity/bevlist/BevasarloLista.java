@@ -73,6 +73,22 @@ public final class BevasarloLista extends EgyediKulcs{
 
     }
 
+    public BevasarloLista(String tulajdonosUniqueKey, String label) {
+        if (tulajdonosUniqueKey == null) {
+            throw new IllegalArgumentException("A tulajdonos felhasznnáló ID nem lehet null!");
+        }
+        //TODO: implementlni a uniquekey alapján a felhasználó lekérését
+        this.tulajdonos = new Felhasznalo(null, null, null);
+
+        //uniqueKey alapján lekérni a tartalmat
+        vasarlandok = new HashSet<>();
+
+        sharedWith = new HashSet<>();
+
+        bevasarloListaNev = label;
+
+    }
+
     /**
      * Felveszi a listára a vásárlandó alapanyagokat. Ha valamelyikből már van,
      * akkor növeli a mennyiséget.

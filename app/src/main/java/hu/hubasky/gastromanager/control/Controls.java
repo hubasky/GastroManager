@@ -21,6 +21,7 @@ public final class Controls {
 
     private Context actualContext;
 
+    public static final String EXTRA_loggedinUsrID =  "loggedinUsrID";
     public Context getActualContext() {
         return actualContext;
     }

@@ -17,6 +17,7 @@ import android.widget.ListView;
 import java.util.ArrayList;
 import java.util.HashSet;
 
+import hu.hubasky.gastromanager.control.Controls;
 import hu.hubasky.gastromanager.entity.bevlist.BevasarloLista;
 import hu.hubasky.gastromanager.entity.felhasznalo.Felhasznalo;
 import hu.hubasky.gastromanager.viewmodel.ShopItem;
@@ -37,7 +38,7 @@ public class ShopItemListPickerActivity extends AppCompatActivity {
     private final AppCompatActivity self = this;
 
     private String loggedinUsrID;
-    private final String EXTRA_loggedinUsrID = "loggedinUsrID";
+    //private final String EXTRA_loggedinUsrID = "loggedinUsrID";
 
     ListView mListView;
     ShopItemListBundleAdapter adapter;
@@ -50,7 +51,7 @@ public class ShopItemListPickerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activitylayout_shopitemlist_picker);
 
-        loggedinUsrID = getIntent().getStringExtra(EXTRA_loggedinUsrID);
+        loggedinUsrID = getIntent().getStringExtra(Controls.EXTRA_loggedinUsrID);
 
         Log.d(TAG, "onCreate: Started.");
         mListView = (ListView) findViewById(R.id.listView_shclist);
@@ -67,7 +68,7 @@ public class ShopItemListPickerActivity extends AppCompatActivity {
 
                 shoppingListIntent.putExtra(EXTRA_ID, selectedList.getUniqueKey());
                 shoppingListIntent.putExtra(EXTRA_NAME, selectedName);
-                shoppingListIntent.putExtra(EXTRA_loggedinUsrID, loggedinUsrID); //session
+                shoppingListIntent.putExtra(Controls.EXTRA_loggedinUsrID, loggedinUsrID); //session
                 startActivity(shoppingListIntent);
             }
         });
@@ -82,12 +83,6 @@ public class ShopItemListPickerActivity extends AppCompatActivity {
 
                 final AlertDialog.Builder alertDialog = new AlertDialog.Builder(self);
 
-//                final ArrayAdapter<String> adapter = new ArrayAdapter<>(self,android.R.layout.simple_list_item_multiple_choice);
-//                adapter.add("DummyUser1");
-//                adapter.add("DummyUser2");
-//                adapter.add("DummyUser3");
-//                adapter.add("DummyUser4");
-//                adapter.add("DummyUser5");
 
                 CharSequence[] sq = new CharSequence[5];
                 sq[0]=("DummyUser1");
@@ -169,9 +164,8 @@ public class ShopItemListPickerActivity extends AppCompatActivity {
 
                                 String selectedName = input.getText().toString();
 
-                                //TODO: firebase-ből loggedinUsrID alapján a felhasználót lekérni
-
-                                BevasarloLista selectedList = new BevasarloLista(loggedinUsrID, );
+                                //TODO: firebase-ből loggedinUsrID alapján a felhasználót lekérni a konstruktorban
+                                BevasarloLista selectedList = new BevasarloLista(loggedinUsrID, selectedName);
 
                                 //parcelable kell, hogy legyen a shoppingcart!
                                 shoppingListIntent.putExtra(EXTRA_ID, selectedList.getUniqueKey());
