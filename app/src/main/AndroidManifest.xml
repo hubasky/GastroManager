@@ -53,18 +53,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ReciepeManagerActivity" />
-        <activity android:name=".EditReciepeActivity" />
-        <activity android:name=".ShopItemPickerActivity" />
-        <activity android:name=".ShopItemListPickerActivity"/>
 
-        <activity
-            android:name=".AddIngredientActivity"
-            android:configChanges="orientation|screenSize"
-            android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".EditIngredientActivity"
-            android:configChanges="orientation|screenSize"
-            android:windowSoftInputMode="adjustResize" />
     </application>
 
 </manifest>
