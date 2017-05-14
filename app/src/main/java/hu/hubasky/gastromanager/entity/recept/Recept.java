@@ -1,5 +1,7 @@
 package hu.hubasky.gastromanager.entity.recept;
 
+import android.util.Log;
+
 import com.google.firebase.database.IgnoreExtraProperties;
 
 import java.util.ArrayList;

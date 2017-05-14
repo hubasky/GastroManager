@@ -11,6 +11,7 @@ import hu.hubasky.gastromanager.control.impl.dummy.DmyCimkeNyilvantarto;
 import hu.hubasky.gastromanager.control.impl.dummy.DmyFelhasznaloNyilvantarto;
 import hu.hubasky.gastromanager.control.impl.dummy.DmyReceptNyilvantarto;
 import hu.hubasky.gastromanager.control.impl.firebase.FirebaseIngredientManager;
+import hu.hubasky.gastromanager.control.impl.firebase.FirebaseReciepeManager;
 
 /**
  * A vezérlőket tartalmazó egyke.
@@ -123,6 +124,7 @@ public final class Controls {
 
     private void firebaseImpl() {
         controls.add(alapanyagNyilvantarto = new FirebaseIngredientManager());
+        controls.add(receptNyilvantarto = new FirebaseReciepeManager());
     }
 
     /**
