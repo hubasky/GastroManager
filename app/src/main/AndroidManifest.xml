@@ -21,7 +21,9 @@
         </activity>
         <activity android:name=".ReciepeManagerActivity" />
         <activity android:name=".EditReciepeActivity" />
-        <activity android:name=".ShoppingListActivity" />
+        <activity android:name=".ShopItemPickerActivity" />
+        <activity android:name=".ShopItemListPickerActivity"/>
+
         <activity
             android:name=".AddIngredientActivity"
             android:configChanges="orientation|screenSize"

@@ -1,6 +1,5 @@
 package hu.hubasky.gastromanager;
 
-import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -56,19 +55,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-//        shopping_list.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//            }
-//        });
 
         shopping_list.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                Intent shoppingListIntent = new Intent(self, ShoppingListActivity.class);
-                startActivity(shoppingListIntent);
+                Intent shoppingCartPickerIntent = new Intent(self, ShopItemListPickerActivity.class);
+                startActivity(shoppingCartPickerIntent);
             }
         });
 
