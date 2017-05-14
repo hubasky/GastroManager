@@ -337,6 +337,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         UserLoginTask(String email, String password) {
             mEmail = email;
+            mPassword = email;
             mPassword = password;
         }
 
@@ -360,11 +361,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 }else{
 
                     try {
-                        felhasznaloNyilvantarto.regiszter(mEmail, mPassword, mEmail);
+                        loggedInUsr = felhasznaloNyilvantarto.regiszter(mEmail, mPassword, mEmail);
 
                         //Toast.makeText(self, "Sikeres regisztráció!", Toast.LENGTH_SHORT).show();
-
-                        loggedInUsr = usr;
                         return true;
 
 
