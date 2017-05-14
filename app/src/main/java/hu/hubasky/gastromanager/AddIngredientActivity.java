@@ -107,21 +107,16 @@ public class AddIngredientActivity extends AppCompatActivity {
                 startActivityForResult(editIngredient, EDIT_INGREDIENT_REQUEST);
 
                 refreshIngredients();
-
-
             }
         });
 
-        refreshIngredients();
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 1001 && resultCode == RESULT_OK) {
-            refreshIngredients();
-        }
-
+    protected void onResume() {
+        super.onResume();
+        refreshIngredients();
+        // TODO: Szerkesztesbol visszateresnel a spinner nem updatelodik.
     }
 
     private Alapanyag selectIngredient(int position) {

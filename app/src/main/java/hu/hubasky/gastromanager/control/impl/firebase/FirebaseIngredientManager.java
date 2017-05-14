@@ -99,7 +99,15 @@ public final class FirebaseIngredientManager extends AsyncControlBase implements
 
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                final List<Alapanyag> ingredients = new ArrayList<Alapanyag>();
+                ingredients.add(dataSnapshot.getValue(FirebaseIngredient.class).convertToIngredient(dataSnapshot.getKey()));
 
+                callbackUI(new Runnable() {
+                    @Override
+                    public void run() {
+                        callback.onSuccess(ingredients);
+                    }
+                });
             }
 
             @Override
