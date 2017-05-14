@@ -13,16 +13,18 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import hu.hubasky.gastromanager.R;
+import hu.hubasky.gastromanager.entity.bevlist.BevasarloLista;
+import hu.hubasky.gastromanager.entity.felhasznalo.Felhasznalo;
 
 
-public class ShopItemListBundleAdapter extends ArrayAdapter<ShopItemListBundle> {
+public class ShopItemListBundleAdapter extends ArrayAdapter<BevasarloLista> {
     private static final String TAG = "ShopItemListBundleAdapter";
 
     private Context mContext;
     private int mResource;
     private int lastPosition = -1;
 
-    public ShopItemListBundleAdapter(Context context, int resource, ArrayList<ShopItemListBundle> objects) {
+    public ShopItemListBundleAdapter(Context context, int resource, ArrayList<BevasarloLista> objects) {
         super(context, resource, objects);
         mContext = context;
         mResource = resource;
@@ -45,12 +47,16 @@ public class ShopItemListBundleAdapter extends ArrayAdapter<ShopItemListBundle> 
     @NonNull
     @Override
     public View getView(int position, View convertView, @NonNull ViewGroup parent) {
-        String name = getItem(position).getName();
-        String senderName = getItem(position).getSenderName();
-        String sharedWith = getItem(position).getSharedWith();
-        ArrayList<ShopItem> siList = getItem(position).getSiList();
+        String name = getItem(position).getBevasarloListaNev();
+        String senderName = getItem(position).getTulajdonos().getNev();
 
-        ShopItemListBundle shopItemListBundle = new ShopItemListBundle(name, senderName, sharedWith, siList);
+        ArrayList<Felhasznalo> tmp = new ArrayList<>(getItem(position).getSharedWith());
+        String sharedWith = "";
+        for (int i = 0; i < tmp.size(); i++) {
+            sharedWith = tmp.get(i).getNev() + " ";
+
+        }
+
 
         final View result;
         ViewHolder holder = new ViewHolder();

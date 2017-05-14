@@ -94,7 +94,10 @@ public final class Controls {
      * Privát konstruktor.
      */
     private Controls() {
-        // dummyImpl();
+
+
+
+        //dummyImpl();
         firebaseImpl();
 
         Set<ControlBase> needInit = new HashSet<>(controls);
