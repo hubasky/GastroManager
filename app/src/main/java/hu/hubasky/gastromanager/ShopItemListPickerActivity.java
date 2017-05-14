@@ -63,11 +63,15 @@ public class ShopItemListPickerActivity extends AppCompatActivity {
         //megosztáshoz long click on item
         mListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                final AlertDialog.Builder alertDialog = new AlertDialog.Builder(self);
+            public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
 
-                final EditText input = new EditText(self);
-                input.setInputType(InputType.TYPE_CLASS_TEXT);
+                final AlertDialog.Builder alertDialog = new AlertDialog.Builder(self);
+                final ArrayAdapter<String> adapter = new ArrayAdapter<>(self,android.R.layout.simple_list_item_multiple_choice);
+                adapter.add("DummyUser1");
+                adapter.add("DummyUser2");
+                adapter.add("DummyUser3");
+                adapter.add("DummyUser4");
+                adapter.add("DummyUser5");
 
                 alertDialog
                         .setTitle(R.string.share_shclist_prompt_title)
@@ -82,21 +86,15 @@ public class ShopItemListPickerActivity extends AppCompatActivity {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
 
-                                Intent shoppingListIntent = new Intent(self, ShopItemPickerActivity.class);
+                                shareShopItemList(position); //user arraylist-et is kellene átadni, amit kiválasztott, ha lesz
 
-                                String selectedName = input.getText().toString();
-                                ShopItemListBundle selectedList = new ShopItemListBundle(selectedName, "SenDeRNaMe", null, new ArrayList<ShopItem>());
 
-                                //parcelable kell, hogy legyen a shoppingcart!
-                                shoppingListIntent.putExtra(EXTRA_CONTENT, selectedList.getSiList());
-                                shoppingListIntent.putExtra(EXTRA_NAME, selectedName);
-                                startActivity(shoppingListIntent);
 
                             }
                         })
 
 
-                        .setView(input)
+
 
                         .show();
 
@@ -229,6 +227,13 @@ public class ShopItemListPickerActivity extends AppCompatActivity {
                         });
         mListView.setOnTouchListener(touchListener);
 
+    }
+
+    public int shareShopItemList(int position){ //arraylist<User> user
+
+        //implementálni!
+
+        return 0;
     }
 
 
