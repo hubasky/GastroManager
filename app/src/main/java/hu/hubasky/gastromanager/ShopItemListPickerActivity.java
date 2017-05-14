@@ -205,7 +205,7 @@ public class ShopItemListPickerActivity extends AppCompatActivity {
                             public void onDismiss(ListView listView, int[] reverseSortedPositions) {
                                 for (int position : reverseSortedPositions) {
 
-                                    if (true){//user == loggedinUser) {
+                                    if (true){///user == loggedinUser) {
                                         deleteShListItem(position);
                                     }else{
                                         unsubscribeShListItem(position);
