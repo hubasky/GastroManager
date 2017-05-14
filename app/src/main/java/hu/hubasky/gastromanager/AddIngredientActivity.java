@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -155,10 +156,30 @@ public class AddIngredientActivity extends AppCompatActivity {
         Controls.getInstance().getAlapanyagNyilvantarto().keres(akjb.build(), new ControlResultListener<Alapanyag>() {
             @Override
             public void onSuccess(List<Alapanyag> resultList) {
+                /*
                 ingredients = resultList;
                 IngredientListAdapter adapter = new IngredientListAdapter(resultList, self);
                 ingredientsListView.setAdapter(adapter);
                 ingredientsListView.invalidate();
+                */
+                if (resultList != null && resultList.size() == 1) {
+                    Alapanyag ingredient = resultList.get(0);
+                    boolean found = false;
+                    int index = 0;
+                    for (Alapanyag i : ingredients) {
+                        if (i.getUniqueKey().equals(ingredient.getUniqueKey())) {
+                            found = true;
+                            break;
+                        }
+                        index++;
+                    }
+                    if (found) {
+                        ingredients.set(index, ingredient);
+                    } else {
+                        ingredients.add(ingredient);
+                    }
+                    ((BaseAdapter)ingredientsListView.getAdapter()).notifyDataSetChanged();
+                }
             }
 
             @Override

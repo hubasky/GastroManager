@@ -80,8 +80,45 @@ public final class FirebaseIngredientManager extends AsyncControlBase implements
     @Override
     public void keres(AlapanyagKeresesiJellemzok jellemzok,  final ControlResultListener<Alapanyag> callback) {
         // FirebaseAccess.getInstance().getIngredients();
-        final List<Alapanyag> ingredients = new ArrayList<Alapanyag>(50);
+        // final List<Alapanyag> ingredients = new ArrayList<Alapanyag>();
 
+        ingredientsDbRef.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+
+                final List<Alapanyag> ingredients = new ArrayList<Alapanyag>();
+                ingredients.add(dataSnapshot.getValue(FirebaseIngredient.class).convertToIngredient(dataSnapshot.getKey()));
+
+                callbackUI(new Runnable() {
+                    @Override
+                    public void run() {
+                        callback.onSuccess(ingredients);
+                    }
+                });
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        /*
         ingredientsDbRef.runTransaction(new Transaction.Handler() {
             @Override
             public Transaction.Result doTransaction(MutableData mutableData) {
@@ -107,5 +144,6 @@ public final class FirebaseIngredientManager extends AsyncControlBase implements
                 });
             }
         });
+        */
     }
 }

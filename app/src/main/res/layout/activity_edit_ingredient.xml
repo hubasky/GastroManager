@@ -57,7 +57,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/edit_ingredient_reference_g"
             android:inputType="numberDecimal|textShortMessage"
-            android:text="100"
+            android:text="1"
             android:padding="8dp"/>
 
 
