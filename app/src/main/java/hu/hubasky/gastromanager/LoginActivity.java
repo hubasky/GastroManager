@@ -426,6 +426,15 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 mPasswordView.setError(getString(R.string.error_incorrect_password));
                 mPasswordView.requestFocus();
                 Toast.makeText(self, "Sikertelen belépés/regisztráció!", Toast.LENGTH_LONG).show();
+
+//DUMMY IMPLEMENTÁCIÓ!
+                LoginActivity.loggedInUser = this.loggedInUsr;
+                Intent mainmenu = new Intent(self, MainActivity.class);
+                startActivity(mainmenu);
+
+                Log.d(TAG, "onPostExecute: sikertelen belépés, (test) backdoor út siker!");
+                finish();
+
             }
         }
 
