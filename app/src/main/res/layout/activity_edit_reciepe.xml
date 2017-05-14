@@ -19,7 +19,8 @@
             android:layout_height="200dp"
             android:id="@+id/edit_reciepe_ingredients_list"
             android:background="@color/listBackground"
-            android:layout_marginBottom="16dp"/>
+            android:layout_marginBottom="16dp"
+            android:divider="@color/transparent"/>
 
         <android.support.v7.widget.AppCompatButton
             android:text="@string/delete_ingredient_text"

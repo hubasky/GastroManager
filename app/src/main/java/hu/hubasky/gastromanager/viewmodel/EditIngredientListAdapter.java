@@ -8,7 +8,6 @@ import android.widget.TextView;
 import java.util.List;
 
 import hu.hubasky.gastromanager.R;
-import hu.hubasky.gastromanager.entity.alapanyag.Alapanyag;
 import hu.hubasky.gastromanager.entity.recept.Hozzavalo;
 
 
@@ -39,7 +38,7 @@ public class EditIngredientListAdapter extends BaseAdapter {
         View rootView = convertView;
 
         if (rootView == null) {
-            rootView = View.inflate(parent.getContext(), R.layout.ingredient_listitem_layout, null);
+            rootView = View.inflate(parent.getContext(), R.layout.ingredient_quantity_listitem_layout, null);
         }
 
         Hozzavalo ingredient = getItem(position);

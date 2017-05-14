@@ -34,7 +34,7 @@ public class ReciepeManagerActivity extends AppCompatActivity {
                     new ArrayList<IngredientVM>()));
         }
 
-        final ReciepeAdapter reciepeAdapter = new ReciepeAdapter(reciepesList);
+        final ReciepeAdapter reciepeAdapter = new ReciepeAdapter(reciepesList, this);
         ListView reciepeListView = (ListView) findViewById(R.id.reciepe_list);
 
         reciepeListView.setAdapter(reciepeAdapter);
