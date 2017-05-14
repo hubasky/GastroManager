@@ -6,9 +6,8 @@ import java.util.List;
 
 import hu.hubasky.gastromanager.control.AlapanyagNyilvantarto;
 import hu.hubasky.gastromanager.control.CimkeNyilvantarto;
-import hu.hubasky.gastromanager.control.ControlBase;
+import hu.hubasky.gastromanager.control.ControlResultListener;
 import hu.hubasky.gastromanager.control.Controls;
-import hu.hubasky.gastromanager.control.FelhasznaloNyilvantarto;
 import hu.hubasky.gastromanager.entity.Cimke;
 import hu.hubasky.gastromanager.entity.ECimkeTipus;
 import hu.hubasky.gastromanager.entity.EMennyisegiEgyseg;
@@ -65,20 +64,20 @@ public class DummyTest {
     @Test
     public void felhasznaloKezeloPeldak() throws Exception {
         Controls controls = Controls.getInstance();
-        FelhasznaloNyilvantarto felhasznaloNyilvantarto = controls.getFelhasznaloNyilvantarto();
+        hu.hubasky.gastromanager.control.FelhasznaloNyilvantarto felhasznaloNyilvantarto = controls.getFelhasznaloNyilvantarto();
         Felhasznalo loggedIn;
 
         // sikeres bejelentkezés
         loggedIn = felhasznaloNyilvantarto.login(
                 DmyFelhasznaloNyilvantarto.MAKRAAT_USR,
                 DmyFelhasznaloNyilvantarto.ALL_PSW);
-        System.out.printf("%s bejelentkezés%n",loggedIn==null?"Sikertelen":"Sikeres");
+        System.out.printf("%s bejelentkezés%n", loggedIn == null ? "Sikertelen" : "Sikeres");
 
         // sikertelen bejelentkezés
         loggedIn = felhasznaloNyilvantarto.login(
                 DmyFelhasznaloNyilvantarto.MAKRAAT_USR,
                 "xxx");
-        System.out.printf("%s bejelentkezés%n",loggedIn==null?"Sikertelen":"Sikeres");
+        System.out.printf("%s bejelentkezés%n", loggedIn == null ? "Sikertelen" : "Sikeres");
     }
 
     /**
@@ -171,6 +170,26 @@ public class DummyTest {
         talalatok = alapanyagNyilvantarto.keres(keresesiJellemzok);
         // majd kiírjuk
         System.out.println(talalatok.isEmpty() ? "Nincs találat" : String.format("%d találat van.", talalatok.size()));
+
+
+        // aszinkron kereséséel
+        alapanyagNyilvantarto.keres(keresesiJellemzok, new ControlResultListener<Alapanyag>() {
+            @Override
+            public void onSuccess(List<Alapanyag> resultList) {
+                System.out.println("Találatok:");
+                for (Alapanyag a : resultList){
+                    System.out.printf("%s%n",a.getNeve());
+                }
+            }
+
+            @Override
+            public void onFailed(Exception ex) {
+                System.out.printf("Valami hiba volt: %s%n", ex.getLocalizedMessage());
+            }
+        });
+
+        //  hogy ne álljon le azonnal, mert szálból megy a cucc
+        Thread.sleep(1000*10);
     }
 
 

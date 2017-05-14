@@ -3,20 +3,20 @@ package hu.hubasky.gastromanager.control.impl.dummy;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
+import java.util.concurrent.Executors;
 
 import hu.hubasky.gastromanager.common.Helper;
 import hu.hubasky.gastromanager.control.AlapanyagNyilvantarto;
+import hu.hubasky.gastromanager.control.AsyncControlBase;
 import hu.hubasky.gastromanager.control.CimkeNyilvantarto;
+import hu.hubasky.gastromanager.control.ControlResultListener;
 import hu.hubasky.gastromanager.control.Controls;
 import hu.hubasky.gastromanager.control.FelhasznaloNyilvantarto;
 import hu.hubasky.gastromanager.control.ReceptNyilvantarto;
 import hu.hubasky.gastromanager.entity.Cimke;
 import hu.hubasky.gastromanager.entity.ECimkeTipus;
 import hu.hubasky.gastromanager.entity.alapanyag.Alapanyag;
-import hu.hubasky.gastromanager.entity.alapanyag.AlapanyagJellemzok;
 import hu.hubasky.gastromanager.entity.alapanyag.AlapanyagKeresesiJellemzok;
 import hu.hubasky.gastromanager.entity.bevlist.VasarlandoAlapanyag;
 import hu.hubasky.gastromanager.entity.felhasznalo.Felhasznalo;
@@ -30,7 +30,7 @@ import hu.hubasky.gastromanager.entity.recept.ReceptKeresesiJellemzok;
  * Created by hallgato on 2017-04-27.
  */
 
-public final class DmyReceptNyilvantarto implements ReceptNyilvantarto {
+public final class DmyReceptNyilvantarto extends AsyncControlBase implements ReceptNyilvantarto {
 
     /**
      * Receptek.
@@ -159,10 +159,71 @@ public final class DmyReceptNyilvantarto implements ReceptNyilvantarto {
     }
 
     @Override
+    public void keres(final ReceptKeresesiJellemzok jellemzok, final ControlResultListener<Recept> callback) {
+        if (jellemzok == null) throw new IllegalArgumentException("jellemzok nem lehet null!");
+        if (callback == null) throw new IllegalArgumentException("callback nem lehet null!");
+
+        Executors.newSingleThreadExecutor().submit(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    final List<Recept> ret = keres(jellemzok);
+                    // itt adjuk vissza, de UI szálon át
+                    callbackUI(new Runnable() {
+                        @Override
+                        public void run() {
+                            callback.onSuccess(ret);
+                        }
+                    });
+
+                } catch (final Exception e) {
+                    // itt adjuk vissza a hibát
+                    callbackUI(new Runnable() {
+                        @Override
+                        public void run() {
+                            callback.onFailed(e);
+                        }
+                    });
+                }
+            }
+        });
+
+    }
+
+    @Override
     public List<VasarlandoAlapanyag> vasarlandoKalkulacio(Recept recept, double adag) throws Exception {
         if (recept == null) throw new IllegalArgumentException("recept nem lehet null!");
         return recept.vasarlandoKalkulacio(adag);
+    }
 
+    @Override
+    public void vasarlandoKalkulacio(final Recept recept, final double adag, final ControlResultListener<VasarlandoAlapanyag> callback) {
+        if (recept == null) throw new IllegalArgumentException("recept nem lehet null!");
+        if (callback == null) throw new IllegalArgumentException("callback nem lehet null!");
+
+        Executors.newSingleThreadExecutor().submit(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    final List<VasarlandoAlapanyag> ret = vasarlandoKalkulacio(recept, adag);
+                    // visszahívunk a UI szálon keresztül
+                    callbackUI(new Runnable() {
+                        @Override
+                        public void run() {
+                            callback.onSuccess(ret);
+                        }
+                    });
+                } catch (final Exception e) {
+                    // visszahívunk a UI szálon keresztül.
+                    callbackUI(new Runnable() {
+                        @Override
+                        public void run() {
+                            callback.onFailed(e);
+                        }
+                    });
+                }
+            }
+        });
     }
 
     @Override

@@ -5,8 +5,11 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Executors;
 
 import hu.hubasky.gastromanager.common.Helper;
+import hu.hubasky.gastromanager.control.AsyncControlBase;
+import hu.hubasky.gastromanager.control.ControlResultListener;
 import hu.hubasky.gastromanager.control.Controls;
 import hu.hubasky.gastromanager.control.FelhasznaloNyilvantarto;
 import hu.hubasky.gastromanager.entity.bevlist.BevasarloLista;
@@ -17,7 +20,8 @@ import hu.hubasky.gastromanager.entity.recept.Recept;
  * Created by hallgato on 2017-04-27.
  */
 
-public final class DmyFelhasznaloNyilvantarto implements FelhasznaloNyilvantarto {
+public final class DmyFelhasznaloNyilvantarto extends AsyncControlBase
+        implements FelhasznaloNyilvantarto {
     public static final String MAKRAAT_USR = "makraat";
     public static final String HAZAIP_USR = "hazaip";
     public static final String STICKERB_USR = "stickerb";
@@ -68,6 +72,36 @@ public final class DmyFelhasznaloNyilvantarto implements FelhasznaloNyilvantarto
     }
 
     @Override
+    public void keres(final String nevtoredek, final Felhasznalo kizart, final ControlResultListener<Felhasznalo> callback) {
+        if (nevtoredek == null) throw new IllegalArgumentException("névtöredék nem lehet null!");
+        if (callback == null) throw new IllegalArgumentException("callback nem lehet null!");
+
+        Executors.newSingleThreadExecutor().submit(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    final List<Felhasznalo> ret = keres(nevtoredek, kizart);
+                    // itt adjuk vissza az eredményt, de a UI szálon át
+                    callbackUI(new Runnable() {
+                        @Override
+                        public void run() {
+                            callback.onSuccess(ret);
+                        }
+                    });
+                } catch (final Exception e) {
+                    // itt adjuk vissza a hibát, de a UI szálon át
+                    callbackUI(new Runnable() {
+                        @Override
+                        public void run() {
+                            callback.onFailed(e);
+                        }
+                    });
+                }
+            }
+        });
+    }
+
+    @Override
     public Felhasznalo login(final String usernev, final String jelszo) throws Exception {
         List<Felhasznalo> fnd = Helper.filter(felhasznalok, new Helper.Checker<Felhasznalo>() {
             @Override
@@ -99,6 +133,36 @@ public final class DmyFelhasznaloNyilvantarto implements FelhasznaloNyilvantarto
     }
 
     @Override
+    public void getKapottReceptek(final Felhasznalo felhasznalo, final ControlResultListener<Recept> callback) {
+        if (felhasznalo == null) throw new IllegalArgumentException("felhasznalo nem lehet null!");
+        if (callback == null) throw new IllegalArgumentException("callback nem lehet null!");
+
+        Executors.newSingleThreadExecutor().submit(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    final List<Recept> ret = getKapottReceptek(felhasznalo);
+                    // itt adjuk vissza az eredményt, de a UI szálon át
+                    callbackUI(new Runnable() {
+                        @Override
+                        public void run() {
+                            callback.onSuccess(ret);
+                        }
+                    });
+                } catch (final Exception e) {
+                    // itt adjuk vissza a hibát, de a UI szálon át
+                    callbackUI(new Runnable() {
+                        @Override
+                        public void run() {
+                            callback.onFailed(e);
+                        }
+                    });
+                }
+            }
+        });
+    }
+
+    @Override
     public void remKapottRecept(Felhasznalo felhasznalo, Recept recept) throws Exception {
         if (felhasznalo == null) throw new IllegalArgumentException("felhasznalo nem lehet null!");
         if (recept == null) throw new IllegalArgumentException("recept nem lehet null!");
@@ -115,6 +179,36 @@ public final class DmyFelhasznaloNyilvantarto implements FelhasznaloNyilvantarto
 
         List<BevasarloLista> bl = bevlistak.get(felhasznalo);
         return bl == null ? Collections.<BevasarloLista>emptyList() : Collections.unmodifiableList(bl);
+    }
+
+    @Override
+    public void getBevasarloListak(final Felhasznalo felhasznalo, final ControlResultListener<BevasarloLista> callback) {
+        if (felhasznalo == null) throw new IllegalArgumentException("felhasznalo nem lehet null!");
+        if (callback == null) throw new IllegalArgumentException("callback nem lehet null!");
+
+        Executors.newSingleThreadExecutor().submit(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    final List<BevasarloLista> ret = getBevasarloListak(felhasznalo);
+                    // itt adjuk vissza az eredményt, de a UI szálon át
+                    callbackUI(new Runnable() {
+                        @Override
+                        public void run() {
+                            callback.onSuccess(ret);
+                        }
+                    });
+                } catch (final Exception e) {
+                    // itt adjuk vissza a hibát, de a UI szálon át
+                    callbackUI(new Runnable() {
+                        @Override
+                        public void run() {
+                            callback.onFailed(e);
+                        }
+                    });
+                }
+            }
+        });
     }
 
     @Override
@@ -180,5 +274,35 @@ public final class DmyFelhasznaloNyilvantarto implements FelhasznaloNyilvantarto
         List<Recept> recepts = kedvencek.get(felhasznalo);
         return recepts == null ? Collections.<Recept>emptyList() : Collections.unmodifiableList(recepts);
 
+    }
+
+    @Override
+    public void getKedvencek(final Felhasznalo felhasznalo, final ControlResultListener<Recept> callback) {
+        if (felhasznalo == null) throw new IllegalArgumentException("felhasznalo nem lehet null!");
+        if (callback == null) throw new IllegalArgumentException("callback nem lehet null!");
+
+        Executors.newSingleThreadExecutor().submit(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    final List<Recept> ret = getKedvencek(felhasznalo);
+                    // itt adjuk vissza az eredményt, de a UI szálon át
+                    callbackUI(new Runnable() {
+                        @Override
+                        public void run() {
+                            callback.onSuccess(ret);
+                        }
+                    });
+                } catch (final Exception e) {
+                    // itt a hibát adjuk vissza
+                    callbackUI(new Runnable() {
+                        @Override
+                        public void run() {
+                            callback.onFailed(e);
+                        }
+                    });
+                }
+            }
+        });
     }
 }

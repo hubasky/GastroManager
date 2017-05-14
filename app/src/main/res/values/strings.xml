@@ -1,11 +1,45 @@
 <resources>
     <string name="app_name">GastroManager</string>
 
+    <string name="db_error">Hiba történt adatbázishoz kapcsolódás közben!</string>
+
     <string name="reciepe_str">Receptek</string>
     <string name="shopping_list_str">Bevásárló lista</string>
     <string name="diet_manager_str">Étrend kezelő</string>
     <string name="search_reciepe_str">Receptek keresése</string>
     <string name="favourite_reciepes_str">Kedvenc receptek</string>
     <string name="new_reciepe_str">Új recept hozzáadása</string>
+    <string name="cancel_button_text">Mégse</string>
+    <string name="save_button_text">Mentés</string>
+    <string name="delete_ingredient_text">Hozzávaló törlése</string>
+    <string name="add_ingredient">Új hozzávaló</string>
+    <string name="edit_reciepe_description_hint_text">Írd le a recept elkészítési módját.</string>
+    <string name="edit_ingredient_search_ingredient_hint">Írd be a keresendő alapanyag nevét...</string>
+    <string name="ok_button_text">OK</string>
+    <string name="new_button_text">Új</string>
+    <string name="edit_ingredient_quantity_text">Mennyiség:</string>
+    <string name="add_quantity">Add meg a mennyiséget...</string>
+
+
+    <string name="default_data">Alap adatok</string>
+    <string name="ingredient_name">Alapanyag neve</string>
+    <string name="unit_type">Métrékegység fajtája</string>
+    <string name="unit_in_gramms">Egy egység tömege grammban</string>
+    <string name="ingredient_details">Összetétel jellemzők</string>
+    <string name="protein_content">Fehérje tartalom (%)</string>
+    <string name="fat_content">Zsír tartalom (%)</string>
+    <string name="carbo_content">Szénhidrát tartalom (%)</string>
+    <string name="energy_content">Energia tartalom 100g-ban (kJ)</string>
+
+    <string name="weight">súly</string>
+    <string name="liquid">űrmérték</string>
+    <string name="piece">darab</string>
+    <string name="write_ingredient_name">Írd be az alapanyag nevét</string>
+    <string-array name="unit_types">
+        <item>@string/weight</item>
+        <item>@string/liquid</item>
+        <item>@string/piece</item>
+    </string-array>
+
 
 </resources>

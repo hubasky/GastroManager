@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <integer name="add_ingredient_request">1000</integer>
+    <integer name="edit_ingredient_request">1001</integer>
+
+</resources>

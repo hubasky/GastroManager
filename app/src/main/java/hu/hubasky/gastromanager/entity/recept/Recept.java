@@ -1,5 +1,7 @@
 package hu.hubasky.gastromanager.entity.recept;
 
+import com.google.firebase.database.IgnoreExtraProperties;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -21,6 +23,7 @@ import hu.hubasky.gastromanager.entity.felhasznalo.Felhasznalo;
  * Created by mirso on 2017. 04. 26..
  */
 
+@IgnoreExtraProperties
 public final class Recept extends Cimkezheto {
     /**
      * A recept tulajdonosa.
