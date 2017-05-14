@@ -59,6 +59,55 @@ public class ShopItemListPickerActivity extends AppCompatActivity {
             }
         });
 
+
+        //megosztáshoz long click on item
+        mListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                final AlertDialog.Builder alertDialog = new AlertDialog.Builder(self);
+
+                final EditText input = new EditText(self);
+                input.setInputType(InputType.TYPE_CLASS_TEXT);
+
+                alertDialog
+                        .setTitle(R.string.share_shclist_prompt_title)
+                        .setNegativeButton(R.string.cancel_button_text, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        })
+
+                        .setPositiveButton(R.string.create_button_text, new DialogInterface.OnClickListener(){
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                                Intent shoppingListIntent = new Intent(self, ShopItemPickerActivity.class);
+
+                                String selectedName = input.getText().toString();
+                                ShopItemListBundle selectedList = new ShopItemListBundle(selectedName, "SenDeRNaMe", null, new ArrayList<ShopItem>());
+
+                                //parcelable kell, hogy legyen a shoppingcart!
+                                shoppingListIntent.putExtra(EXTRA_CONTENT, selectedList.getSiList());
+                                shoppingListIntent.putExtra(EXTRA_NAME, selectedName);
+                                startActivity(shoppingListIntent);
+
+                            }
+                        })
+
+
+                        .setView(input)
+
+                        .show();
+
+                //telling the framework that the touch event is consumed and no further event handling is required
+
+                return true;
+            }
+        });
+
+
+        //új kosár hozzáadásához
         addShopItemListBundleButton = (Button) findViewById(R.id.add_shopitembundle_btn);
         addShopItemListBundleButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -151,7 +200,7 @@ public class ShopItemListPickerActivity extends AppCompatActivity {
         shcList.add(o);
 
 
-
+        //TÖRLÉSHEZ
         adapter = new ShopItemListBundleAdapter(this, R.layout.layout_shopitemlist_bundle, shcList);
         mListView.setAdapter(adapter);
 
@@ -168,7 +217,11 @@ public class ShopItemListPickerActivity extends AppCompatActivity {
                             public void onDismiss(ListView listView, int[] reverseSortedPositions) {
                                 for (int position : reverseSortedPositions) {
 
-                                    deleteShListItem(position);
+                                    if (true){//user == loggedinUser) {
+                                        deleteShListItem(position);
+                                    }else{
+                                        unsubscribeShListItem(position);
+                                    }
                                 }
 
 

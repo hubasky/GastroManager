@@ -16,6 +16,7 @@
     <string name="shclist_sender">Bekűtte:</string>
     <string name="shclist_sharedwith">Láttya ő is:</string>
     <string name="new_shclist_prompt_title">Adj egy címet a bevásárlólistádnak!</string>
+    <string name="share_shclist_prompt_title">Bevásárlólista megosztása…</string>
     <string name="plcholder">PlaceholderText</string>
 
 
