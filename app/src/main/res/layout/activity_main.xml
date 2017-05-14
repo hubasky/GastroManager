@@ -11,12 +11,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="30"
+        android:layout_marginBottom="180sp"
         >
 
         <GridLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:columnCount="3"
+            android:columnCount="2"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             >
@@ -25,6 +26,7 @@
                 android:id="@+id/reciepe_button"
                 style="@style/MainButtonStyle"
                 android:background="@drawable/recipe_icon"
+
                 />
 
             <android.support.v7.widget.AppCompatButton
@@ -33,17 +35,17 @@
                 android:background="@drawable/shopping_list_icon"
                 />
 
-            <android.support.v7.widget.AppCompatButton
-                android:id="@+id/diet_manager_buton"
-                style="@style/MainButtonStyle"
-                android:background="@drawable/diet_manager_icon"
-                />
+            <!--<android.support.v7.widget.AppCompatButton-->
+                <!--android:id="@+id/diet_manager_buton"-->
+                <!--style="@style/MainButtonStyle"-->
+                <!--android:background="@drawable/diet_manager_icon"-->
+                <!--/>-->
 
-            <android.support.v7.widget.AppCompatTextView
-                android:id="@+id/appCompatTextView1"
-                style="@style/MainButtonTextStyle"
-                android:text="@string/reciepe_str"
-                />
+            <!--<android.support.v7.widget.AppCompatTextView-->
+                <!--android:id="@+id/appCompatTextView1"-->
+                <!--style="@style/MainButtonTextStyle"-->
+                <!--android:text="@string/reciepe_str"-->
+                <!--/>-->
 
             <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/appCompatTextView2"
@@ -59,13 +61,7 @@
         </GridLayout>
     </RelativeLayout>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="70"
-        >
 
-    </RelativeLayout>
 
 
 </LinearLayout>
