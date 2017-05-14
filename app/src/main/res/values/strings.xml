@@ -10,12 +10,15 @@
     <string name="favourite_reciepes_str">Kedvenc receptek</string>
     <string name="new_reciepe_str">Új recept hozzáadása</string>
     <string name="cancel_button_text">Mégse</string>
+    <string name="create_button_text">Létrehoz</string>
     <string name="save_button_text">Mentés</string>
     <string name="delete_ingredient_text">Hozzávaló törlése</string>
     <string name="add_ingredient">Új hozzávaló</string>
     <string name="edit_reciepe_description_hint_text">Írd le a recept elkészítési módját.</string>
     <string name="shclist_sender">Bekűtte:</string>
     <string name="shclist_sharedwith">Láttya ő is:</string>
+    <string name="new_shclist_prompt_title">Adj egy címet a bevásárlólistádnak!</string>
+    <string name="share_shclist_prompt_title">Bevásárlólista megosztása…</string>
     <string name="plcholder">PlaceholderText</string>
     <string name="edit_ingredient_search_ingredient_hint">Írd be a keresendő alapanyag nevét...</string>
     <string name="ok_button_text">OK</string>

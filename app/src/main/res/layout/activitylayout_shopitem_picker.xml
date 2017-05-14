@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
@@ -14,7 +15,6 @@
         android:layout_margin="10dp"
         android:textColor="@color/colorPrimaryDark"
         android:id="@+id/textView_shhoppingListLabel"
-
         />
 
     <ListView
@@ -25,5 +25,16 @@
         android:layout_height="match_parent"
         >
     </ListView>
+
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/add_shopitem_btn"
+        style="@style/AddButtonStyle"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true" />
+
+
+
 
 </RelativeLayout>

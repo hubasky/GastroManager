@@ -14,9 +14,6 @@ import java.util.ArrayList;
 
 import hu.hubasky.gastromanager.R;
 
-/**
- * Created by Balu on 2017-05-13.
- */
 
 public class ShopItemListBundleAdapter extends ArrayAdapter<ShopItemListBundle> {
     private static final String TAG = "ShopItemListBundleAdapter";
@@ -30,7 +27,6 @@ public class ShopItemListBundleAdapter extends ArrayAdapter<ShopItemListBundle> 
         mContext = context;
         mResource = resource;
 
-
     }
 
     private static class ViewHolder{
@@ -41,6 +37,10 @@ public class ShopItemListBundleAdapter extends ArrayAdapter<ShopItemListBundle> 
 
     }
 
+    @Override
+    public void notifyDataSetChanged() {
+        super.notifyDataSetChanged();
+    }
 
     @NonNull
     @Override
@@ -69,10 +69,13 @@ public class ShopItemListBundleAdapter extends ArrayAdapter<ShopItemListBundle> 
             holder = (ViewHolder) convertView.getTag();
         }
 
-        result = convertView;
+//        result = convertView;
 
-        Animation animation = AnimationUtils.loadAnimation(mContext, (position > lastPosition) ? R.anim.load_down_anim : R.anim.load_up_anim);
-        result.startAnimation(animation);
+
+        //Animation animation = AnimationUtils.loadAnimation(mContext, (position > lastPosition) ? R.anim.load_down_anim : R.anim.load_up_anim);
+        //result.startAnimation(animation);
+
+
         lastPosition = position;
 
         holder.name.setText(name);
@@ -82,5 +85,6 @@ public class ShopItemListBundleAdapter extends ArrayAdapter<ShopItemListBundle> 
 
         return convertView;
     }
+
 }
 
