@@ -12,11 +12,11 @@ public final class Felhasznalo extends EgyediKulcs {
     /**
      * A felhasználói név min hossza.
      */
-    private static final int MIN_USERNEV_LENGTH = 6;
+    public static final int MIN_USERNEV_LENGTH = 6;
     /**
      * A jelszó  min hossza.
      */
-    private static final int MIN_JELSZO_LENGTH = 5;
+    public static final int MIN_JELSZO_LENGTH = 5;
     /**
      * A felhasználói (bejelentkező) név.
      */

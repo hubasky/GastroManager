@@ -20,6 +20,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -29,9 +30,15 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import hu.hubasky.gastromanager.control.Controls;
+import hu.hubasky.gastromanager.control.FelhasznaloNyilvantarto;
+import hu.hubasky.gastromanager.control.impl.dummy.DmyFelhasznaloNyilvantarto;
+import hu.hubasky.gastromanager.entity.felhasznalo.Felhasznalo;
 
 import static android.Manifest.permission.READ_CONTACTS;
 
@@ -43,6 +50,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     /**
      * Id to identity READ_CONTACTS permission request.
      */
+
+
+    private static final String TAG = "LoginActivity";
+    
     private static final int REQUEST_READ_CONTACTS = 0;
     private final AppCompatActivity self = this;
 
@@ -50,9 +61,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      * A dummy authentication store containing known user names and passwords.
      * TODO: remove after connecting to a real authentication system.
      */
-    private static final String[] DUMMY_CREDENTIALS = new String[]{
-            "foo@example.com:hello", "bar@example.com:world"
-    };
+//    private static final String[] DUMMY_CREDENTIALS = new String[]{
+//            "foo@example.com:hello", "bar@example.com:world"
+//    };
     /**
      * Keep track of the login task to ensure we can cancel it if requested.
      */
@@ -64,10 +75,28 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private View mProgressView;
     private View mLoginFormView;
 
+    protected static Felhasznalo loggedInUser;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        if(Controls.getInstance().getFelhasznaloNyilvantarto()== null){
+            Toast.makeText(self, "Nincs példányosítva FelhasznaloNyilvantarto static osztály!", Toast.LENGTH_LONG).show();
+        }
+
+        //login név csekkolása
+        if (loggedInUser != null && loggedInUser.getUsernev() != null) {
+            Intent mainActIntent = new Intent(self, MainActivity.class);
+            startActivity(mainActIntent);
+            finish();
+        }
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        //megvizsgálni, hogy a loggedinUser null-e, ha nem, akkor tovább lökni intent extra-val
+        //mainactivity-nek
+
         // Set up the login form.
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
         populateAutoComplete();
@@ -167,7 +196,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 //            focusView = mPasswordView;
 //            cancel = true;
 //        }
-
+//
 //        // Check for a valid email address.
 //        if (TextUtils.isEmpty(email)) {
 //            mEmailView.setError(getString(R.string.error_field_required));
@@ -190,20 +219,17 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             mAuthTask = new UserLoginTask(email, password);
             mAuthTask.execute((Void) null);
 
-            Intent mainmenu = new Intent(self, MainActivity.class);
-            startActivity(mainmenu);
-            finish();
         }
     }
 
     private boolean isEmailValid(String email) {
-        //TODO: Replace this with your own logic
-        return email.contains("@");
+
+        return email.length()>=Felhasznalo.MIN_USERNEV_LENGTH; // && email.contains("@.");
     }
 
     private boolean isPasswordValid(String password) {
         //TODO: Replace this with your own logic
-        return password.length() > 4;
+        return password.length() > Felhasznalo.MIN_JELSZO_LENGTH;
     }
 
     /**
@@ -302,8 +328,12 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      */
     public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
 
+        private static final String TAG = "LoginActivity_UsrLgnTsk";
+        
         private final String mEmail;
         private final String mPassword;
+
+        private Felhasznalo loggedInUsr;
 
         UserLoginTask(String email, String password) {
             mEmail = email;
@@ -312,37 +342,90 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         @Override
         protected Boolean doInBackground(Void... params) {
-            // TODO: attempt authentication against a network service.
-
+            Log.d(TAG, "doInBackground: háttérfolyamat elindítva");
             try {
-                // Simulate network access.
-                Thread.sleep(2000);
+
+                //szervernek elküldjük az auth adatokat
+                FelhasznaloNyilvantarto felhasznaloNyilvantarto = Controls.getInstance().getFelhasznaloNyilvantarto();
+
+
+                Felhasznalo usr = felhasznaloNyilvantarto.login(mEmail, mPassword);
+                Log.d(TAG, "doInBackground: usr adatok lekérve");
+                
+                if (usr != null) {
+                    loggedInUsr = usr;
+//                    Toast.makeText(self, "Sikeres belépés!", Toast.LENGTH_SHORT).show();
+                    //usr visszatérés!
+                    return true;
+                }else{
+
+                    try {
+                        felhasznaloNyilvantarto.regiszter(mEmail, mPassword, mEmail);
+
+                        //Toast.makeText(self, "Sikeres regisztráció!", Toast.LENGTH_SHORT).show();
+
+                        loggedInUsr = usr;
+                        return true;
+
+
+                    } catch (Exception e) {
+//                        Toast.makeText(self, "Sikertelen regisztráció", Toast.LENGTH_SHORT).show();
+                        return false;
+                    }
+                }
+
+
+
             } catch (InterruptedException e) {
+//                Toast.makeText(self, "Sikertelen bejelentkezés (megszakítva)", Toast.LENGTH_SHORT).show();
+
+                return false;
+            } catch (Exception e) {
+
+//                Toast.makeText(self, "Sikertelen bejelentkezés, amely elvesztette megoldandó jellegét.", Toast.LENGTH_SHORT).show();
+
                 return false;
             }
 
-            for (String credential : DUMMY_CREDENTIALS) {
-                String[] pieces = credential.split(":");
-                if (pieces[0].equals(mEmail)) {
-                    // Account exists, return true if the password matches.
-                    return pieces[1].equals(mPassword);
-                }
-            }
+//            for (String credential : DUMMY_CREDENTIALS) {
+//                String[] pieces = credential.split(":");
+//                if (pieces[0].equals(mEmail)) {
+//                    // Account exists, return true if the password matches.
+//                    return pieces[1].equals(mPassword);
+//                }
+//            }
 
-            // TODO: register the new account here.
-            return true;
+//             TODO: register the new account here.
+
+            //true= siker; false = rábaszás
+
+//            public final class DmyFelhasznaloNyilvantarto extends AsyncControlBase
+//                    implements FelhasznaloNyilvantarto {
+//                public static final String MAKRAAT_USR = "makraat";
+//                public static final String HAZAIP_USR = "hazaip";
+//                public static final String STICKERB_USR = "stickerb";
+//                public static final String ALL_PSW = "123456";
+//            return true;
         }
 
         @Override
         protected void onPostExecute(final Boolean success) {
+
             mAuthTask = null;
             showProgress(false);
 
             if (success) {
+//              TODO: ellenőrizni, hogy így kellene-e átani a sessiont!!!!!!!!!!!!
+                LoginActivity.loggedInUser = this.loggedInUsr;
+                Intent mainmenu = new Intent(self, MainActivity.class);
+                startActivity(mainmenu);
+
+                Log.d(TAG, "onPostExecute: sikeres belépés");
                 finish();
             } else {
                 mPasswordView.setError(getString(R.string.error_incorrect_password));
                 mPasswordView.requestFocus();
+                Toast.makeText(self, "Sikertelen belépés/regisztráció!", Toast.LENGTH_LONG).show();
             }
         }
 

@@ -93,7 +93,7 @@ public final class Controls {
      * Privát konstruktor.
      */
     private Controls() {
-        // dummyImpl();
+        //dummyImpl();
         firebaseImpl();
 
         Set<ControlBase> needInit = new HashSet<>(controls);
@@ -123,6 +123,7 @@ public final class Controls {
 
     private void firebaseImpl() {
         controls.add(alapanyagNyilvantarto = new FirebaseIngredientManager());
+        controls.add(felhasznaloNyilvantarto = new DmyFelhasznaloNyilvantarto());
     }
 
     /**
