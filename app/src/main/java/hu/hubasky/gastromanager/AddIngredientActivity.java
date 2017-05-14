@@ -43,6 +43,7 @@ public class AddIngredientActivity extends AppCompatActivity {
 
     private List<Alapanyag> ingredients;
     private List<String> spinnerUnits;
+    private String passedUID;
 
     private IngredientListAdapter ingredientListAdapter;
 
@@ -63,6 +64,11 @@ public class AddIngredientActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        //UID (most név) elkapása - ehhez a listához adjuk majd hozzá az összetevőt
+        passedUID = Intent.EXTRA_UID;
+
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_ingredient);
 

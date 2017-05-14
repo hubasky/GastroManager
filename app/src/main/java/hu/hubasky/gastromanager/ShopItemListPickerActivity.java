@@ -16,6 +16,7 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 
+import hu.hubasky.gastromanager.entity.bevlist.BevasarloLista;
 import hu.hubasky.gastromanager.viewmodel.ShopItem;
 import hu.hubasky.gastromanager.viewmodel.ShopItemListBundle;
 import hu.hubasky.gastromanager.viewmodel.ShopItemListBundleAdapter;
@@ -25,7 +26,7 @@ public class ShopItemListPickerActivity extends AppCompatActivity {
 
     private static final String TAG = "ShoppingCartPickerAct";
     public static final String EXTRA_ID = "hu.hubasky.gastromanager._ID";
-    public static final String EXTRA_CONTENT = "hu.hubasky.gastromanager._CONTENT";
+//    public static final String EXTRA_CONTENT = "hu.hubasky.gastromanager._CONTENT";
     public static final String EXTRA_NAME = "hu.hubasky.gastromanager._NAME";
 
     private Button addShopItemListBundleButton;
@@ -34,7 +35,7 @@ public class ShopItemListPickerActivity extends AppCompatActivity {
     ListView mListView;
     ShopItemListBundleAdapter adapter;
 
-    private ArrayList<ShopItemListBundle> shcList;
+    private ArrayList<BevasarloLista> shcList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,11 +50,12 @@ public class ShopItemListPickerActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent shoppingListIntent = new Intent(self, ShopItemPickerActivity.class);
 
-                ShopItemListBundle selectedList = shcList.get(position); //lehet, hogy ezt is kell parcellázni!
-                String selectedName = selectedList.getName();
+                BevasarloLista selectedList = shcList.get(position); //lehet, hogy ezt is kell parcellázni!
+                String selectedName = selectedList.getBevasarloListaNev();
 
                 //parcelable kell, hogy legyen a shoppingcart!
-                shoppingListIntent.putExtra(EXTRA_CONTENT, selectedList.getSiList());
+//                shoppingListIntent.putExtra(EXTRA_CONTENT, selectedList.getUniqueKey());
+                shoppingListIntent.putExtra(EXTRA_ID, selectedList.getUniqueKey());
                 shoppingListIntent.putExtra(EXTRA_NAME, selectedName);
                 startActivity(shoppingListIntent);
             }
@@ -158,7 +160,7 @@ public class ShopItemListPickerActivity extends AppCompatActivity {
                                 ShopItemListBundle selectedList = new ShopItemListBundle(selectedName, "SenDeRNaMe", null, new ArrayList<ShopItem>());
 
                                 //parcelable kell, hogy legyen a shoppingcart!
-                                shoppingListIntent.putExtra(EXTRA_CONTENT, selectedList.getSiList());
+//                                shoppingListIntent.putExtra(EXTRA_CONTENT, selectedList.getSiList());
                                 shoppingListIntent.putExtra(EXTRA_NAME, selectedName);
                                 startActivity(shoppingListIntent);
 
@@ -204,25 +206,25 @@ public class ShopItemListPickerActivity extends AppCompatActivity {
 
         shcList = new ArrayList<>();
 
-        shcList.add(a);
-        shcList.add(b);
-        shcList.add(c);
-        shcList.add(d);
-        shcList.add(e);
-        shcList.add(f);
-        shcList.add(g);
-        shcList.add(h);
-        shcList.add(i);
-        shcList.add(j);
-        shcList.add(k);
-        shcList.add(l);
-        shcList.add(m);
-        shcList.add(n);
-        shcList.add(o);
+//        shcList.add(a);
+//        shcList.add(b);
+//        shcList.add(c);
+//        shcList.add(d);
+//        shcList.add(e);
+//        shcList.add(f);
+//        shcList.add(g);
+//        shcList.add(h);
+//        shcList.add(i);
+//        shcList.add(j);
+//        shcList.add(k);
+//        shcList.add(l);
+//        shcList.add(m);
+//        shcList.add(n);
+//        shcList.add(o);
 
 
         //TÖRLÉSHEZ
-        adapter = new ShopItemListBundleAdapter(this, R.layout.layout_shopitemlist_bundle, shcList);
+//        adapter = new ShopItemListBundleAdapter(this, R.layout.layout_shopitemlist_bundle, shcList);
         mListView.setAdapter(adapter);
 
         SwipeDismissListViewTouchListener touchListener =
@@ -278,7 +280,7 @@ public class ShopItemListPickerActivity extends AppCompatActivity {
 
         //
         if(position<=shcList.size()) {
-            shcList.get(position).clearItem();
+//            shcList.get(position).clearItem();
             shcList.remove(position);
             adapter.notifyDataSetChanged();
             return 0;
@@ -292,7 +294,7 @@ public class ShopItemListPickerActivity extends AppCompatActivity {
     public void deleteAll(){
 
         for (int i = 0; i < shcList.size(); i++) {
-            shcList.get(i).clearItem();
+//            shcList.get(i).clearItem();
             shcList.remove(i);
         }
 
