@@ -4,11 +4,12 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
 
+import hu.hubasky.gastromanager.entity.Cimkezheto;
 import hu.hubasky.gastromanager.viewmodel.IngerdientUnit;
 
 import static android.R.attr.id;
 
-public class ShopItem implements Parcelable {
+public class ShopItem extends Cimkezheto implements Parcelable {
 
     private String name;
     private int quantity;
