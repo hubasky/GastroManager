@@ -15,4 +15,15 @@
         android:id="@+id/listView_shclist"
         />
 
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/add_shopitembundle_btn"
+        style="@style/AddButtonStyle"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true" />
+
+
+
+
 </RelativeLayout>

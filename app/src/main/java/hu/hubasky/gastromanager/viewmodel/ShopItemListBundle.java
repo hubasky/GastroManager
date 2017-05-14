@@ -36,7 +36,7 @@ public class ShopItemListBundle {
         this.name = name;
     }
 
-    public String getSenderName() {
+    String getSenderName() {
         return senderName;
     }
 
@@ -44,7 +44,7 @@ public class ShopItemListBundle {
         this.senderName = senderName;
     }
 
-    public String getSharedWith() {
+    String getSharedWith() {
         return sharedWith;
     }
 
@@ -60,6 +60,14 @@ public class ShopItemListBundle {
         this.sharedWith = sharedWith;
         this.siList = siList;
 
+    }
+
+    public void clearItem(){
+        this.name = null;
+        this.senderName = null;
+        this.sharedWith = null;
+        this.siList.clear();
+        this.siList = null;
     }
 
 }

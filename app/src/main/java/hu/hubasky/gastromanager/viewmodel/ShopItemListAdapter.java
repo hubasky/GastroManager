@@ -2,7 +2,6 @@ package hu.hubasky.gastromanager.viewmodel;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,7 +21,7 @@ public class ShopItemListAdapter extends ArrayAdapter<ShopItem>{
     private static final String TAG = "ShopItemListAdapter";
 
     public ShopItemListAdapter(List<ShopItem> shopItemtList, Context context) {
-        super(context, R.layout.shopping_list_layout, shopItemtList);
+        super(context, R.layout.layout_shopitem, shopItemtList);
         this.shopItemtList = shopItemtList;
         this.context = context;
     }
@@ -47,7 +46,7 @@ public class ShopItemListAdapter extends ArrayAdapter<ShopItem>{
         if(convertView == null) {
 
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            v = inflater.inflate(R.layout.shopping_list_layout, parent,false);
+            v = inflater.inflate(R.layout.layout_shopitem, parent,false);
 
             holder.itemName = (TextView) v.findViewById(R.id.name);
             holder.qtyView = (TextView) v.findViewById(R.id.quantity);
