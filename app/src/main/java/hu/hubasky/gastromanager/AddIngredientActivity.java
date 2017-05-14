@@ -44,6 +44,8 @@ public class AddIngredientActivity extends AppCompatActivity {
     private List<Alapanyag> ingredients;
     private List<String> spinnerUnits;
 
+    private IngredientListAdapter ingredientListAdapter;
+
     private final List<String> weightUnits = new ArrayList<String>() {{
         add("g");
         add("dkg");
@@ -72,11 +74,21 @@ public class AddIngredientActivity extends AppCompatActivity {
         quantityEditText = (EditText) findViewById(R.id.edit_ingredient_quantity_edit_text);
         unitTypeSpinner = (Spinner) findViewById(R.id.edit_ingredient_unit_type_spinner);
 
-        ingredients = new ArrayList<>();
-        spinnerUnits = new ArrayList<>();
+        Controls.getInstance().getAlapanyagNyilvantarto().keres(null, new ControlResultListener<Alapanyag>() {
+            @Override
+            public void onSuccess(List<Alapanyag> resultList) {
+                ingredients = resultList;
+                ingredientListAdapter = new IngredientListAdapter(ingredients, self);
+                ingredientsListView.setAdapter(ingredientListAdapter);
+            }
 
-        final IngredientListAdapter ingredientAdapter = new IngredientListAdapter(ingredients, self);
-        ingredientsListView.setAdapter(ingredientAdapter);
+            @Override
+            public void onFailed(Exception ex) {
+
+            }
+        });
+
+        spinnerUnits = new ArrayList<>();
 
         ingredientsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -100,6 +112,14 @@ public class AddIngredientActivity extends AppCompatActivity {
             }
         });
 
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setResult(RESULT_CANCELED);
+                finish();
+            }
+        });
+
         newButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -110,6 +130,12 @@ public class AddIngredientActivity extends AppCompatActivity {
             }
         });
 
+        okButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
     }
 
     @Override
@@ -151,12 +177,17 @@ public class AddIngredientActivity extends AppCompatActivity {
         Controls.getInstance().getAlapanyagNyilvantarto().keres(akjb.build(), new ControlResultListener<Alapanyag>() {
             @Override
             public void onSuccess(List<Alapanyag> resultList) {
+
+
+                ((BaseAdapter)ingredientsListView.getAdapter()).notifyDataSetChanged();
                 /*
                 ingredients = resultList;
                 IngredientListAdapter adapter = new IngredientListAdapter(resultList, self);
                 ingredientsListView.setAdapter(adapter);
                 ingredientsListView.invalidate();
                 */
+
+                /*
                 if (resultList != null && resultList.size() == 1) {
                     Alapanyag ingredient = resultList.get(0);
                     boolean found = false;
@@ -175,6 +206,8 @@ public class AddIngredientActivity extends AppCompatActivity {
                     }
                     ((BaseAdapter)ingredientsListView.getAdapter()).notifyDataSetChanged();
                 }
+
+                */
             }
 
             @Override
