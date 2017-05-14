@@ -56,7 +56,10 @@ public class ShopItemPickerActivity extends AppCompatActivity implements
             throw new NullPointerException("Nullpointer: hiányzik az arraylist a shopitem objektumból!");
         }
 
+        for (int i = 0; i < shopItemList.size(); i++) {
+            Log.d(TAG, "onCreate: " +  shopItemList.get(i).getName());
 
+        }
 
         lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
