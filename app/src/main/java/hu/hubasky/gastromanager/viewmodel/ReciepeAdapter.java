@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -23,15 +24,15 @@ public class ReciepeAdapter extends BaseAdapter {
     private RelativeLayout rootView;
     private ReciepeViewHolder holder;
 
-    public CharSequence getSearchString() {
+    public String getSearchString() {
         return searchString;
     }
 
-    public void setSearchString(CharSequence searchString) {
+    public void setSearchString(String searchString) {
         this.searchString = searchString;
     }
 
-    private CharSequence searchString;
+    private String searchString;
 
     public ReciepeAdapter(List<Recept> reciepes, Context context) {
         this.reciepes = reciepes;
@@ -78,22 +79,18 @@ public class ReciepeAdapter extends BaseAdapter {
         Recept reciepe = getItem(position);
 
         holder.titleText.setText(reciepe.getNeve());
-        holder.descriptionText.setText(String.valueOf((int) reciepe.getAdag()) + " adag");
+        holder.descriptionText.setText((String.valueOf((int) reciepe.getAdag()) + " adag"));
 
 
         if(searchString != null){
-            if(searchString.toString() == "" || reciepe.getName().contains(searchString.toString())) {
+            if(searchString.equals("") || reciepe.getNeve().toLowerCase().contains(searchString.toLowerCase())) {
                 rootView.setVisibility(View.VISIBLE);
             } else {
-                rootView.setVisibility(View.INVISIBLE);
+                rootView.setVisibility(View.GONE);
             }
         } else {
-
                 rootView.setVisibility(View.VISIBLE);
-
         }
-
-
 
         return rootView;
     }

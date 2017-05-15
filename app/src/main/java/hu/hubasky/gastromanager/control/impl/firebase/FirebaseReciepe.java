@@ -50,13 +50,15 @@ public class FirebaseReciepe {
                 imgURL, // Image URL
                 portion);
         result.setUniqueKey(reciepeId);
-        for (String key : ingredientQuantities.keySet()) {
-            Hozzavalo ingredient;
-            for (Alapanyag i : FirebaseAccess.getInstance().getIngredients()) {
-                if (key.equals(i.getUniqueKey())) {
-                    ingredient = new Hozzavalo(ingredientQuantities.get(key), i);
-                    result.addHozzavalo(ingredient);
-                    break;
+        if (ingredientQuantities != null) {
+            for (String key : ingredientQuantities.keySet()) {
+                Hozzavalo ingredient;
+                for (Alapanyag i : FirebaseAccess.getInstance().getIngredients()) {
+                    if (key.equals(i.getUniqueKey())) {
+                        ingredient = new Hozzavalo(ingredientQuantities.get(key), i);
+                        result.addHozzavalo(ingredient);
+                        break;
+                    }
                 }
             }
         }

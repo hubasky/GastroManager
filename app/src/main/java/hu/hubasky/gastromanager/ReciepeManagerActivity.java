@@ -3,11 +3,14 @@ package hu.hubasky.gastromanager;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -28,6 +31,7 @@ public class ReciepeManagerActivity extends AppCompatActivity {
     private static final String TAG = "ReciepeManagerActivity";
 
     private Button addReciepeButton;
+    private EditText searchField;
     ListView reciepeListView;
     private final AppCompatActivity self = this;
     public static final String EXTRA_RECIPE = "recipe_extra";
@@ -90,6 +94,26 @@ public class ReciepeManagerActivity extends AppCompatActivity {
                 editReciepeIntent.putExtra(EXTRA_RECIPE, r.getUniqueKey());
                 editReciepeIntent.putExtra("newReciepe", true);
                 startActivity(editReciepeIntent);
+            }
+        });
+
+        searchField = (EditText) findViewById(R.id.reciepe_searchfield);
+        searchField.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                String result = searchField.getText().toString();
+                reciepeAdapter.setSearchString(result);
+                reciepeAdapter.notifyDataSetChanged();
             }
         });
     }
