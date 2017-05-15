@@ -99,23 +99,25 @@ public class AddIngredientActivity extends AppCompatActivity {
         Controls.getInstance().getReceptNyilvantarto().keres(null, new ControlResultListener<Recept>() {
             @Override
             public void onSuccess(List<Recept> resultList) {
-                for (Recept r : resultList) {
-                    if (r.getUniqueKey().equals(reciepeUniqueKey)) {
-                        reciepe = r;
-                        break;
-                    }
-                }
-
-                if (!newIngredient) {
-                    for (Hozzavalo i : reciepe.getHozzavalok()) {
-                        if (ingredientUniqueKey.equals(i.getAlapanyag().getUniqueKey())) {
-                            ingredient = i;
+                if (reciepeUniqueKey != null) {
+                    for (Recept r : resultList) {
+                        if (r.getUniqueKey().equals(reciepeUniqueKey)) {
+                            reciepe = r;
                             break;
                         }
                     }
 
-                    quantityEditText.setText(String.valueOf((int) ingredient.getMennyiseg()));
-                    selectIngredient(ingredients.indexOf(ingredient.getAlapanyag()));
+                    if (!newIngredient) {
+                        for (Hozzavalo i : reciepe.getHozzavalok()) {
+                            if (ingredientUniqueKey.equals(i.getAlapanyag().getUniqueKey())) {
+                                ingredient = i;
+                                break;
+                            }
+                        }
+
+                        quantityEditText.setText(String.valueOf((int) ingredient.getMennyiseg()));
+                        selectIngredient(ingredients.indexOf(ingredient.getAlapanyag()));
+                    }
                 }
             }
 
@@ -191,19 +193,21 @@ public class AddIngredientActivity extends AppCompatActivity {
         okButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (newIngredient) {
-                    ingredient = new Hozzavalo(
-                            getQuantity(),
-                            selectedIngredient
-                    );
-                    reciepe.addHozzavalo(ingredient);
-                } else {
-                    ingredient.setMennyiseg(getQuantity());
-                }
-                try {
-                    Controls.getInstance().getReceptNyilvantarto().tarolas(reciepe);
-                } catch (Exception e) {
-                    e.printStackTrace();
+                if (reciepeUniqueKey != null) {
+                    if (newIngredient) {
+                        ingredient = new Hozzavalo(
+                                getQuantity(),
+                                selectedIngredient
+                        );
+                        reciepe.addHozzavalo(ingredient);
+                    } else {
+                        ingredient.setMennyiseg(getQuantity());
+                    }
+                    try {
+                        Controls.getInstance().getReceptNyilvantarto().tarolas(reciepe);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
                 finish();
             }
