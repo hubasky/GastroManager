@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:padding="8dp">
 
     <android.support.v7.widget.AppCompatTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/edit_reciepe_ingredient_quantity"
+        android:textSize="16sp"
         android:width="80dp"
         android:text="100kg"/>
 
@@ -14,6 +16,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/edit_reciepe_ingredient_name"
+        android:textSize="16sp"
         android:layout_toEndOf="@+id/edit_reciepe_ingredient_quantity"
         android:text="Some ingredient"/>
 

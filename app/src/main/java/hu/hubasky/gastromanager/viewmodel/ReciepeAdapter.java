@@ -13,14 +13,15 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 import hu.hubasky.gastromanager.R;
+import hu.hubasky.gastromanager.entity.recept.Recept;
 
 
 public class ReciepeAdapter extends BaseAdapter {
 
-    private List<ReciepeVM> reciepes;
+    private List<Recept> reciepes;
     private Context context;
 
-    public ReciepeAdapter(List<ReciepeVM> reciepes, Context context) {
+    public ReciepeAdapter(List<Recept> reciepes, Context context) {
         this.reciepes = reciepes;
         this.context = context;
     }
@@ -31,7 +32,7 @@ public class ReciepeAdapter extends BaseAdapter {
     }
 
     @Override
-    public ReciepeVM getItem(int position) {
+    public Recept getItem(int position) {
         return reciepes != null ? reciepes.get(position) : null;
     }
 
@@ -60,10 +61,10 @@ public class ReciepeAdapter extends BaseAdapter {
             holder = (ReciepeViewHolder) rootView.getTag();
         }
 
-        ReciepeVM reciepe = getItem(position);
+        Recept reciepe = getItem(position);
 
-        holder.titleText.setText(reciepe.getName());
-        holder.descriptionText.setText(reciepe.getDescription());
+        holder.titleText.setText(reciepe.getNeve());
+        holder.descriptionText.setText(String.valueOf((int) reciepe.getAdag()) + " adag");
 
         return rootView;
     }

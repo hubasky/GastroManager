@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 
+import hu.hubasky.gastromanager.entity.alapanyag.Alapanyag;
 import hu.hubasky.gastromanager.entity.felhasznalo.Felhasznalo;
 import hu.hubasky.gastromanager.entity.recept.EReceptStatus;
 import hu.hubasky.gastromanager.entity.recept.Hozzavalo;
@@ -49,6 +50,16 @@ public class FirebaseReciepe {
                 imgURL, // Image URL
                 portion);
         result.setUniqueKey(reciepeId);
+        for (String key : ingredientQuantities.keySet()) {
+            Hozzavalo ingredient;
+            for (Alapanyag i : FirebaseAccess.getInstance().getIngredients()) {
+                if (key.equals(i.getUniqueKey())) {
+                    ingredient = new Hozzavalo(ingredientQuantities.get(key), i);
+                    result.addHozzavalo(ingredient);
+                    break;
+                }
+            }
+        }
         return result;
     }
 

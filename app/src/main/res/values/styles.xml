@@ -30,6 +30,6 @@
         <item name="android:background">@drawable/add_button</item>
     </style>
 
-    <dimen name="ReciepeListItemHeight">108dp</dimen>
+    <dimen name="ReciepeListItemHeight">110dp</dimen>
 
 </resources>

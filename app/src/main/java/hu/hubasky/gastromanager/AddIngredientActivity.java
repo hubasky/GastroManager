@@ -22,6 +22,8 @@ import hu.hubasky.gastromanager.control.ControlResultListener;
 import hu.hubasky.gastromanager.control.Controls;
 import hu.hubasky.gastromanager.entity.alapanyag.Alapanyag;
 import hu.hubasky.gastromanager.entity.alapanyag.AlapanyagKeresesiJellemzok;
+import hu.hubasky.gastromanager.entity.recept.Hozzavalo;
+import hu.hubasky.gastromanager.entity.recept.Recept;
 import hu.hubasky.gastromanager.viewmodel.IngredientListAdapter;
 import hu.hubasky.gastromanager.viewmodel.SingleTextAdapter;
 import hu.hubasky.gastromanager.viewmodel.SwipeDismissListViewTouchListener;
@@ -47,6 +49,10 @@ public class AddIngredientActivity extends AppCompatActivity {
     private String passedUID;
 
     private IngredientListAdapter ingredientListAdapter;
+
+    boolean newIngredient = false;
+    Recept reciepe;
+    Hozzavalo ingredient;
 
     private final List<String> weightUnits = new ArrayList<String>() {{
         add("g");
@@ -81,6 +87,44 @@ public class AddIngredientActivity extends AppCompatActivity {
         quantityEditText = (EditText) findViewById(R.id.edit_ingredient_quantity_edit_text);
         unitTypeSpinner = (Spinner) findViewById(R.id.edit_ingredient_unit_type_spinner);
 
+
+        newIngredient = this.getIntent().getBooleanExtra("new_ingredient", false);
+        final String reciepeUniqueKey = this.getIntent().getStringExtra("reciepe_uniqueKey");
+        final String ingredientUniqueKey = this.getIntent().getStringExtra("ingredient_uniqueKey");
+
+        if (!newIngredient) {
+            ingredientsListView.setEnabled(false);
+        }
+
+        Controls.getInstance().getReceptNyilvantarto().keres(null, new ControlResultListener<Recept>() {
+            @Override
+            public void onSuccess(List<Recept> resultList) {
+                for (Recept r : resultList) {
+                    if (r.getUniqueKey().equals(reciepeUniqueKey)) {
+                        reciepe = r;
+                        break;
+                    }
+                }
+
+                if (!newIngredient) {
+                    for (Hozzavalo i : reciepe.getHozzavalok()) {
+                        if (ingredientUniqueKey.equals(i.getAlapanyag().getUniqueKey())) {
+                            ingredient = i;
+                            break;
+                        }
+                    }
+
+                    quantityEditText.setText(String.valueOf((int) ingredient.getMennyiseg()));
+                    selectIngredient(ingredients.indexOf(ingredient.getAlapanyag()));
+                }
+            }
+
+            @Override
+            public void onFailed(Exception ex) {
+
+            }
+        });
+
         Controls.getInstance().getAlapanyagNyilvantarto().keres(null, new ControlResultListener<Alapanyag>() {
             @Override
             public void onSuccess(List<Alapanyag> resultList) {
@@ -109,19 +153,19 @@ public class AddIngredientActivity extends AppCompatActivity {
             }
         });
 
-//        ingredientsListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-//            @Override
-//            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-//                view.setSelected(true);
-//                Alapanyag ingredient = selectIngredient(position);
-//
-//                Intent editIngredient = new Intent(self, EditIngredientActivity.class);
-//                editIngredient.putExtra("ingredient", ingredient.getUniqueKey());
-//                startActivityForResult(editIngredient, 1001);
-//
-//                return true;
-//            }
-//        });
+        ingredientsListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                view.setSelected(true);
+                Alapanyag ingredient = selectIngredient(position);
+
+                Intent editIngredient = new Intent(self, EditIngredientActivity.class);
+                editIngredient.putExtra("ingredient", ingredient.getUniqueKey());
+                startActivityForResult(editIngredient, 1001);
+
+                return true;
+            }
+        });
 
 
 
@@ -147,7 +191,21 @@ public class AddIngredientActivity extends AppCompatActivity {
         okButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                if (newIngredient) {
+                    ingredient = new Hozzavalo(
+                            getQuantity(),
+                            selectedIngredient
+                    );
+                    reciepe.addHozzavalo(ingredient);
+                } else {
+                    ingredient.setMennyiseg(getQuantity());
+                }
+                try {
+                    Controls.getInstance().getReceptNyilvantarto().tarolas(reciepe);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                finish();
             }
         });
     }
@@ -191,37 +249,7 @@ public class AddIngredientActivity extends AppCompatActivity {
         Controls.getInstance().getAlapanyagNyilvantarto().keres(akjb.build(), new ControlResultListener<Alapanyag>() {
             @Override
             public void onSuccess(List<Alapanyag> resultList) {
-
-
                 ((BaseAdapter)ingredientsListView.getAdapter()).notifyDataSetChanged();
-                /*
-                ingredients = resultList;
-                IngredientListAdapter adapter = new IngredientListAdapter(resultList, self);
-                ingredientsListView.setAdapter(adapter);
-                ingredientsListView.invalidate();
-                */
-
-                /*
-                if (resultList != null && resultList.size() == 1) {
-                    Alapanyag ingredient = resultList.get(0);
-                    boolean found = false;
-                    int index = 0;
-                    for (Alapanyag i : ingredients) {
-                        if (i.getUniqueKey().equals(ingredient.getUniqueKey())) {
-                            found = true;
-                            break;
-                        }
-                        index++;
-                    }
-                    if (found) {
-                        ingredients.set(index, ingredient);
-                    } else {
-                        ingredients.add(ingredient);
-                    }
-                    ((BaseAdapter)ingredientsListView.getAdapter()).notifyDataSetChanged();
-                }
-
-                */
             }
 
             @Override
@@ -229,5 +257,23 @@ public class AddIngredientActivity extends AppCompatActivity {
                 Toast.makeText(self, "@string/db_error", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private double getQuantity() {
+        double result = Double.parseDouble(quantityEditText.getText().toString());
+        String selectedUnitType = (String) unitTypeSpinner.getSelectedItem();
+
+        if (selectedUnitType != null) {
+            switch (selectedUnitType) {
+                case "dkg": result = result * 10;
+                    break;
+                case "kg": result = result * 1000;
+                    break;
+                case "ml": result = result / 1000;
+                    break;
+                case "dl": result = result / 100;
+            }
+        }
+        return result;
     }
 }

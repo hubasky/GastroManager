@@ -20,6 +20,10 @@ import hu.hubasky.gastromanager.entity.felhasznalo.Felhasznalo;
 
 public final class ReceptKeresesiJellemzok {
 
+
+
+    private final String uniqueKey;
+    public String getUniqueKey() { return uniqueKey; }
     /**
      * Aki a keresést végzi.
      */
@@ -215,6 +219,8 @@ public final class ReceptKeresesiJellemzok {
      * Az építő.
      */
     public final static class Builder {
+
+        private String uniqueKey;
         /**
          * Keresési névtöredés.
          */
@@ -456,6 +462,11 @@ public final class ReceptKeresesiJellemzok {
             return this;
         }
 
+        public Builder getByUniqueKey(String uk) {
+            uniqueKey = uk;
+            return this;
+        }
+
         /**
          * Beállítja a felhasználót, mint feltételt.
          *
@@ -478,18 +489,18 @@ public final class ReceptKeresesiJellemzok {
          * @return a jellemzők.
          */
         public ReceptKeresesiJellemzok build(Felhasznalo keresoFelhasznalo) {
-            if (keresoFelhasznalo == null) {
-                throw new IllegalArgumentException();
-            }
-            if (teljes && sajat) {
-                throw new IllegalArgumentException("Ha teljes halmazra keresel, akkor a sajátot ne add meg!");
-            }
-            if (teljes && kedvenc) {
-                throw new IllegalArgumentException("Ha teljes halmazra keresel, akkor a kedvencet ne add meg!");
-            }
-            if (felhasznalo == null && (sajat || kedvenc)) {
-                throw new IllegalArgumentException("Ha saját vagy kedvenc halmazra keresel, akkor felhasználót is meg kell adni!");
-            }
+//            if (keresoFelhasznalo == null) {
+//                throw new IllegalArgumentException();
+//            }
+//            if (teljes && sajat) {
+//                throw new IllegalArgumentException("Ha teljes halmazra keresel, akkor a sajátot ne add meg!");
+//            }
+//            if (teljes && kedvenc) {
+//                throw new IllegalArgumentException("Ha teljes halmazra keresel, akkor a kedvencet ne add meg!");
+//            }
+//            if (felhasznalo == null && (sajat || kedvenc)) {
+//                throw new IllegalArgumentException("Ha saját vagy kedvenc halmazra keresel, akkor felhasználót is meg kell adni!");
+//            }
             return new ReceptKeresesiJellemzok(
                     keresoFelhasznalo,
                     nevtoredek,
@@ -501,7 +512,7 @@ public final class ReceptKeresesiJellemzok {
                     kizartCimke.isEmpty() ? null : kizartCimke,
                     szavak.isEmpty() ? null : szavak,
                     mindenSzotTartalmazzon,
-                    adagSzures.build(), darabszam, kezdoRecept, kedvenc, sajat, teljes, felhasznalo);
+                    adagSzures.build(), darabszam, kezdoRecept, kedvenc, sajat, teljes, felhasznalo, uniqueKey);
         }
     }
 
@@ -533,7 +544,7 @@ public final class ReceptKeresesiJellemzok {
             Set<Alapanyag> kizartAlapanyag, List<Cimke> tartalmazottCimke, boolean mindenCimketTartalmazzon,
             List<Cimke> kizartCimke, Set<String> szavak, boolean mindenSzotTartalmazzon,
             Tartomany adagSzures, int darabszam,
-            Recept kezdoRecept, boolean kedvenc, boolean sajat, boolean teljes, Felhasznalo felhasznalo) {
+            Recept kezdoRecept, boolean kedvenc, boolean sajat, boolean teljes, Felhasznalo felhasznalo, String uniqueKey) {
         this.keresoFelhasznalo = keresoFelhasznalo;
         this.nevtoredek = nevtoredek;
         this.ajanlottEtkezesek = ajanlottEtkezesek;
@@ -551,6 +562,7 @@ public final class ReceptKeresesiJellemzok {
         this.sajat = sajat;
         this.teljes = teljes;
         this.felhasznalo = felhasznalo;
+        this.uniqueKey = uniqueKey;
     }
 
     /**

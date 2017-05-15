@@ -5,6 +5,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -13,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import hu.hubasky.gastromanager.control.ControlResultListener;
 import hu.hubasky.gastromanager.control.Controls;
 import hu.hubasky.gastromanager.entity.recept.EReceptStatus;
 import hu.hubasky.gastromanager.entity.recept.Recept;
@@ -25,55 +28,69 @@ public class ReciepeManagerActivity extends AppCompatActivity {
     private static final String TAG = "ReciepeManagerActivity";
 
     private Button addReciepeButton;
+    ListView reciepeListView;
     private final AppCompatActivity self = this;
-    private boolean invalidateVisual;
     public static final String EXTRA_RECIPE = "recipe_extra";
+
+    List<Recept> reciepesList = new ArrayList<Recept>();
+    ReciepeAdapter reciepeAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.reciepe_manager);
 
-        invalidateVisual = getIntent().getBooleanExtra(Controls.EXTRA_INVALIDATEVISUAL, true);
-
-        Log.d(TAG, "onCreate: INVALIDATEVISUAL:" + Boolean.toString(invalidateVisual));
-
-        List<ReciepeVM> reciepesList = new ArrayList<ReciepeVM>();
-        Random rand = new Random();
-        for(int i = 1; i < 15; i++) {
-            reciepesList.add(new ReciepeVM("Fincsi hamcsi recept " + i,
-                    "Elkészítési idő: " + rand.nextInt(120) +" perc\nAdagok száma: 4\nFűszeres, illatos pihi puhi csibehusi, gyerekek és felnőttek kedvence.",
-                    new ArrayList<IngredientVM>()));
-        }
-
-        final ReciepeAdapter reciepeAdapter = new ReciepeAdapter(reciepesList, this);
-        ListView reciepeListView = (ListView) findViewById(R.id.reciepe_list);
-
+        reciepeListView = (ListView) findViewById(R.id.reciepe_list);
+        reciepeAdapter = new ReciepeAdapter(reciepesList, this);
         reciepeListView.setAdapter(reciepeAdapter);
+
+        Controls.getInstance().getReceptNyilvantarto().keres(null, new ControlResultListener<Recept>() {
+            @Override
+            public void onSuccess(List<Recept> resultList) {
+                reciepesList = resultList;
+                reciepeAdapter = new ReciepeAdapter(resultList, self);
+                reciepeListView.setAdapter(reciepeAdapter);
+            }
+
+            @Override
+            public void onFailed(Exception ex) {
+
+            }
+        });
+
+        reciepeListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Recept r = reciepesList.get(position);
+
+                Intent editReciepeIntent = new Intent(self, EditReciepeActivity.class);
+                editReciepeIntent.putExtra(EXTRA_RECIPE, r.getUniqueKey());
+                editReciepeIntent.putExtra("newReciepe", false);
+                startActivity(editReciepeIntent);
+            }
+        });
 
         addReciepeButton = (Button) findViewById(R.id.add_reciepe_btn);
         addReciepeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Recept r = new Recept(EReceptStatus.PUBLIKUS,
+                        "",
+                        "",
+                        "http://",
+                        4);
 
-                Recept r = new Recept(EReceptStatus.MEGOSZTOTT, "Írja ide a címet", "Leírás", "Kép URL", 4);
+                try {
+                    Controls.getInstance().getReceptNyilvantarto().tarolas(r);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
 
                 Intent editReciepeIntent = new Intent(self, EditReciepeActivity.class);
                 editReciepeIntent.putExtra(EXTRA_RECIPE, r.getUniqueKey());
+                editReciepeIntent.putExtra("newReciepe", true);
                 startActivity(editReciepeIntent);
             }
         });
-
-        if (invalidateVisual) {
-            reciepeAdapter.notifyDataSetChanged();
-        }
-
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-        Controls.getInstance().setActualContext(this);
     }
 }

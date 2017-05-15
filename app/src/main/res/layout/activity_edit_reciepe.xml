@@ -21,21 +21,47 @@
             android:id="@+id/edit_reciepe_ingredients_list"
             android:background="@color/listBackground"
             android:layout_marginBottom="16dp"
-            android:divider="@color/transparent"/>
+            android:divider="@color/transparent"
+            android:layout_below="@+id/edit_reciepe_title_text"/>
 
         <android.support.v7.widget.AppCompatEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/edit_reciepe_description_hint_text"
-            android:inputType="text"
+            android:hint="@string/edit_reciepe_title_hint_text"
+            android:inputType="text|textCapSentences"
             android:background="@color/listBackground"
             android:padding="8dp"
             android:id="@+id/edit_reciepe_title_text"
-            android:layout_below="@+id/edit_reciepe_add_ingredient"
-            android:layout_marginTop="16dp"
             android:layout_marginBottom="16dp"
             android:maxLines="1"
             />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_below="@+id/edit_reciepe_add_ingredient"
+            android:id="@+id/edit_reciepe_portion_layout"
+            android:layout_marginTop="16dp">
+
+
+            <android.support.v7.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:text="Adagok száma:"/>
+
+            <android.support.v7.widget.AppCompatEditText
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:inputType="number"
+                android:padding="8dp"
+                android:layout_marginStart="8dp"
+                android:background="@color/listBackground"
+                android:id="@+id/edit_reciepe_portion_edit_text"/>
+
+        </LinearLayout>
 
         <android.support.v7.widget.AppCompatEditText
             android:layout_width="match_parent"
@@ -45,43 +71,45 @@
             android:background="@color/listBackground"
             android:padding="8dp"
             android:id="@+id/edit_reciepe_description_text"
-            android:layout_below="@+id/edit_reciepe_title_text"
+            android:layout_below="@id/edit_reciepe_portion_layout"
+            android:minHeight="175dp"
             android:layout_marginTop="16dp"
-            android:layout_marginBottom="16dp"/>
+            android:layout_marginBottom="16dp"
+            android:gravity="top"/>
 
         <android.support.v7.widget.AppCompatButton
             android:text="@string/add_ingredient"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/edit_reciepe_add_ingredient"
-            android:layout_below="@+id/edit_reciepe_ingredients_list"
-            android:layout_centerHorizontal="true" />
+            android:layout_below="@id/edit_reciepe_ingredients_list"/>
 
         <android.support.v7.widget.AppCompatButton
             android:text="@string/cancel_button_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/edit_reciepe_cancel_button"
-            android:layout_below="@+id/edit_reciepe_ingredients_list"
-            android:layout_alignParentStart="true" />
+            android:layout_below="@+id/edit_reciepe_description_text"
+            android:layout_toStartOf="@+id/edit_reciepe_save_button"
+            android:layout_marginEnd="16dp"/>
 
         <android.support.v7.widget.AppCompatButton
             android:text="@string/save_button_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/edit_reciepe_save_button"
-            android:layout_below="@+id/edit_reciepe_ingredients_list"
+            android:layout_below="@id/edit_reciepe_description_text"
             android:layout_alignParentEnd="true" />
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/imageView2"
-            android:layout_alignParentTop="true"
+            android:id="@+id/edit_reciepe_image_view"
             android:layout_alignParentEnd="true"
+            android:layout_alignTop="@id/edit_reciepe_ingredients_list"
             android:layout_marginStart="20dp"
-            android:layout_toEndOf="@+id/edit_reciepe_ingredients_list"
-            android:layout_alignBottom="@+id/edit_reciepe_ingredients_list" />
+            android:layout_toEndOf="@id/edit_reciepe_ingredients_list"
+            android:layout_alignBottom="@id/edit_reciepe_ingredients_list" />
 
     </RelativeLayout>
 </ScrollView>

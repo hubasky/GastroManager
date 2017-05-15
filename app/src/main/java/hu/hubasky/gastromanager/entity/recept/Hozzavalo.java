@@ -43,7 +43,7 @@ public class Hozzavalo extends EgyediKulcs {
     }
 
     public String displayQuantity() {
-        DecimalFormat df = new DecimalFormat("#.00");
+        DecimalFormat df = new DecimalFormat("#,00");
         String valueUnit = "";
         switch (alapanyag.getMennyisegiEgyseg()) {
             case GRAMM:
@@ -51,17 +51,17 @@ public class Hozzavalo extends EgyediKulcs {
                     valueUnit = df.format(mennyiseg / 1000) + " kg";
                 else if (mennyiseg >= 10)
                     valueUnit = df.format(mennyiseg / 10) + " dkg";
-                else valueUnit = String.valueOf(mennyiseg) + " g";
+                else valueUnit = df.format(mennyiseg) + " g";
                 break;
             case LITER:
                 if (mennyiseg >= 1)
-                    valueUnit = String.valueOf(mennyiseg) + " l";
-                else if (mennyiseg >= 0.1)
-                    valueUnit = String.valueOf(mennyiseg * 10) + " dl";
-                else valueUnit = String.valueOf(mennyiseg * 1000) + " ml";
+                    valueUnit = df.format(mennyiseg) + " l";
+                else if (mennyiseg >= 0.01)
+                    valueUnit = df.format(mennyiseg * 100) + " dl";
+                else valueUnit = df.format(mennyiseg * 1000) + " ml";
                 break;
             case DARAB:
-                valueUnit = String.valueOf(mennyiseg) + " db";
+                valueUnit = df.format(mennyiseg) + " db";
                 break;
         }
         return valueUnit;

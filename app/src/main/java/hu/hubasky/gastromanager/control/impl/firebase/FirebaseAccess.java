@@ -13,23 +13,17 @@ public class FirebaseAccess {
     private static FirebaseAccess instance = null;
 
     private List<Alapanyag> ingredients;
-    private List<Hozzavalo> ingredientQuantities;
     private List<Recept> reciepes;
     private List<BevasarloLista> shoppingLists;
 
     public FirebaseAccess() {
         ingredients = new ArrayList<>();
-        ingredientQuantities = new ArrayList<>();
         reciepes = new ArrayList<>();
         shoppingLists = new ArrayList<>();
     }
 
     public List<Alapanyag> getIngredients() {
         return ingredients;
-    }
-
-    public List<Hozzavalo> getIngredientQuantities() {
-        return ingredientQuantities;
     }
 
     public List<Recept> getReciepes() {

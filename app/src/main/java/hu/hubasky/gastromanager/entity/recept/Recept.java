@@ -95,11 +95,11 @@ public final class Recept extends Cimkezheto {
      * @param neve a név
      */
     public void setNeve(String neve) {
-        if (neve == null) throw new IllegalArgumentException();
-        neve = neve.trim();
-        if (neve.isEmpty()) {
-            throw new IllegalArgumentException("A recept neve nem lehet üres!");
-        }
+//        if (neve == null) throw new IllegalArgumentException();
+//        neve = neve.trim();
+//        if (neve.isEmpty()) {
+//            throw new IllegalArgumentException("A recept neve nem lehet üres!");
+//        }
         this.neve = neve;
     }
 
@@ -132,11 +132,11 @@ public final class Recept extends Cimkezheto {
      * @param leirasa a leírás
      */
     public void setLeirasa(String leirasa) {
-        if (leirasa == null) throw new IllegalArgumentException();
-        leirasa = leirasa.trim();
-        if (leirasa.isEmpty()) {
-            throw new IllegalArgumentException("A recept leírása nem lehet üres!");
-        }
+//        if (leirasa == null) throw new IllegalArgumentException();
+//        leirasa = leirasa.trim();
+//        if (leirasa.isEmpty()) {
+//            throw new IllegalArgumentException("A recept leírása nem lehet üres!");
+//        }
 
         this.leirasa = leirasa;
     }
